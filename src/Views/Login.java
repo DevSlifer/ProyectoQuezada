@@ -1,7 +1,7 @@
 package Views;
 
-import Views.PanelCover;
-import Views.PanelLoginAndRegister;
+import Views.Components.PanelCover;
+import Views.Components.PanelLoginAndRegister;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -15,7 +15,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
  *
  * @author 1000g
  */
-public class Main extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
    private MigLayout layout;
    private PanelCover cover;
@@ -27,7 +27,7 @@ public class Main extends javax.swing.JFrame {
    private final DecimalFormat df=new DecimalFormat("##0.###");
    
     
-    public Main() {
+    public Login() {
         initComponents();
         init();
     }
@@ -133,6 +133,11 @@ public class Main extends javax.swing.JFrame {
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setOpaque(true);
+        bg.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                bgVetoableChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -160,6 +165,10 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bgVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_bgVetoableChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bgVetoableChange
+
     
     
     public static void main(String args[]) {
@@ -176,20 +185,21 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
 
         java.awt.EventQueue.invokeLater(() -> {
-            new Main().setVisible(true);
+            new Login().setVisible(true);
         });
     }
 

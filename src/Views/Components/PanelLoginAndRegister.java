@@ -1,5 +1,5 @@
 
-package Views;
+package Views.Components;
 
 import Views.swing.Button;
 import Views.swing.Button;
@@ -42,17 +42,17 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         register.add(label);
         
         MyTextField txtUser = new MyTextField();
-        txtUser.setPrefixIcon(new ImageIcon(getClass().getResource("/com/raven/icon/user.png")));
+        txtUser.setPrefixIcon(new ImageIcon(getClass().getResource("/Views/Imagenes/user.png")));
         txtUser.setHint("Name");
         register.add(txtUser, "w 60%");
         
         MyTextField txtEmail = new MyTextField();
-        txtEmail.setPrefixIcon(new ImageIcon(getClass().getResource("/com/raven/icon/mail.png")));
+        txtEmail.setPrefixIcon(new ImageIcon(getClass().getResource("/Views/Imagenes/mail.png")));
         txtEmail.setHint("Email");
         register.add(txtEmail, "w 60%");
         
         MyPasswordField txtPass = new MyPasswordField();
-        txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/com/raven/icon/pass.png")));
+        txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/Views/Imagenes/pass.png")));
         txtPass.setHint("Password");
         register.add(txtPass, "w 60%");
         Button cmd = new Button();
@@ -70,12 +70,12 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
        login.add(label);
        
         MyTextField txtEmail = new MyTextField();
-        txtEmail.setPrefixIcon(new ImageIcon(getClass().getResource("/com/raven/icon/mail.png")));
+        txtEmail.setPrefixIcon(new ImageIcon(getClass().getResource("/Views/Imagenes/mail.png")));
         txtEmail.setHint("Email");
         login.add(txtEmail, "w 60%");
         
         MyPasswordField txtPass = new MyPasswordField();
-        txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/com/raven/icon/pass.png")));
+        txtPass.setPrefixIcon(new ImageIcon(getClass().getResource("/Views/Imagenes/pass.png")));
         txtPass.setHint("Password");
         login.add(txtPass, "w 60%");
         

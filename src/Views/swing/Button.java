@@ -1,7 +1,5 @@
 package Views.swing;
 
-
-
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
