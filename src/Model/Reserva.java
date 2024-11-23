@@ -8,6 +8,6 @@ package Model;
  *
  * @author Supre
  */
-public class Login {    
+public class Reserva {
     
 }
