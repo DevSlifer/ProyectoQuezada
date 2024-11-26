@@ -1,27 +1,29 @@
 //Gerald Manuel Gomera (20240044)
-
 package Views;
 
+import Controller.ReservaController;
 
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 /**
  *
  * @author 1000g
  */
-
-
 public class frmPanelReservaciones extends javax.swing.JFrame {
 
-    
-    
-    public frmPanelReservaciones() throws  InstantiationException, ClassNotFoundException {
- 
+    private ReservaController reservaController;
+
+    public frmPanelReservaciones() throws InstantiationException, ClassNotFoundException {
+
         initComponents();
-        
+        reservaController = new ReservaController();
+
     }
 
     /**
@@ -228,7 +230,7 @@ public class frmPanelReservaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void txtmarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmarcaActionPerformed
@@ -244,7 +246,84 @@ public class frmPanelReservaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_txtfechaentregaActionPerformed
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
+        try {
+            // Recopilar datos del formulario
+            String nombre = txtnombre.getText().trim();
+            String apellido = txtapellido.getText().trim();
+            String cedula = txtcedula.getText().trim();
+            String marca = txtmarca.getText().trim();
+            String modelo = txtmodelo.getText().trim();
+            String anioStr = txtaño.getText().trim();
+            String fechaEntregaStr = txtfechaentrega.getText().trim();
+            String fechaDevolucionStr = txtfechadevolucion.getText().trim();
 
+            // Validar datos básicos
+            if (nombre.isEmpty() || apellido.isEmpty() || cedula.isEmpty()
+                    || marca.isEmpty() || modelo.isEmpty() || anioStr.isEmpty()
+                    || fechaEntregaStr.isEmpty() || fechaDevolucionStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int anio;
+            try {
+                anio = Integer.parseInt(anioStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El año debe ser un número válido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Definir el formato esperado
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            // Convertir cadenas a objetos LocalDate
+            LocalDate fechaReservacion = LocalDate.now(); // Fecha actual
+            LocalDate fechaEntrega = LocalDate.parse(fechaEntregaStr, formatter);
+            LocalDate fechaDevolucion = LocalDate.parse(fechaDevolucionStr, formatter);
+
+            // Validar que la fecha de devolución sea posterior o igual a la fecha de entrega
+            if (fechaDevolucion.isBefore(fechaEntrega)) {
+                JOptionPane.showMessageDialog(this, "La fecha de devolución debe ser posterior o igual a la fecha de entrega.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Convertir LocalDate a java.util.Date para la llamada al controlador
+            Date fechaReservacionUtil = java.sql.Date.valueOf(fechaReservacion);
+            Date fechaEntregaUtil = java.sql.Date.valueOf(fechaEntrega);
+            Date fechaDevolucionUtil = java.sql.Date.valueOf(fechaDevolucion);
+
+            // Llamar al controlador con todos los parámetros
+            boolean exito = reservaController.insertarReserva(
+                    nombre,
+                    apellido,
+                    cedula,
+                    marca,
+                    modelo,
+                    anio,
+                    fechaReservacionUtil,
+                    fechaEntregaUtil,
+                    fechaDevolucionUtil
+            );
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Reservación agregada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                // Limpiar campos
+                txtnombre.setText("");
+                txtapellido.setText("");
+                txtcedula.setText("");
+                txtmarca.setText("");
+                txtmodelo.setText("");
+                txtaño.setText("");
+                txtfechaentrega.setText("");
+                txtfechadevolucion.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al agregar reservación. Verifique los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use el formato yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void txtmodeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmodeloActionPerformed
@@ -271,11 +350,8 @@ public class frmPanelReservaciones extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Establecer el look and feel Nimbus */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -293,18 +369,13 @@ public class frmPanelReservaciones extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmPanelReservaciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Crear y mostrar el formulario */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new frmPanelReservaciones().setVisible(true);          
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(frmPanelReservaciones.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
+                    new frmPanelReservaciones().setVisible(true);
+                } catch (InstantiationException | ClassNotFoundException ex) {
                     Logger.getLogger(frmPanelReservaciones.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -328,18 +399,4 @@ public class frmPanelReservaciones extends javax.swing.JFrame {
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 
-    
-
-    private void limpiarentradas() {
-      
-       txtfechaentrega.setText("");
-       txtfechadevolucion.setText("");
-       
-       txtmarca.setText("");
-       
-      
-      
-       
-       
-    }
 }

@@ -1,14 +1,95 @@
 //Gerald Manuel Gomera (20240044)
 package Views;
 
+import Controller.AdminController;
+import Model.CarroModel;
+import Model.ClienteModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+
 /**
  *
  * @author 1000g
  */
 public class frmPanelAdmin extends javax.swing.JFrame {
 
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private AdminController adminController;
+
     public frmPanelAdmin() throws InstantiationException, ClassNotFoundException {
         initComponents();
+        adminController = new AdminController();
+        cargarTablaClientes();
+        cargarTablaCarros();
+        configurarEventos();
+
+    }
+
+    private void configurarEventos() {
+        btn_buscar.addActionListener((e) -> {
+            btnbuscarActionPerformed(e);
+        });
+
+        btn_actualizar.addActionListener((e) -> btnactualizarActionPerformed(e));
+
+        btn_eliminar.addActionListener((e) -> btn_eliminarActionPerformed(e));
+    }
+
+    private void cargarTablaClientes() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_clientes.getModel();
+        modelo.setRowCount(0);
+
+        List<ClienteModel> clientes = adminController.obtenerClientes();
+        for (ClienteModel cliente : clientes) {
+            modelo.addRow(new Object[]{
+                cliente.getNombre(),
+                cliente.getCedula(),
+                cliente.getProvincia(),
+                cliente.getSector(),
+                cliente.getCalle(),
+                cliente.getNumeroCasa(),
+                cliente.getTelefono()
+            });
+        }
+    }
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, FileNotFoundException, FileNotFoundException {
+        String cedula = txtcedula.getText();
+        ClienteModel cliente = null;
+        try {
+            cliente = adminController.buscarCliente(cedula);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (cliente != null) {
+            DefaultTableModel model = (DefaultTableModel) tbl_clientes.getModel();
+            model.setRowCount(0); // Limpia la tabla
+            model.addRow(new Object[]{
+                cliente.getNombre(),
+                cliente.getApellido(),
+                cliente.getCedula(),
+                cliente.getLicencia(),
+                cliente.getTelefono(),
+                cliente.getProvincia(),
+                cliente.getSector(),
+                cliente.getCalle(),
+                cliente.getNumeroCasa()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+        }
     }
 
     /**
@@ -53,7 +134,7 @@ public class frmPanelAdmin extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Panel de Registros", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255)))); // NOI18N
-        jPanel3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         tbl_clientes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         tbl_clientes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -65,7 +146,7 @@ public class frmPanelAdmin extends javax.swing.JFrame {
                     {null, null, null, null, null, null, null, null, null}
                 },
                 new String[]{
-                    "Nombres", "Apellidos", "Cedula", "Licencia", "Telefono", "Provincia", "Sector", "Calle", "N.º de la Casa"
+                    "Nombre", "Cedula", "Provincia", "Sector", "Calle", "Número de Casa", "Teléfonos"
                 }
         ));
         tbl_clientes.setComponentPopupMenu(jPopupMenu2);
@@ -116,11 +197,12 @@ public class frmPanelAdmin extends javax.swing.JFrame {
                     {null, null, null, null, null, null}
                 },
                 new String[]{
-                    "Matricula", "Marca", "Modelo", "N.º de Placa", "Kilometraje", "Año"
+                    "Matricula", "Marca", "Modelo", "N.º de Placa", "Año"
                 }
         ));
         tbl_matricula.setComponentPopupMenu(jPopupMenu2);
         tbl_matricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_matriculaMouseClicked(evt);
             }
@@ -221,14 +303,55 @@ public class frmPanelAdmin extends javax.swing.JFrame {
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
 
+        try {
+            cargarTablaClientes();
+            cargarTablaCarros();
+            JOptionPane.showMessageDialog(this, "Tablas actualizadas exitosamente");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar las tablas: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         // TODO add your handling code here:
+        try {
+            String cedula = txtcedula.getText().trim();
+            String matricula = txtmatricula1.getText().trim();
+
+            if (!cedula.isEmpty()) {
+                buscarCliente(cedula);
+            } else if (!matricula.isEmpty()) {
+                buscarCarro(matricula);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese una cédula o matrícula para buscar");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         // TODO add your handling code here:
+        try {
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este registro?");
+            if (confirmar == JOptionPane.YES_OPTION) {
+                String cedula = txtcedula.getText().trim();
+                String matricula = txtmatricula1.getText().trim();
+
+                if (!cedula.isEmpty()) {
+                    adminController.eliminarCliente(cedula);
+                    cargarTablaClientes();
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente");
+                } else if (!matricula.isEmpty()) {
+                    adminController.eliminarCarro(matricula);
+                    cargarTablaCarros();
+                    JOptionPane.showMessageDialog(this, "Carro eliminado exitosamente");
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void txtmatricula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmatricula1ActionPerformed
@@ -271,5 +394,76 @@ public class frmPanelAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtmatricula1;
     // End of variables declaration//GEN-END:variables
+
+    private Component crearGestionClientesPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel titulo = new JLabel("Gestión de Empleado");
+        titulo.setFont(new Font("Arial", Font.BOLD, 16));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton btnAgregarCliente = new JButton("Agregar Cliente");
+        btnAgregarCliente.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panel.add(titulo);
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        panel.add(btnAgregarCliente);
+
+        return panel;
+    }
+
+    private void cargarTablaCarros() {
+        DefaultTableModel modelo = (DefaultTableModel) tbl_matricula.getModel();
+        modelo.setRowCount(0);
+
+        List<CarroModel> carros = adminController.obtenerCarros();
+        for (CarroModel carro : carros) {
+            modelo.addRow(new Object[]{
+                carro.getMatricula(),
+                carro.getMarca(),
+                carro.getModelo(),
+                carro.getNumPlaca(),
+                carro.getAnio()
+            });
+        }
+    }
+
+    private void buscarCarro(String matricula) throws SQLException, FileNotFoundException {
+        CarroModel carro = adminController.buscarCarro(matricula);
+        if (carro != null) {
+            DefaultTableModel model = (DefaultTableModel) tbl_matricula.getModel();
+            model.setRowCount(0);
+            model.addRow(new Object[]{
+                carro.getMatricula(),
+                carro.getMarca(),
+                carro.getModelo(),
+                carro.getNumPlaca(),
+                carro.getAnio()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Carro no encontrado");
+        }
+    }
+
+    private void buscarCliente(String cedula) throws SQLException, FileNotFoundException {
+        ClienteModel cliente = adminController.buscarCliente(cedula);
+        if (cliente != null) {
+            DefaultTableModel model = (DefaultTableModel) tbl_clientes.getModel();
+            model.setRowCount(0);
+            model.addRow(new Object[]{
+                cliente.getNombre(),
+                cliente.getCedula(),
+                cliente.getProvincia(),
+                cliente.getSector(),
+                cliente.getCalle(),
+                cliente.getNumeroCasa(),
+                cliente.getTelefono()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+        }
+    }
 
 }

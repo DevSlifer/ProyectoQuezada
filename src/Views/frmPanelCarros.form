@@ -148,22 +148,19 @@
                               <Component id="txtnumdeplaca" min="-2" pref="131" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtmodelo" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                                  <Component id="txtmarca" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtmarca" min="-2" pref="131" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtaño" alignment="1" min="-2" pref="131" max="-2" attributes="0"/>
-                                  <Component id="txtkilometraje" alignment="1" min="-2" pref="131" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtaño" min="-2" pref="131" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="66" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnagregar" min="-2" pref="131" max="-2" attributes="0"/>
+                      <EmptySpace pref="152" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="txtmodelo" min="-2" pref="131" max="-2" attributes="0"/>
+                          <Component id="btnagregar" min="-2" pref="131" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -179,18 +176,15 @@
                           <Component id="txtmatricula" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtmarca" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtkilometraje" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="txtmarca" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtaño" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtmodelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtaño" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="txtmodelo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnagregar" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="155" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -250,24 +244,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtmatriculaActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtkilometraje">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder>
-                      <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Kilometraje">
-                          <Color PropertyName="color" blue="0" green="0" red="0" type="rgb"/>
-                        </TitledBorder>
-                      </Border>
-                    </TitledBorder>
-                  </Border>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtkilometrajeActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtnumdeplaca">

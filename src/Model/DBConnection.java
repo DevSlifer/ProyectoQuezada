@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 /**
  *
  * @author Supre
@@ -28,7 +27,7 @@ public class DBConnection {
                 String directorioActual = System.getProperty("user.dir");
 
 // Construir la ruta completa del archivo
-                String rutaArchivo = directorioActual + File.separator + "\\src\\BaseDeDatos\\configuracion.txt";
+                String rutaArchivo = directorioActual + File.separator + "\\src\\Utils\\configuracion.txt";
 // Abrir el archivo
                 File archivo = new File(rutaArchivo);
                 FileReader lector = new FileReader(archivo);

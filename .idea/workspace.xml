@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c0c33e4c-9886-4941-961f-63e2a43a122a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BaseDeDatos/configuracion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/configuracion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ClienteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Carro.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/CarroModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ClienteModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DBConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Empleado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/EmpleadoModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Factura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ReservaModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/LoginView.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/LoginView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmPanelAdmin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelCarros.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmPanelCarros.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelCarros.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmPanelCarros.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmPanelClientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelReservaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmPanelReservaciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frmPanelAdmin.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 1
+}]]></component>
+  <component name="ProjectId" id="2pM3y3Q4sKBJdyk112EsgXPrEBO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Supre/Documents/NetBeansProjects/ProyectoQuezada",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c0c33e4c-9886-4941-961f-63e2a43a122a" name="Changes" comment="" />
+      <created>1732562367586</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732562367586</updated>
+      <workItem from="1732562368655" duration="50000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Controller/ReservaController.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

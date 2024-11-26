@@ -1,26 +1,27 @@
 //Gerald Manuel Gomera (20240044)
-
 package Views;
 
-
+import Controller.CarroController;
+import Model.CarroModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 1000g
  */
-
-
 public class frmPanelCarros extends javax.swing.JFrame {
 
-    
-    
+    private CarroController controller;
+
     public frmPanelCarros() throws InstantiationException, ClassNotFoundException {
 
         initComponents();
-        
+        controller = new CarroController(this);
+        configurarCampos();
     }
 
     /**
@@ -39,7 +40,6 @@ public class frmPanelCarros extends javax.swing.JFrame {
         txtaño = new javax.swing.JTextField();
         txtmarca = new javax.swing.JTextField();
         txtmatricula = new javax.swing.JTextField();
-        txtkilometraje = new javax.swing.JTextField();
         txtnumdeplaca = new javax.swing.JTextField();
         txtmodelo = new javax.swing.JTextField();
         btnagregar = new javax.swing.JButton();
@@ -60,47 +60,40 @@ public class frmPanelCarros extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Car Registration", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Car Registration", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Car Register", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255)), "", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Car Register", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255)), "", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
 
-        txtaño.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        txtaño.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
         txtaño.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtañoActionPerformed(evt);
             }
         });
 
-        txtmarca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Marca", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        txtmarca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Marca", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
         txtmarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmarcaActionPerformed(evt);
             }
         });
 
-        txtmatricula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Matricula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtmatricula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matricula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtmatricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmatriculaActionPerformed(evt);
             }
         });
 
-        txtkilometraje.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Kilometraje", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtkilometraje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtkilometrajeActionPerformed(evt);
-            }
-        });
-
-        txtnumdeplaca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "N.º  Placa", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtnumdeplaca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "N.º  Placa", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtnumdeplaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnumdeplacaActionPerformed(evt);
             }
         });
 
-        txtmodelo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Modelo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtmodelo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modelo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtmodelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmodeloActionPerformed(evt);
@@ -135,17 +128,15 @@ public class frmPanelCarros extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addComponent(txtnumdeplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtaño, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtkilometraje, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtaño, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(66, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(148, 148, 148))
         );
         jPanel3Layout.setVerticalGroup(
@@ -160,14 +151,12 @@ public class frmPanelCarros extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtkilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtaño, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -212,7 +201,7 @@ public class frmPanelCarros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void txtañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtañoActionPerformed
@@ -227,10 +216,6 @@ public class frmPanelCarros extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmatriculaActionPerformed
 
-    private void txtkilometrajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkilometrajeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtkilometrajeActionPerformed
-
     private void txtnumdeplacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnumdeplacaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnumdeplacaActionPerformed
@@ -240,6 +225,7 @@ public class frmPanelCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_txtmodeloActionPerformed
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
+        registrarCarro();
 
     }//GEN-LAST:event_btnagregarActionPerformed
 
@@ -287,6 +273,138 @@ public class frmPanelCarros extends javax.swing.JFrame {
         });
     }
 
+    public void setMarca(String marca) {
+        txtmarca.setText(marca);
+    }
+
+    public void setModelo(String modelo) {
+        txtmodelo.setText(modelo);
+    }
+
+    public void setAño(String año) {
+        txtaño.setText(año);
+    }
+
+    public void setPlaca(String placa) {
+        txtnumdeplaca.setText(placa);
+    }
+
+    public void setMatricula(String matricula) {
+        txtmatricula.setText(matricula);
+    }
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
+        String matricula = txtmatricula.getText();
+        controller.buscarCarro(matricula);
+    }
+
+    private void configurarCampos() {
+        // Validación para año (solo números y máximo 4 dígitos)
+        txtaño.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) || txtaño.getText().length() >= 4) {
+                    e.consume();
+                }
+            }
+        });
+
+        // Validación para matrícula (máximo 50 caracteres)
+        txtmatricula.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (txtmatricula.getText().length() >= 50) {
+                    e.consume();
+                }
+            }
+        });
+
+        // Validación para placa (máximo 9 caracteres)
+        txtnumdeplaca.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                if (txtnumdeplaca.getText().length() >= 9) {
+                    e.consume();
+                }
+            }
+        });
+
+        // Configurar el evento del botón agregar
+        btnagregar.addActionListener(evt -> {
+            registrarCarro();
+        });
+    }
+
+    private void registrarCarro() {
+        try {
+            // Validar campos requeridos
+            if (camposVacios()) {
+                mostrarMensaje("Todos los campos son requeridos");
+                return;
+            }
+
+            // Validar año
+            int año = Integer.parseInt(txtaño.getText());
+            if (año < 2000) {
+                mostrarMensaje("El año debe ser mayor a 2000");
+                return;
+            }
+
+            // Llamar al controlador
+            controller.procesarRegistroCarro();
+
+        } catch (NumberFormatException e) {
+            mostrarMensaje("El año debe ser un número válido");
+        } catch (Exception e) {
+            mostrarMensaje("Error al registrar el carro: " + e.getMessage());
+            Logger.getLogger(frmPanelCarros.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    private boolean camposVacios() {
+        return txtmarca.getText().trim().isEmpty()
+                || txtmodelo.getText().trim().isEmpty()
+                || txtaño.getText().trim().isEmpty()
+                || txtnumdeplaca.getText().trim().isEmpty()
+                || txtmatricula.getText().trim().isEmpty();
+    }
+
+    // Getters para acceder a los valores de los campos
+    public String getMarca() {
+        return txtmarca.getText().trim();
+    }
+
+    public String getModelo() {
+        return txtmodelo.getText().trim();
+    }
+
+    public String getAño() {
+        return txtaño.getText().trim();
+    }
+
+    public String getPlaca() {
+        return txtnumdeplaca.getText().trim();
+    }
+
+    public String getMatricula() {
+        return txtmatricula.getText().trim();
+    }
+
+    // Métodos de utilidad
+    public void limpiarCampos() {
+        txtmarca.setText("");
+        txtmodelo.setText("");
+        txtaño.setText("");
+        txtnumdeplaca.setText("");
+        txtmatricula.setText("");
+        txtmarca.requestFocus();
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnagregar;
     private javax.swing.JLabel jLabel3;
@@ -295,7 +413,6 @@ public class frmPanelCarros extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JTextField txtaño;
-    private javax.swing.JTextField txtkilometraje;
     private javax.swing.JTextField txtmarca;
     private javax.swing.JTextField txtmatricula;
     private javax.swing.JTextField txtmodelo;

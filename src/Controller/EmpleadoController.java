@@ -3,11 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controller;
-
+import Model.EmpleadoDAO;
 /**
  *
  * @author Supre
  */
 public class EmpleadoController {
-    
+    private EmpleadoDAO empleadoDAO;
+
+    public EmpleadoController() {
+        empleadoDAO = new EmpleadoDAO();
+    }
 }
