@@ -69,9 +69,7 @@ public class CarroModel {
     public void setTipoVehiculo(String tipoVehiculo) {
         this.tipoVehiculo = tipoVehiculo;
     }
-
-
-
+    
     public String getMatricula() {
         return matricula;
     }

@@ -95,7 +95,7 @@ public class ReservaDAO {
 
     // Método para leer una reserva específica por cédula y número de chasis
     public ReservaModel leerReservaByCedulaAndChasis(String cedulaCliente, String numChasis) throws FileNotFoundException {
-        ReservaModel reserva = null;
+        ReservaModel reserva = new ReservaModel();
         String query = "{CALL sp_leer_reserva(?)}";
         try (Connection connection = DBConnection.obtenerConexion(); CallableStatement statement = connection.prepareCall(query)) {
 

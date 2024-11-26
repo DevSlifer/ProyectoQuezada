@@ -6,119 +6,125 @@ import Views.frmPanelCarros;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CarroController {
-
     private final frmPanelCarros view;
     private final CarroDAO carroDAO;
+    private static final Logger LOGGER = Logger.getLogger(CarroController.class.getName());
 
     public CarroController(frmPanelCarros view) {
         this.view = view;
         this.carroDAO = new CarroDAO();
     }
 
-    public void procesarRegistroCarro() {
+    public boolean procesarRegistroCarro(CarroModel carro) {
         try {
-            // Validar campos requeridos
-            if (!validarCamposRequeridos()) {
-                mostrarError("Todos los campos son requeridos");
-                return;
-            }
-
             // Validar formato de matrícula
-            if (!validarFormatoMatricula(view.getMatricula())) {
+            if (!validarFormatoMatricula(carro.getMatricula())) {
                 mostrarError("El formato de la matrícula no es válido");
-                return;
-            }
-
-            // Validar año
-            int año = validarAño();
-            if (año == -1) {
-                return;
+                return false;
             }
 
             // Validar placa
-            if (!validarFormatoPlaca(view.getPlaca())) {
+            if (!validarFormatoPlaca(carro.getNumPlaca())) {
                 mostrarError("El formato de la placa no es válido");
-                return;
+                return false;
             }
 
-            // Crear y poblar el modelo
-            CarroModel carro = new CarroModel();
-            carro.setMarca(view.getMarca());
-            carro.setModelo(view.getModelo());
-            carro.setAnio(año);
-            carro.setTipoVehiculo("Sedan"); // Por ahora hardcodeado, debería venir de un combo en la vista
-            carro.setNumPlaca(view.getPlaca());
-            carro.setNumChasis(view.getPlaca()); // Por ahora usando la placa como número de chasis
-            carro.setMatricula(view.getMatricula());
+            // Validar kilometraje
+            if (carro.getKilometraje() < 0) {
+                mostrarError("El kilometraje no puede ser negativo");
+                return false;
+            }
+            
+            // Validar año
+            if (carro.getAnio() < 2000) {
+                mostrarError("El año debe ser mayor a 2000");
+                return false;
+            }
+
+            // Agregar tipo de vehículo por defecto si es necesario
+            carro.setTipoVehiculo("Sedan"); // Por ahora hardcodeado
+            
+            // Usar la placa como número de chasis por ahora
+            carro.setNumChasis(carro.getNumPlaca());
 
             // Insertar en la base de datos
             carroDAO.insertarCarro(carro);
-
-            // Mostrar mensaje de éxito y limpiar campos
             mostrarMensaje("Vehículo registrado exitosamente");
-            view.limpiarCampos();
+            return true;
 
         } catch (SQLException | FileNotFoundException ex) {
             manejarErrorBaseDatos(ex);
+            return false;
         } catch (Exception e) {
             mostrarError("Error al registrar el vehículo: " + e.getMessage());
+            return false;
         }
     }
 
-    private boolean validarCamposRequeridos() {
-        return !view.getMarca().trim().isEmpty()
-                && !view.getModelo().trim().isEmpty()
-                && !view.getAño().trim().isEmpty()
-                && !view.getPlaca().trim().isEmpty()
-                && !view.getMatricula().trim().isEmpty();
-    }
-
-    private int validarAño() {
+    public List<CarroModel> obtenerTodosLosCarros() {
         try {
-            int año = Integer.parseInt(view.getAño());
-            if (año < 2000) {
-                mostrarError("El año debe ser mayor a 2000");
-                return -1;
-            }
-            if (año > 2025) {
-                mostrarError("El año no puede ser mayor al actual");
-                return -1;
-            }
-            return año;
-        } catch (NumberFormatException e) {
-            mostrarError("El año debe ser un número válido");
-            return -1;
+            return carroDAO.obtenerTodosLosCarros();
+        } catch (SQLException | FileNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error al obtener la lista de carros", e);
+            mostrarError("Error al obtener la lista de vehículos");
+            return new ArrayList<>();
         }
     }
 
-    private boolean validarFormatoMatricula(String matricula) {
-        // La matrícula debe tener entre 6 y 50 caracteres alfanuméricos
-        return matricula.matches("^[A-Z0-9]{6,50}$");
-    }
-
-    private boolean validarFormatoPlaca(String placa) {
-        // La placa debe tener exactamente 7 caracteres: 3 letras y 4 números
-        return placa.matches("^[A-Z]{3}\\d{4}$");
-    }
-
-    public void buscarCarro(String matricula) {
+    public CarroModel buscarCarroPorMatricula(String matricula) {
         try {
+            if (!validarFormatoMatricula(matricula)) {
+                mostrarError("El formato de la matrícula no es válido");
+                return null;
+            }
+            
             CarroModel carro = carroDAO.buscarCarroPorMatricula(matricula);
             if (carro != null) {
-                // Actualizar campos en la vista
                 actualizarVistaConCarro(carro);
             } else {
                 mostrarError("No se encontró ningún vehículo con esa matrícula");
             }
+            return carro;
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error al buscar carro", e);
             mostrarError("Error al buscar el vehículo: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean actualizarCarro(CarroModel carro) {
+        try {
+            if (!validarDatosCarro(carro)) {
+                return false;
+            }
+            
+            carroDAO.actualizarCarro(carro);
+            mostrarMensaje("Vehículo actualizado exitosamente");
+            return true;
+        } catch (SQLException | FileNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error al actualizar carro", e);
+            manejarErrorBaseDatos(e);
+            return false;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error inesperado al actualizar carro", e);
+            mostrarError("Error al actualizar el vehículo: " + e.getMessage());
+            return false;
         }
     }
 
     public void eliminarCarro(String matricula) {
         try {
+            if (!validarFormatoMatricula(matricula)) {
+                mostrarError("El formato de la matrícula no es válido");
+                return;
+            }
+
             if (JOptionPane.showConfirmDialog(view,
                     "¿Está seguro de eliminar este vehículo?",
                     "Confirmar eliminación",
@@ -128,9 +134,49 @@ public class CarroController {
                 mostrarMensaje("Vehículo eliminado exitosamente");
                 view.limpiarCampos();
             }
+        } catch (SQLException | FileNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error al eliminar carro", e);
+            manejarErrorBaseDatos(e);
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error inesperado al eliminar carro", e);
             mostrarError("Error al eliminar el vehículo: " + e.getMessage());
         }
+    }
+
+    private boolean validarDatosCarro(CarroModel carro) {
+        if (!validarFormatoMatricula(carro.getMatricula())) {
+            mostrarError("El formato de la matrícula no es válido");
+            return false;
+        }
+        if (!validarFormatoPlaca(carro.getNumPlaca())) {
+            mostrarError("El formato de la placa no es válido");
+            return false;
+        }
+        if (carro.getKilometraje() < 0) {
+            mostrarError("El kilometraje no puede ser negativo");
+            return false;
+        }
+        if (carro.getAnio() < 2000) {
+            mostrarError("El año debe ser mayor a 2000");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarFormatoMatricula(String matricula) {
+        if (matricula == null || matricula.isEmpty()) {
+            return false;
+        }
+        // La matrícula debe tener entre 6 y 50 caracteres alfanuméricos
+        return matricula.matches("^[A-Z0-9]{6,50}$");
+    }
+
+    private boolean validarFormatoPlaca(String placa) {
+        if (placa == null || placa.isEmpty()) {
+            return false;
+        }
+        // La placa debe tener exactamente 7 caracteres: 3 letras y 4 números
+        return placa.matches("^[A-Z]{3}\\d{4}$");
     }
 
     private void actualizarVistaConCarro(CarroModel carro) {
@@ -139,6 +185,7 @@ public class CarroController {
         view.setAño(String.valueOf(carro.getAnio()));
         view.setPlaca(carro.getNumPlaca());
         view.setMatricula(carro.getMatricula());
+        view.setKilometraje(String.valueOf(carro.getKilometraje()));
     }
 
     private void mostrarMensaje(String mensaje) {

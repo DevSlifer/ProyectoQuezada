@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author 1000g
  */
 
-public class frmPanelviewReservaClientes extends javax.swing.JFrame {
+public class frmPanelviewReservaClientes extends javax.swing.JInternalFrame {
 
     private final ReservaController reservaController;
 

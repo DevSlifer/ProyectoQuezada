@@ -1,27 +1,36 @@
-//Gerald Manuel Gomera (20240044)
 package Views;
 
 import Controller.CarroController;
 import Model.CarroModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author 1000g
  */
-public class frmPanelCarros extends javax.swing.JFrame {
+public class frmPanelCarros extends javax.swing.JInternalFrame {
 
-    private CarroController controller;
+    private CarroController controller = new CarroController(this);
+    private static final Logger LOGGER = Logger.getLogger(frmPanelCarros.class.getName());
 
-    public frmPanelCarros() throws InstantiationException, ClassNotFoundException {
-
+    /**
+     * Creates new form PaneldeCarros
+     */
+    public frmPanelCarros() {
+        super("Registro de Carros",
+                true, // resizable
+                true, // closable
+                true, // maximizable
+                true); // iconifiable
         initComponents();
-        controller = new CarroController(this);
-        configurarCampos();
+        configurarComponentes();
+        this.controller = new CarroController(this);
+        setSize(800, 600);
+
     }
 
     /**
@@ -33,38 +42,29 @@ public class frmPanelCarros extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu2 = new javax.swing.JPopupMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         txtaño = new javax.swing.JTextField();
         txtmarca = new javax.swing.JTextField();
         txtmatricula = new javax.swing.JTextField();
+        txtkilometraje = new javax.swing.JTextField();
         txtnumdeplaca = new javax.swing.JTextField();
         txtmodelo = new javax.swing.JTextField();
         btnagregar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
 
-        jPopupMenu2.setForeground(new java.awt.Color(20, 20, 20));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
 
-        jMenuItem2.setBackground(new java.awt.Color(20, 20, 20));
-        jMenuItem2.setForeground(new java.awt.Color(50, 50, 50));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/Imagenes/7347206 (2).png"))); // NOI18N
-        jMenuItem2.setText("ELIMINAR");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jPopupMenu2.add(jMenuItem2);
+        jPanel2.setBackground(new java.awt.Color(0, 153, 255));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Car Registration", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
-
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Car Register", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255)), "", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
-
+        txtaño.setBackground(new java.awt.Color(255, 255, 255));
         txtaño.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
         txtaño.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,6 +72,7 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
+        txtmarca.setBackground(new java.awt.Color(255, 255, 255));
         txtmarca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Marca", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
         txtmarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,13 +80,24 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
-        txtmatricula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matricula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtmatricula.setBackground(new java.awt.Color(255, 255, 255));
+        txtmatricula.setForeground(new java.awt.Color(51, 51, 255));
+        txtmatricula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matricula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtmatricula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtmatriculaActionPerformed(evt);
             }
         });
 
+        txtkilometraje.setBackground(new java.awt.Color(255, 255, 255));
+        txtkilometraje.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kilometraje", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtkilometraje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtkilometrajeActionPerformed(evt);
+            }
+        });
+
+        txtnumdeplaca.setBackground(new java.awt.Color(255, 255, 255));
         txtnumdeplaca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "N.º  Placa", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtnumdeplaca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +105,7 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
+        txtmodelo.setBackground(new java.awt.Color(255, 255, 255));
         txtmodelo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modelo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtmodelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +113,8 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
-        btnagregar.setForeground(new java.awt.Color(0, 0, 0));
+        btnagregar.setBackground(new java.awt.Color(0, 0, 0));
+        btnagregar.setForeground(new java.awt.Color(255, 255, 255));
         btnagregar.setText("Aceptar");
         btnagregar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         btnagregar.addActionListener(new java.awt.event.ActionListener() {
@@ -109,75 +123,99 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("    Ingrese los datos del vehiculo");
-        jLabel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
+
+        jTextField1.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setBorder(null);
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setBackground(new java.awt.Color(51, 51, 51));
+        jTextField2.setBorder(null);
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(txtnumdeplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtaño, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(66, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(152, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(148, 148, 148))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(37, 37, 37)
+                                        .addComponent(txtnumdeplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtaño, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtkilometraje, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(212, 212, 212))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(126, 126, 126))))
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(299, 299, 299))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtnumdeplaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtmatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnumdeplaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtkilometraje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtaño, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(txtmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btnagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(188, 188, 188)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(189, 189, 189)))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(30, 30, 30)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,24 +223,20 @@ public class frmPanelCarros extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(296, Short.MAX_VALUE))
+                .addContainerGap(650, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void txtañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtañoActionPerformed
         // TODO add your handling code here:
@@ -224,93 +258,37 @@ public class frmPanelCarros extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmodeloActionPerformed
 
-    private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
-        registrarCarro();
-
-    }//GEN-LAST:event_btnagregarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPanelCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPanelCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPanelCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPanelCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new frmPanelCarros().setVisible(true);
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(frmPanelCarros.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(frmPanelCarros.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-    }
-
-    public void setMarca(String marca) {
-        txtmarca.setText(marca);
-    }
-
-    public void setModelo(String modelo) {
-        txtmodelo.setText(modelo);
-    }
-
-    public void setAño(String año) {
-        txtaño.setText(año);
-    }
-
-    public void setPlaca(String placa) {
-        txtnumdeplaca.setText(placa);
-    }
-
-    public void setMatricula(String matricula) {
-        txtmatricula.setText(matricula);
-    }
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        String matricula = txtmatricula.getText();
-        controller.buscarCarro(matricula);
-    }
-
-    private void configurarCampos() {
-        // Validación para año (solo números y máximo 4 dígitos)
+    private void configurarComponentes() {
+        // Configurar el campo año
         txtaño.addKeyListener(new KeyAdapter() {
-            @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c) || txtaño.getText().length() >= 4) {
+                String currentText = txtaño.getText();
+                // Permitir solo números y backspace
+                if (!Character.isDigit(c) && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+                    e.consume();
+                    return;
+                }
+                // Limitar a 4 dígitos
+                if (currentText.length() >= 4 && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
                     e.consume();
                 }
             }
         });
 
-        // Validación para matrícula (máximo 50 caracteres)
+        // Configurar el campo placa
+        txtnumdeplaca.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                String currentText = txtnumdeplaca.getText().toUpperCase();
+                txtnumdeplaca.setText(currentText);
+                if (currentText.length() >= 9) {
+                    e.consume();
+                }
+            }
+        });
+
+        // Configurar el campo matrícula
         txtmatricula.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -320,22 +298,18 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
         });
 
-        // Validación para placa (máximo 9 caracteres)
-        txtnumdeplaca.addKeyListener(new KeyAdapter() {
+        // Configurar el campo kilometraje
+        txtkilometraje.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent e) {
-                if (txtnumdeplaca.getText().length() >= 9) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
                     e.consume();
                 }
             }
         });
-
-        // Configurar el evento del botón agregar
-        btnagregar.addActionListener(evt -> {
-            registrarCarro();
-        });
     }
-
-    private void registrarCarro() {
+    private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
         try {
             // Validar campos requeridos
             if (camposVacios()) {
@@ -344,21 +318,56 @@ public class frmPanelCarros extends javax.swing.JFrame {
             }
 
             // Validar año
-            int año = Integer.parseInt(txtaño.getText());
-            if (año < 2000) {
-                mostrarMensaje("El año debe ser mayor a 2000");
+            int año = validarAño();
+            if (año == -1) {
                 return;
             }
 
-            // Llamar al controlador
-            controller.procesarRegistroCarro();
+            // Crear modelo de carro
+            CarroModel carro = new CarroModel();
+            carro.setMarca(txtmarca.getText().trim());
+            carro.setModelo(txtmodelo.getText().trim());
+            carro.setAnio(año);
+            carro.setNumPlaca(txtnumdeplaca.getText().trim().toUpperCase());
+            carro.setMatricula(txtmatricula.getText().trim());
+            carro.setKilometraje(Double.parseDouble(txtkilometraje.getText().trim()));
+
+            // Procesar registro
+            if (controller.procesarRegistroCarro(carro)) {
+                mostrarMensaje("Carro registrado exitosamente");
+                limpiarCampos();
+            }
 
         } catch (NumberFormatException e) {
-            mostrarMensaje("El año debe ser un número válido");
+            mostrarMensaje("Por favor ingrese valores numéricos válidos");
         } catch (Exception e) {
             mostrarMensaje("Error al registrar el carro: " + e.getMessage());
-            Logger.getLogger(frmPanelCarros.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, "Error en el registro", e);
         }
+    }//GEN-LAST:event_btnagregarActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void txtkilometrajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkilometrajeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtkilometrajeActionPerformed
+
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new frmPanelCarros().setVisible(true);
+                } catch (Exception ex) {
+                }
+            }
+        });
     }
 
     private boolean camposVacios() {
@@ -366,10 +375,42 @@ public class frmPanelCarros extends javax.swing.JFrame {
                 || txtmodelo.getText().trim().isEmpty()
                 || txtaño.getText().trim().isEmpty()
                 || txtnumdeplaca.getText().trim().isEmpty()
-                || txtmatricula.getText().trim().isEmpty();
+                || txtmatricula.getText().trim().isEmpty()
+                || txtkilometraje.getText().trim().isEmpty();
     }
 
-    // Getters para acceder a los valores de los campos
+    private int validarAño() {
+        try {
+            int año = Integer.parseInt(txtaño.getText().trim());
+            if (año < 2000) {
+                mostrarMensaje("El año debe ser mayor a 2000");
+                return -1;
+            }
+            if (año > 2025) {
+                mostrarMensaje("El año no puede ser mayor a 2025");
+                return -1;
+            }
+            return año;
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Por favor ingrese un año válido");
+            return -1;
+        }
+    }
+
+    public void limpiarCampos() {
+        txtmarca.setText("");
+        txtmodelo.setText("");
+        txtaño.setText("");
+        txtnumdeplaca.setText("");
+        txtmatricula.setText("");
+        txtkilometraje.setText("");
+        txtmarca.requestFocus();
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
     public String getMarca() {
         return txtmarca.getText().trim();
     }
@@ -390,33 +431,46 @@ public class frmPanelCarros extends javax.swing.JFrame {
         return txtmatricula.getText().trim();
     }
 
-    // Métodos de utilidad
-    public void limpiarCampos() {
-        txtmarca.setText("");
-        txtmodelo.setText("");
-        txtaño.setText("");
-        txtnumdeplaca.setText("");
-        txtmatricula.setText("");
-        txtmarca.requestFocus();
+    public String getKilometraje() {
+        return txtkilometraje.getText().trim();
     }
 
-    public void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
+    // Setters para el controlador
+    public void setMarca(String marca) {
+        txtmarca.setText(marca);
     }
 
+    public void setModelo(String modelo) {
+        txtmodelo.setText(modelo);
+    }
 
+    public void setAño(String año) {
+        txtaño.setText(año);
+    }
+
+    public void setPlaca(String placa) {
+        txtnumdeplaca.setText(placa);
+    }
+
+    public void setMatricula(String matricula) {
+        txtmatricula.setText(matricula);
+    }
+
+    public void setKilometraje(String kilometraje) {
+        txtkilometraje.setText(kilometraje);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnagregar;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField txtaño;
+    private javax.swing.JTextField txtkilometraje;
     private javax.swing.JTextField txtmarca;
     private javax.swing.JTextField txtmatricula;
     private javax.swing.JTextField txtmodelo;
     private javax.swing.JTextField txtnumdeplaca;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  *
  * @author 1000g
  */
-public class frmPanelEmpleados extends javax.swing.JFrame {
+public class frmPanelEmpleados extends javax.swing.JInternalFrame {
 
     public frmPanelEmpleados() throws InstantiationException, ClassNotFoundException {
 

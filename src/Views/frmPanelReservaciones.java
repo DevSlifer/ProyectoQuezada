@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * @author 1000g
  */
-public class frmPanelReservaciones extends javax.swing.JFrame {
+public class frmPanelReservaciones extends javax.swing.JInternalFrame {
 
     private ReservaController reservaController;
 

@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
-public class frmPaneldeFacturacion extends javax.swing.JFrame {
+public class frmPaneldeFacturacion extends javax.swing.JInternalFrame {
 
     
     
@@ -49,7 +49,7 @@ public class frmPaneldeFacturacion extends javax.swing.JFrame {
 
         jMenuItem2.setBackground(new java.awt.Color(20, 20, 20));
         jMenuItem2.setForeground(new java.awt.Color(50, 50, 50));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Viws/Imagenes/7347206 (2).png"))); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Views/Imagenes/7347206 (2).png"))); // NOI18N
         jMenuItem2.setText("ELIMINAR");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

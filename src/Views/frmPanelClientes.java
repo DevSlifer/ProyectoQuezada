@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  *
  * @author 1000g
  */
-public class frmPanelClientes extends javax.swing.JFrame {
+public class frmPanelClientes extends javax.swing.JInternalFrame {
 
     private ClienteController controller;
     public javax.swing.JTextField txtnombre;

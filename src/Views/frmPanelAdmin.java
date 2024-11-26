@@ -1,49 +1,153 @@
 //Gerald Manuel Gomera (20240044)
 package Views;
 
-import Controller.AdminController;
-import Model.CarroModel;
-import Model.ClienteModel;
-import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import Controller.AdminController;
+import Model.CarroModel;
+import Model.ClienteModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author 1000g
  */
-public class frmPanelAdmin extends javax.swing.JFrame {
+public class frmPanelAdmin extends javax.swing.JInternalFrame {
 
-    private CardLayout cardLayout;
-    private JPanel mainPanel;
     private AdminController adminController;
+    private static final Logger LOGGER = Logger.getLogger(frmPanelAdmin.class.getName());
 
     public frmPanelAdmin() throws InstantiationException, ClassNotFoundException {
+        super("Panel de Administración", true, true, true, true);
         initComponents();
-        adminController = new AdminController();
-        cargarTablaClientes();
-        cargarTablaCarros();
+        configurarTablaCarros();
+        configurarTablaClientes();
+        this.adminController = new AdminController(new frmPanelCarros());
         configurarEventos();
+        cargarDatosIniciales();
+    }
 
+    private void configurarTablaCarros() {
+        DefaultTableModel modelo = new DefaultTableModel(
+                new String[]{"ID", "Matrícula", "Marca", "Modelo", "Placa", "Año", "Kilometraje"},
+                0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tbl_matricula.setModel(modelo);
+    }
+
+    private void configurarTablaClientes() {
+        DefaultTableModel modelo = new DefaultTableModel(
+                new String[]{"Nombre", "Cédula", "Provincia", "Sector", "Calle", "N° Casa", "Teléfono"},
+                0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tbl_clientes.setModel(modelo);
     }
 
     private void configurarEventos() {
-        btn_buscar.addActionListener((e) -> {
-            btnbuscarActionPerformed(e);
+        // Evento de búsqueda
+        btn_buscar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cedula = txtcedula.getText().trim();
+                String matricula = txtmatricula1.getText().trim();
+                try {
+                    if (!cedula.isEmpty()) {
+                        buscarCliente(cedula);
+                    } else if (!matricula.isEmpty()) {
+                        adminController.buscarCarroEnTabla(tbl_matricula, matricula);
+                    } else {
+                        JOptionPane.showMessageDialog(frmPanelAdmin.this, "Ingrese una cédula o matrícula para buscar");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmPanelAdmin.this, "Error en la búsqueda: " + ex.getMessage());
+                }
+            }
         });
 
-        btn_actualizar.addActionListener((e) -> btnactualizarActionPerformed(e));
+        // Evento de eliminación
+        btn_eliminar.addActionListener(e -> {
+            try {
+                String matricula = txtmatricula1.getText().trim();
+                if (!matricula.isEmpty()) {
+                    adminController.eliminarCarro(matricula, tbl_matricula);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un carro para eliminar");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+            }
+        });
 
-        btn_eliminar.addActionListener((e) -> btn_eliminarActionPerformed(e));
+        // Evento de actualización
+        btn_actualizar.addActionListener(e -> {
+            cargarDatosIniciales();
+        });
+
+        // Evento de eliminación
+        btn_eliminar.addActionListener(e -> {
+            try {
+                String matricula = txtmatricula1.getText().trim();
+                if (!matricula.isEmpty()) {
+                    adminController.eliminarCarro(matricula, tbl_matricula);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Seleccione un carro para eliminar");
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al eliminar: " + ex.getMessage());
+            }
+        });
+
+        // Evento de doble clic en tabla de carros
+        tbl_matricula.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    mostrarDialogoEdicionCarro();
+                }
+            }
+        });
+    }
+
+    private void cargarDatosIniciales() {
+        adminController.cargarDatosCarrosEnTabla(tbl_matricula);
+        cargarTablaClientes();
+    }
+
+    private void mostrarDialogoEdicionCarro() {
+        int filaSeleccionada = tbl_matricula.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            String matricula = tbl_matricula.getValueAt(filaSeleccionada, 1).toString();
+            CarroModel carro = adminController.buscarCarroPorMatricula(matricula);
+            if (carro != null) {
+                // Crear y mostrar diálogo de edición
+                JDialog dialogo = new JDialog((Frame) SwingUtilities.windowForComponent(this), "Editar Vehículo", true);
+                // ... configuración del diálogo y campos de edición ...
+                // Agregar campos para editar el carro
+            }
+        }
     }
 
     private void cargarTablaClientes() {
@@ -67,11 +171,7 @@ public class frmPanelAdmin extends javax.swing.JFrame {
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, FileNotFoundException, FileNotFoundException {
         String cedula = txtcedula.getText();
         ClienteModel cliente = null;
-        try {
-            cliente = adminController.buscarCliente(cedula);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(frmPanelAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cliente = adminController.buscarCliente(cedula);
 
         if (cliente != null) {
             DefaultTableModel model = (DefaultTableModel) tbl_clientes.getModel();
@@ -344,7 +444,7 @@ public class frmPanelAdmin extends javax.swing.JFrame {
                     cargarTablaClientes();
                     JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente");
                 } else if (!matricula.isEmpty()) {
-                    adminController.eliminarCarro(matricula);
+                    adminController.eliminarCarro(matricula, tbl_matricula);
                     cargarTablaCarros();
                     JOptionPane.showMessageDialog(this, "Carro eliminado exitosamente");
                 }
@@ -425,26 +525,14 @@ public class frmPanelAdmin extends javax.swing.JFrame {
                 carro.getMarca(),
                 carro.getModelo(),
                 carro.getNumPlaca(),
-                carro.getAnio()
+                carro.getAnio(),
+                carro.getKilometraje()
             });
         }
     }
 
     private void buscarCarro(String matricula) throws SQLException, FileNotFoundException {
-        CarroModel carro = adminController.buscarCarro(matricula);
-        if (carro != null) {
-            DefaultTableModel model = (DefaultTableModel) tbl_matricula.getModel();
-            model.setRowCount(0);
-            model.addRow(new Object[]{
-                carro.getMatricula(),
-                carro.getMarca(),
-                carro.getModelo(),
-                carro.getNumPlaca(),
-                carro.getAnio()
-            });
-        } else {
-            JOptionPane.showMessageDialog(this, "Carro no encontrado");
-        }
+        adminController.buscarCarroEnTabla(matricula, tbl_matricula);
     }
 
     private void buscarCliente(String cedula) throws SQLException, FileNotFoundException {
@@ -465,5 +553,4 @@ public class frmPanelAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cliente no encontrado");
         }
     }
-
 }
