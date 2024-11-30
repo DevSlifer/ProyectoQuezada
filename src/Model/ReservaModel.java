@@ -4,64 +4,71 @@ import java.util.Date;
 
 public class ReservaModel {
 
-    private String nombreCliente;
-    private String apellidoCliente;
-    private String cedulaCliente;
-    private String marcaVehiculo;
-    private String modeloVehiculo;
-    private int anio;
+    private int idReservacion;
     private Date fechaReservacion;
     private Date fechaDeEntrega;
     private Date fechaDevolucion;
-    private String numChasis;
+    private boolean cancelacion;
+    private int diasTotal;
+    private double montoEstimado;
+    private int idCliente;
+    private int idCarro;
+    private ClienteModel cliente;
+    private CarroModel carro;
+
+    public int getDiasTotal() {
+        return diasTotal;
+    }
+
+    public void setDiasTotal(int diasTotal) {
+        this.diasTotal = diasTotal;
+    }
+
+    public double getMontoEstimado() {
+        return montoEstimado;
+    }
+
+    public void setMontoEstimado(double montoEstimado) {
+        this.montoEstimado = montoEstimado;
+    }
+
+    
+    
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
+    }
+
+    public CarroModel getCarro() {
+        return carro;
+    }
+
+    public void setCarro(CarroModel carro) {
+        this.carro = carro;
+    }    
+
+    public ReservaModel() {
+    }
+
+    public ReservaModel(Date fechaDeEntrega, Date fechaDevolucion, int idCliente, int idCarro) {
+        this.fechaReservacion = new Date();
+        this.fechaDeEntrega = fechaDeEntrega;
+        this.fechaDevolucion = fechaDevolucion;
+        this.cancelacion = false;
+        this.idCliente = idCliente;
+        this.idCarro = idCarro;
+    }
 
     // Getters and Setters
-    public String getNombreCliente() {
-        return nombreCliente;
+    public int getIdReservacion() {
+        return idReservacion;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
-
-    public String getApellidoCliente() {
-        return apellidoCliente;
-    }
-
-    public void setApellidoCliente(String apellidoCliente) {
-        this.apellidoCliente = apellidoCliente;
-    }
-
-    public String getCedulaCliente() {
-        return cedulaCliente;
-    }
-
-    public void setCedulaCliente(String cedulaCliente) {
-        this.cedulaCliente = cedulaCliente;
-    }
-
-    public String getMarcaVehiculo() {
-        return marcaVehiculo;
-    }
-
-    public void setMarcaVehiculo(String marcaVehiculo) {
-        this.marcaVehiculo = marcaVehiculo;
-    }
-
-    public String getModeloVehiculo() {
-        return modeloVehiculo;
-    }
-
-    public void setModeloVehiculo(String modeloVehiculo) {
-        this.modeloVehiculo = modeloVehiculo;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
+    public void setIdReservacion(int idReservacion) {
+        this.idReservacion = idReservacion;
     }
 
     public Date getFechaReservacion() {
@@ -88,11 +95,27 @@ public class ReservaModel {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public String getNumChasis() {
-        return numChasis;
+    public boolean isCancelacion() {
+        return cancelacion;
     }
 
-    public void setNumChasis(String numChasis) {
-        this.numChasis = numChasis;
+    public void setCancelacion(boolean cancelacion) {
+        this.cancelacion = cancelacion;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public int getIdCarro() {
+        return idCarro;
+    }
+
+    public void setIdCarro(int idCarro) {
+        this.idCarro = idCarro;
     }
 }

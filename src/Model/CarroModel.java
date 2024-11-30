@@ -9,18 +9,38 @@ package Model;
  * @author Supre
  */
 public class CarroModel {
+
     private int idCarro;
     private String marca;
     private String modelo;
     private int anio;
-    private String tipoVehiculo;
-    private String NumPlaca;
-    private String NumChasis;
+    private double precioPorDia;
+    private String placa;
     private String matricula;
     private double kilometraje;
-    
+
+    public double getKilometraje() {
+        return kilometraje;
+    }
+
+    public void setKilometraje(double kilometraje) {
+        this.kilometraje = kilometraje;
+    }
     
 
+    public CarroModel() {
+    }
+
+    public CarroModel(String marca, String modelo, int anio, double precioPorDia, String placa, String matricula) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.precioPorDia = precioPorDia;
+        this.placa = placa;
+        this.matricula = matricula;
+    }
+
+    // Getters and Setters
     public int getIdCarro() {
         return idCarro;
     }
@@ -32,15 +52,6 @@ public class CarroModel {
     public String getMarca() {
         return marca;
     }
-
-    public double getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(double kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-    
 
     public void setMarca(String marca) {
         this.marca = marca;
@@ -62,15 +73,21 @@ public class CarroModel {
         this.anio = anio;
     }
 
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
+    public double getPrecioPorDia() {
+        return precioPorDia;
     }
 
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
+    public void setPrecioPorDia(double precioPorDia) {
+        this.precioPorDia = precioPorDia;
     }
 
+    public String getPlaca() {
+        return placa;
+    }
 
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
     public String getMatricula() {
         return matricula;
@@ -78,36 +95,5 @@ public class CarroModel {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    public String getNumPlaca() {
-        return NumPlaca;
-    }
-
-    public void setNumPlaca(String NumPlaca) {
-        this.NumPlaca = NumPlaca;
-    }
-
-    public String getNumChasis() {
-        return NumChasis;
-    }
-
-    public void setNumChasis(String NumChasis) {
-        this.NumChasis = NumChasis;
-    }
-    
-    
-        @Override
-    public String toString() {
-        return "CarroModel{" +
-                "idCarro=" + idCarro +
-                ", marca='" + marca + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", anio=" + anio +
-                ", tipoVehiculo='" + tipoVehiculo + '\'' +
-                ", placa='" + NumPlaca + '\'' +
-                ", numChasis='" + NumChasis + '\'' +
-                ", matricula='" + matricula + '\'' +
-                '}';
     }
 }

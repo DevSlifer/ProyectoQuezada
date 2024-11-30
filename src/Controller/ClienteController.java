@@ -1,112 +1,167 @@
 package Controller;
 
+import java.awt.event.ActionListener;
 import Model.ClienteModel;
-import Model.ClienteDAO;
-import Views.frmPanelClientes;
-import javax.swing.*;
+import Model.DAOS.ClienteDAO;
+import Views.PaneldeRegistros;
+import Views.frmDashboard;
+import Views.RegistrodeClientes;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.regex.Pattern;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ClienteController {
 
-    private final frmPanelClientes view;
     private final ClienteDAO clienteDAO;
+    private final ClienteModel clienteModel;
+    private final PaneldeRegistros paneldeRegistros;
+    private final RegistrodeClientes registrodeClientes;
 
-    public ClienteController(frmPanelClientes view) {
-        this.view = view;
+    public ClienteController(PaneldeRegistros paneldeRegistros, RegistrodeClientes registroDeClientes) throws SQLException, FileNotFoundException {
         this.clienteDAO = new ClienteDAO();
+        this.clienteModel = new ClienteModel();
+        this.paneldeRegistros = paneldeRegistros;
+        this.registrodeClientes = registroDeClientes;
+        listarClientes();
+        configurarListeners();
     }
 
-    public void procesarRegistroCliente() {
+
+    public void listarClientes() throws FileNotFoundException, SQLException {
         try {
-            if (!validarCamposRequeridos()) {
-                mostrarError("Todos los campos marcados son requeridos");
-                return;
-            }
+            DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblclientes().getModel();
+            modelo.setRowCount(0);
+            List<ClienteModel> clientes = clienteDAO.verCliente(null);
 
-            if (!validarFormatoCedula(view.txtcedula1.getText())) {
-                mostrarError("El formato de la cédula no es válido");
-                return;
+            for (ClienteModel cliente : clientes) {
+                Object[] fila = new Object[9];
+                fila[0] = cliente.getNombre();
+                fila[1] = cliente.getApellido();
+                fila[2] = cliente.getCedula();
+                fila[3] = cliente.getTelefono();
+                fila[4] = cliente.getLicencia();
+                fila[5] = cliente.getDirreccion().getProvincia();
+                fila[6] = cliente.getDirreccion().getSector();
+                fila[7] = cliente.getDirreccion().getCalle();
+                fila[8] = cliente.getDirreccion().getNumeroDeCasa();
+                modelo.addRow(fila);
             }
-
-            if (!validarFormatoTelefono(view.txttelefono.getText())) {
-                mostrarError("El formato del teléfono no es válido");
-                return;
-            }
-
-            ClienteModel cliente = new ClienteModel();
-            cliente.setNombre(view.txtnombre.getText());
-            cliente.setApellido(view.txtapellido.getText());
-            cliente.setCedula(view.txtcedula1.getText());
-            cliente.setLicencia(view.txtlicencia.getText());
-            cliente.setTelefono(view.txttelefono.getText());
-            cliente.setProvincia(view.txtprovincia.getText());
-            cliente.setSector(view.txtsector.getText());
-            cliente.setCalle(view.txtcalle.getText());
-            try {
-                cliente.setNumeroCasa(Integer.parseInt(view.txtnumdelacasa.getText()));
-            } catch (NumberFormatException e) {
-                mostrarError("El número de casa debe ser un valor numérico");
-                return;
-            }
-            clienteDAO.insertarCliente(cliente);
-            mostrarMensaje("Cliente registrado exitosamente");
-            limpiarCampos();
-
-        } catch (SQLException ex) {
-            manejarErrorBaseDatos(ex);
-        } catch (Exception e) {
-            mostrarError("Error al registrar el cliente: " + e.getMessage());
+            paneldeRegistros.getTblclientes().setModel(modelo);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(paneldeRegistros,
+                    "Error al listar los clientes: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private boolean validarCamposRequeridos() {
-        return !view.txtnombre.getText().trim().isEmpty()
-                && !view.txtapellido.getText().trim().isEmpty()
-                && !view.txtcedula1.getText().trim().isEmpty()
-                && !view.txtlicencia.getText().trim().isEmpty()
-                && !view.txttelefono.getText().trim().isEmpty();
+    public void agregar() {
+        String nombre = registrodeClientes.getTxtregistroclientesnombre().getText();
+        String apellido = registrodeClientes.getTxtregistroclientesapellido().getText();
+        String cedula = registrodeClientes.getTxtregistroclientescedula().getText();
+        String telefono = registrodeClientes.getTxtregistroclientestelefono().getText();
+        String licencia = registrodeClientes.getTxtregistroclienteslicencia().getText();
+        String calle = registrodeClientes.getTxtregistroclientescalle().getText();
+        String sector = registrodeClientes.getTxtregistroclientessector().getText();
+        int numero = Integer.parseInt(registrodeClientes.getTxtregistroclientestelefono().getText());
+        clienteModel.setNombre(nombre);
+        clienteModel.setApellido(apellido);
+        clienteModel.setCedula(cedula);
+        clienteModel.setTelefono(telefono);
+        clienteModel.setLicencia(licencia);
+        clienteModel.getDirreccion().setCalle(calle);
+        clienteModel.getDirreccion().setSector(sector);
+        clienteModel.getDirreccion().setNumeroDeCasa(numero);
+        if (validar(registrodeClientes) > 1) {
+            try {
+                clienteDAO.insertarCliente(clienteModel);
+                JOptionPane.showMessageDialog(registrodeClientes, "Cliente agregado correctamente!", "Exito!", JOptionPane.INFORMATION_MESSAGE);
+                listarClientes();
+                limpiarCampos();
+            } catch (FileNotFoundException | SQLException e) {
+                JOptionPane.showMessageDialog(registrodeClientes, "Error al agregar el cliente!", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-    private boolean validarFormatoCedula(String cedula) {
-        return Pattern.matches("^\\d{11}$", cedula);
+    public void limpiarCampos() {
+        registrodeClientes.getTxtregistroclientesnombre().setText("");
+        registrodeClientes.getTxtregistroclientesapellido().setText("");
+        registrodeClientes.getTxtregistroclientescedula().setText("");
+        registrodeClientes.getTxtregistroclientestelefono().setText("");
+        registrodeClientes.getTxtregistroclienteslicencia().setText("");
+        registrodeClientes.getTxtregistroclientescalle().setText("");
+        registrodeClientes.getTxtregistroclientessector().setText("");
+        registrodeClientes.getTxtregistroclientestelefono().setText("");
     }
 
-    private boolean validarFormatoTelefono(String telefono) {
-        return Pattern.matches("^\\d{10}$", telefono);
+    private void configurarListeners() {
+        registrodeClientes.getBtnregistroclientesagregar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                agregar();
+            }
+        });
     }
 
-    private void limpiarCampos() {
-        view.txtnombre.setText("");
-        view.txtapellido.setText("");
-        view.txtcedula1.setText("");
-        view.txtlicencia.setText("");
-        view.txttelefono.setText("");
-        view.txtprovincia.setText("");
-        view.txtsector.setText("");
-        view.txtcalle.setText("");
-        view.txtnumdelacasa.setText("");
-        view.txtnombre.requestFocus();
+    public int validar(RegistrodeClientes registrodeClientes) {
+        int validacion = 1;
+        if (registrodeClientes.getTxtregistroclientesnombre().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de nombre no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientesnombre().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientesapellido().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de apellido no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientesapellido().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientescedula().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de cedula no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientescedula().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientestelefono().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de telefono no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientestelefono().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclienteslicencia().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de licencia no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclienteslicencia().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientescalle().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de calle no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientescalle().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientessector().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de sector no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientessector().requestFocus();
+            return 0;
+        }
+        if (registrodeClientes.getTxtregistroclientestelefono().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(registrodeClientes, "El campo de numero no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeClientes.getTxtregistroclientestelefono().requestFocus();
+            return 0;
+        }
+        return validacion;
     }
 
-    private void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(view, mensaje);
-    }
-
-    private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(view, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void manejarErrorBaseDatos(SQLException ex) {
-        String mensaje;
-        mensaje = switch (ex.getErrorCode()) {
-            case 1062 ->
-                "Ya existe un cliente con esa cédula";
-            case 1452 ->
-                "Error de integridad en los datos";
-            default ->
-                "Error en la base de datos: " + ex.getMessage();
-        };
-        mostrarError(mensaje);
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
+        frmDashboard dash = new frmDashboard();
+        RegistrodeClientes registrodeClientes = new RegistrodeClientes();
+        PaneldeRegistros paneldeRegistros1 = new PaneldeRegistros();
+        ClienteController controller = new ClienteController(paneldeRegistros1, registrodeClientes);
+        dash.escritorio.add(registrodeClientes);
+        dash.escritorio.add(paneldeRegistros1);
+        dash.setVisible(true);
+        registrodeClientes.setVisible(true);
+        paneldeRegistros1.setVisible(true);
     }
 }

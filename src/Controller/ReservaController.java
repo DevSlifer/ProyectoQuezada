@@ -1,171 +1,74 @@
 package Controller;
 
-import Model.ReservaDAO;
 import Model.ReservaModel;
+import Model.DAOS.ReservaDAO;
+import Views.ViewReservacionesdeClientes;
+import Views.PaneldeReservaciones;
+import Views.frmDashboard;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.util.Date;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ReservaController {
 
     private final ReservaDAO reservaDAO;
-    private static final Logger LOGGER = Logger.getLogger(ReservaController.class.getName());
+    private final ReservaModel reservaModel;
+    private final ViewReservacionesdeClientes viewReservacionesdeClientes;
+    private final PaneldeReservaciones paneldeReservaciones;
 
-    public ReservaController() {
+    public ReservaController(ViewReservacionesdeClientes viewReservacionesdeClientes, PaneldeReservaciones paneldeReservaciones) throws SQLException, FileNotFoundException {
         this.reservaDAO = new ReservaDAO();
+        this.reservaModel = new ReservaModel();
+        this.viewReservacionesdeClientes = viewReservacionesdeClientes;
+        this.paneldeReservaciones = paneldeReservaciones;
+        listarReservas();
+        //configurarListeners();
     }
 
-    public boolean insertarReserva(String cedulaCliente, String numChasis, Date fechaReservacion,
-            Date fechaDeEntrega, Date fechaDevolucion) {
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
+        frmDashboard dash = new frmDashboard();
+        ViewReservacionesdeClientes viewReservacionesdeClientes = new ViewReservacionesdeClientes();
+        PaneldeReservaciones paneldeReservaciones = new PaneldeReservaciones();
+        ReservaController controller = new ReservaController(viewReservacionesdeClientes, paneldeReservaciones);
+        dash.escritorio.add(viewReservacionesdeClientes);
+        dash.escritorio.add(paneldeReservaciones);
+        dash.setVisible(true);
+        viewReservacionesdeClientes.setVisible(true);
+        paneldeReservaciones.setVisible(true);
+    }
+
+    public void listarReservas() throws FileNotFoundException, SQLException {
         try {
-            if (!validarDatosReserva(cedulaCliente, numChasis, fechaReservacion, fechaDeEntrega, fechaDevolucion)) {
-                return false;
+            DefaultTableModel modelo = (DefaultTableModel) viewReservacionesdeClientes.getJtableviewreservaciones().getModel();
+            modelo.setRowCount(0);
+            List<ReservaModel> reservas = reservaDAO.verReserva(null);
+            for (ReservaModel reserva : reservas) {
+                Object[] fila = new Object[13];
+                fila[0] = reserva.getCliente().getNombre();
+                fila[1] = reserva.getCliente().getApellido();
+                fila[2] = reserva.getCliente().getCedula();
+                fila[3] = reserva.getCliente().getTelefono();
+                fila[4] = reserva.getCarro().getMarca();
+                fila[5] = reserva.getCarro().getModelo();
+                fila[6] = reserva.getCarro().getPlaca();
+                fila[7] = reserva.getCarro().getPrecioPorDia();
+                fila[8] = reserva.getFechaReservacion();
+                fila[9] = reserva.getFechaDeEntrega();
+                fila[10] = reserva.getFechaDevolucion();
+                fila[11] = reserva.getDiasTotal();
+                fila[12] = reserva.getMontoEstimado();
+                modelo.addRow(fila);
             }
-
-            ReservaModel reserva = new ReservaModel();
-            reserva.setCedulaCliente(cedulaCliente);
-            reserva.setNumChasis(numChasis);
-            reserva.setFechaReservacion(fechaReservacion);
-            reserva.setFechaDeEntrega(fechaDeEntrega);
-            reserva.setFechaDevolucion(fechaDevolucion);
-
-            reservaDAO.insertarReserva(reserva);
-            LOGGER.info("Reserva insertada exitosamente");
-            return true;
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error de conexión a la base de datos: {0}", e.getMessage());
-            return false;
-        } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Error al insertar la reserva: {0}", e.getMessage());
-            return false;
+            viewReservacionesdeClientes.getJtableviewreservaciones().setModel(modelo);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(viewReservacionesdeClientes,
+                    "Error al listar los clientes: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    public List<ReservaModel> obtenerReservas(String cedulaCliente) {
-        try {
-            return reservaDAO.leerReservas(cedulaCliente);
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error de conexión a la base de datos: {0}", e.getMessage());
-            return null;
-        } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Error al obtener las reservas: {0}", e.getMessage());
-            return null;
-        }
-    }
-
-    public boolean eliminarReserva(String cedulaCliente, String numChasis) {
-        try {
-            if (cedulaCliente == null || cedulaCliente.trim().isEmpty()
-                    || numChasis == null || numChasis.trim().isEmpty()) {
-                LOGGER.warning("La cédula del cliente y el número de chasis son requeridos para eliminar una reserva");
-                return false;
-            }
-
-            reservaDAO.eliminarReserva(cedulaCliente, numChasis);
-            LOGGER.info("Reserva eliminada exitosamente");
-            return true;
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error de conexión a la base de datos: {0}", e.getMessage());
-            return false;
-        } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Error al eliminar la reserva: {0}", e.getMessage());
-            return false;
-        }
-    }
-
-    private boolean validarDatosReserva(String cedulaCliente, String numChasis,
-            Date fechaReservacion, Date fechaDeEntrega,
-            Date fechaDevolucion) {
-        if (cedulaCliente == null || cedulaCliente.trim().isEmpty()) {
-            LOGGER.warning("La cédula del cliente es requerida");
-            return false;
-        }
-        if (numChasis == null || numChasis.trim().isEmpty()) {
-            LOGGER.warning("El número de chasis es requerido");
-            return false;
-        }
-        if (fechaReservacion == null || fechaDeEntrega == null || fechaDevolucion == null) {
-            LOGGER.warning("Todas las fechas son requeridas");
-            return false;
-        }
-        if (fechaReservacion.after(fechaDeEntrega) || fechaDeEntrega.after(fechaDevolucion)) {
-            LOGGER.warning("Las fechas ingresadas no son válidas");
-            return false;
-        }
-        return true;
-    }
-
-    public boolean insertarReserva(String nombre, String apellido, String cedula,
-            String marca, String modelo, int anio,
-            Date fechaReservacion, Date fechaEntrega,
-            Date fechaDevolucion) {
-        try {
-            if (!validarDatosReserva(nombre, apellido, cedula, marca, modelo,
-                    anio, fechaReservacion, fechaEntrega, fechaDevolucion)) {
-                return false;
-            }
-
-            ReservaModel reserva = new ReservaModel();
-            reserva.setNombreCliente(nombre);
-            reserva.setApellidoCliente(apellido);
-            reserva.setCedulaCliente(cedula);
-            reserva.setMarcaVehiculo(marca);
-            reserva.setModeloVehiculo(modelo);
-            reserva.setAnio(anio);
-            reserva.setFechaReservacion(fechaReservacion);
-            reserva.setFechaDeEntrega(fechaEntrega);
-            reserva.setFechaDevolucion(fechaDevolucion);
-
-            reservaDAO.insertarReserva(reserva);
-            LOGGER.info("Reserva insertada exitosamente");
-            return true;
-        } catch (FileNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error de conexión a la base de datos: {0}", e.getMessage());
-            return false;
-        } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Error al insertar la reserva: {0}", e.getMessage());
-            return false;
-        }
-    }
-
-    private boolean validarDatosReserva(String nombre, String apellido, String cedula,
-            String marca, String modelo, int anio,
-            Date fechaReservacion, Date fechaEntrega,
-            Date fechaDevolucion) {
-        if (nombre == null || nombre.trim().isEmpty()) {
-            LOGGER.warning("El nombre es requerido");
-            return false;
-        }
-        if (apellido == null || apellido.trim().isEmpty()) {
-            LOGGER.warning("El apellido es requerido");
-            return false;
-        }
-        if (cedula == null || cedula.trim().isEmpty()) {
-            LOGGER.warning("La cédula es requerida");
-            return false;
-        }
-        if (marca == null || marca.trim().isEmpty()) {
-            LOGGER.warning("La marca del vehículo es requerida");
-            return false;
-        }
-        if (modelo == null || modelo.trim().isEmpty()) {
-            LOGGER.warning("El modelo del vehículo es requerido");
-            return false;
-        }
-        if (anio <= 0) {
-            LOGGER.warning("El año debe ser un número válido");
-            return false;
-        }
-        if (fechaReservacion == null || fechaEntrega == null || fechaDevolucion == null) {
-            LOGGER.warning("Todas las fechas son requeridas");
-            return false;
-        }
-        if (fechaEntrega.before(fechaReservacion) || fechaDevolucion.before(fechaEntrega)) {
-            LOGGER.warning("Las fechas ingresadas no son válidas");
-            return false;
-        }
-        return true;
     }
 }

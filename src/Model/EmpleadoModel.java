@@ -9,13 +9,26 @@ package Model;
  * @author Supre
  */
 public class EmpleadoModel {
+
     private int idEmpleado;
     private String nombre;
     private String apellido;
-    private String cedula;
     private double salario;
-    private int idDepartamento;
+    private String cedula;
+    private String telefono;
 
+    public EmpleadoModel() {
+    }
+
+    public EmpleadoModel(String nombre, String apellido, double salario, String cedula, String telefono) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.salario = salario;
+        this.cedula = cedula;
+        this.telefono = telefono;
+    }
+
+    // Getters and Setters
     public int getIdEmpleado() {
         return idEmpleado;
     }
@@ -40,14 +53,6 @@ public class EmpleadoModel {
         this.apellido = apellido;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
     public double getSalario() {
         return salario;
     }
@@ -56,13 +61,19 @@ public class EmpleadoModel {
         this.salario = salario;
     }
 
-    public int getIdDepartamento() {
-        return idDepartamento;
+    public String getCedula() {
+        return cedula;
     }
 
-    public void setIdDepartamento(int idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
-    
-    
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 }

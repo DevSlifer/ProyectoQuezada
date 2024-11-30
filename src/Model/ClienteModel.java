@@ -9,19 +9,37 @@ package Model;
  * @author Supre
  */
 public class ClienteModel {
+    
     private int idCliente;
     private String nombre;
     private String apellido;
     private String cedula;
     private String licencia;
     private String telefono;
-    private String provincia;
-    private String sector;
-    private String calle;
-    private int NumeroCasa;
+    private DireccionClienteModel dirreccion;
 
+    public DireccionClienteModel getDirreccion() {
+        return dirreccion;
+    }
+
+    public void setDirreccion(DireccionClienteModel dirreccion) {
+        this.dirreccion = dirreccion;
+    }
     
+    
+    
+    public ClienteModel() {
+    }
 
+    public ClienteModel(String nombre, String apellido, String cedula, String licencia, String telefono) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+        this.licencia = licencia;
+        this.telefono = telefono;
+    }
+
+    // Getters and Setters
     public int getIdCliente() {
         return idCliente;
     }
@@ -69,39 +87,4 @@ public class ClienteModel {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public int getNumeroCasa() {
-        return NumeroCasa;
-    }
-
-    public void setNumeroCasa(int NumeroCasa) {
-        this.NumeroCasa = NumeroCasa;
-    }
-    
-    
-    
 }

@@ -1,61 +1,119 @@
 package Controller;
 
-import Views.LoginView;
-import Views.MainFrame;
-import Model.UsuarioDAO;
 import Model.UsuarioModel;
-
+import Model.DAOS.UsuarioDAO;
+import Views.LoginView;
+import Views.swing.MyPasswordField;
+import Views.swing.MyTextField;
+import Views.swing.Button;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import Views.frmDashboard;
+import Views.PaneldeRegistros;
+import Views.RegistrodeCarros;
+import Views.component.PanelLoginAndRegister;
 
-public class LoginController {
-    private final LoginView loginView;
-    private final MainFrame mainFrame;
+public class LoginController implements ActionListener {
+
     private final UsuarioDAO usuarioDAO;
+    private final LoginView LV;
+    private final MyTextField userText;
+    private final MyPasswordField userPassword;
+    private final Button btnIniciar;
 
-    public LoginController(LoginView loginView, MainFrame mainFrame) {
-        this.loginView = loginView;
-        this.mainFrame = mainFrame;
+    public LoginController(LoginView loginView, MyTextField userText, MyPasswordField userPassword, Button btnIniciar) {
+        this.LV = loginView;
+        this.userText = userText;
+        this.userPassword = userPassword;
+        this.btnIniciar = btnIniciar;
         this.usuarioDAO = new UsuarioDAO();
-
-        this.loginView.addIngresarListener((ActionEvent e) -> {
-            try {
-                autenticarUsuario();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
+        btnIniciar.addActionListener(this);
     }
 
-    private void autenticarUsuario() throws FileNotFoundException {
-        String email = loginView.getUsuario().trim();
-        String contrasena = loginView.getContrasena().trim();
-
-        if (email.isEmpty() || contrasena.isEmpty()) {
-            loginView.mostrarMensaje("Por favor, ingrese correo y contraseña.");
-            return;
+    private boolean validaCampos(MyTextField email, MyPasswordField password) {
+        if (email.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(email, "El campo de email no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            email.requestFocus();
+            return false;
         }
+        if (password.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(password, "El campo de clave no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            password.requestFocus();
+            return false;
+        }
+        return true;
+    }
 
+    private void configurarAccesosSegunRol(String rol, PaneldeRegistros panelRegistros) {
+        boolean esEmpleado = "empleado".equals(rol);
+        panelRegistros.getTblEmpleados().setVisible(!esEmpleado);
+        panelRegistros.getBtnregistroeliminar().setVisible(!esEmpleado);
+        panelRegistros.getTxtpanelregistroempleado().setEditable(!esEmpleado);
+    }
+
+    private void limpiarCampos() {
+        userText.setText("");
+        userPassword.setText("");
+        userText.requestFocusInWindow();
+    }
+
+    public static void main(String[] args) {
         try {
-            UsuarioModel usuario = usuarioDAO.obtenerUsuario(email, contrasena);
-            if (usuario != null) {
-                loginView.mostrarMensaje("Bienvenido, " + usuario.getEmail() + "!");
-                loginView.dispose(); // Cierra el LoginView
+            LoginView loginView = new LoginView();
 
-                switch (usuario.getRol().toLowerCase()) {
-                    case "admin" -> mainFrame.mostrarAdminPanel();
-                    case "empleado" -> mainFrame.mostrarEmpleadoPanel();
-                    case "cliente" -> mainFrame.mostrarClientePanel();
-                    default -> throw new IllegalArgumentException("Rol no reconocido: " + usuario.getRol());
+            PanelLoginAndRegister loginPanel = loginView.getLoginAndRegister();
+            MyTextField userText = loginPanel.getTxtEmail();
+            MyPasswordField userPassword = loginPanel.getTxtPass();
+            Button btnIniciar = loginPanel.getBtnLogin();
+
+            LoginController loginController = new LoginController(loginView, userText, userPassword, btnIniciar);
+
+            loginView.setVisible(true);
+
+
+        } catch (Exception e) {
+            System.err.println("Error al iniciar el sistema: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnIniciar && validaCampos(userText, userPassword)) {
+            String email = userText.getText();
+            String password = String.valueOf(userPassword.getPassword());
+            try {
+                UsuarioModel usuario = usuarioDAO.leerUsario(email, password);
+                if (usuario != null) {
+                    LV.setVisible(false);
+
+                    // Crear el dashboard y las vistas necesarias
+                    frmDashboard frm = new frmDashboard();
+                    PaneldeRegistros panelRegistros = new PaneldeRegistros();
+                    RegistrodeCarros registroCarros = new RegistrodeCarros();
+
+                    // Inicializar el controlador de carros
+                    CarroController carroController = new CarroController(registroCarros, panelRegistros);
+
+
+
+                    // Configurar accesos según rol
+                    configurarAccesosSegunRol(usuario.getRol(), panelRegistros);
+
+                    // Agregar los paneles al desktop y mostrar el dashboard
+                    frm.escritorio.add(panelRegistros);
+                    frm.setVisible(true);
+
+                    // Forzar la actualización de la tabla de carros
+                    carroController.listarCarros();
+
+                } else {
+                    JOptionPane.showMessageDialog(LV, "Credenciales incorrectas!");
                 }
-            } else {
-                loginView.mostrarMensaje("Correo o contraseña incorrectos.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(LV, "Error: " + ex.getMessage());
             }
-        } catch (SQLException e) {
-            loginView.mostrarMensaje("Error al conectar con la base de datos.");
         }
     }
 }
