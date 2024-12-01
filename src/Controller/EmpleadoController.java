@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,24 +27,11 @@ public class EmpleadoController implements ActionListener {
         this.empleadoModel = new EmpleadoModel();
         this.registrodeEmpleados = registrodeEmpleados;
         this.paneldeRegistros = paneldeRegistros;
+        registrodeEmpleados.getBtnregistroempleadosagregar().addActionListener(this);
+        paneldeRegistros.getBtnregistroeliminar().addActionListener(this);
+        paneldeRegistros.getBtnregistroactualizar().addActionListener(this);
+        paneldeRegistros.getBtnregistrobuscar().addActionListener(this);
         listarEmpleados();
-        configurarListeners();
-    }
-
-    public static void main(String[] args) throws SQLException, FileNotFoundException {
-        frmDashboard dash = new frmDashboard();
-        RegistrodeEmpleados registrodeEmpleados = new RegistrodeEmpleados();
-        PaneldeRegistros paneldeRegistros1 = new PaneldeRegistros();
-        EmpleadoController controller = new EmpleadoController(registrodeEmpleados, paneldeRegistros1);
-        dash.escritorio.add(registrodeEmpleados);
-        dash.escritorio.add(paneldeRegistros1);
-        dash.setVisible(true);
-        registrodeEmpleados.setVisible(true);
-        paneldeRegistros1.setVisible(true);
-    }
-
-    private void configurarListeners() {
-        this.registrodeEmpleados.getBtnregistroempleadosagregar().addActionListener(this);
     }
 
     public void agregar() {
@@ -57,9 +46,106 @@ public class EmpleadoController implements ActionListener {
                 empleadoDAO.insertarEmpleado(empleadoModel);
                 JOptionPane.showMessageDialog(registrodeEmpleados, "Empleado agregado correctamente!", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
                 listarEmpleados();
+                limpiarCampos();
             } catch (SQLException | FileNotFoundException e) {
                 JOptionPane.showMessageDialog(registrodeEmpleados, "Error al agregar el empleado: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+
+    public void listarEmpleados() throws SQLException, FileNotFoundException {
+        DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblEmpleados().getModel();
+        modelo.setRowCount(0);
+        List<EmpleadoModel> empleados;
+        empleados = empleadoDAO.verEmpleado(null);
+        Object[] fila = new Object[5];
+        for (EmpleadoModel empleado : empleados) {
+            fila[0] = empleado.getNombre();
+            fila[1] = empleado.getApellido();
+            fila[2] = empleado.getCedula();
+            fila[3] = empleado.getSalario();
+            fila[4] = empleado.getTelefono();
+            modelo.addRow(fila);
+        }
+        paneldeRegistros.getTblEmpleados().setModel(modelo);
+    }
+
+    public void eliminarEmpleado(String cedula) throws SQLException, FileNotFoundException {
+        try {
+            if (cedula.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(paneldeRegistros, "Por favor ingrese la cedula del empleado",
+                        "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int confirmacion = JOptionPane.showConfirmDialog(paneldeRegistros,
+                    "¿Está seguro que desea eliminar el empleado con cédula " + cedula + "?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                empleadoDAO.eliminarEmpleado(cedula);
+                JOptionPane.showMessageDialog(paneldeRegistros, "Empleado eliminado correctamente!", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                listarEmpleados();
+            } else {
+                JOptionPane.showMessageDialog(paneldeRegistros, "Operación cancelada por el usuario", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(paneldeRegistros, "Error al eliminar el empleado: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void actualizarEmpleado(String cedula) throws SQLException, FileNotFoundException {
+        try {
+            if (cedula.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(paneldeRegistros, "Por favor ingrese la cedula del empleado",
+                        "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            List<EmpleadoModel> empleados = empleadoDAO.verEmpleado(cedula);
+            if (!empleados.isEmpty()) {
+                EmpleadoModel empleado = empleados.get(0);
+                String nuevoNombre = JOptionPane.showInputDialog(paneldeRegistros, "Ingrese el nuevo nombre del empleado", empleado.getNombre());
+                String nuevoApellido = JOptionPane.showInputDialog(paneldeRegistros, "Ingrese el nuevo apellido del empleado", empleado.getApellido());
+                String nuevoTelefono = JOptionPane.showInputDialog(paneldeRegistros, "Ingrese el nuevo teléfono del empleado", empleado.getTelefono());
+                String nuevoSalario = JOptionPane.showInputDialog(paneldeRegistros, "Ingrese el nuevo salario del empleado", empleado.getSalario());
+                if (nuevoNombre != null && nuevoApellido != null && nuevoTelefono != null && nuevoSalario != null) {
+                    empleado.setNombre(nuevoNombre);
+                    empleado.setApellido(nuevoApellido);
+                    empleado.setTelefono(nuevoTelefono);
+                    empleado.setSalario(Double.parseDouble(nuevoSalario));
+                    empleadoDAO.actualizarEmpleado(empleado);
+                    JOptionPane.showMessageDialog(paneldeRegistros, "Empleado actualizado correctamente!", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
+                    listarEmpleados();
+                }
+
+            }
+        } catch (SQLException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(paneldeRegistros, "Error al actualizar el empleado: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void buscarPorCedula(String cedula) throws SQLException, FileNotFoundException {
+        try {
+            if (cedula.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(paneldeRegistros, "Por favor ingrese la cedula del empleado",
+                        "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblEmpleados().getModel();
+            modelo.setRowCount(0);
+            List<EmpleadoModel> empleados = empleadoDAO.verEmpleado(cedula);
+            Object[] fila = new Object[5];
+            for (EmpleadoModel empleado : empleados) {
+                fila[0] = empleado.getNombre();
+                fila[1] = empleado.getApellido();
+                fila[2] = empleado.getCedula();
+                fila[3] = empleado.getSalario();
+                fila[4] = empleado.getTelefono();
+                modelo.addRow(fila);
+            }
+            paneldeRegistros.getTblEmpleados().setModel(modelo);
+        } catch (SQLException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(paneldeRegistros, "Error al buscar el empleado: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+            listarEmpleados();
         }
     }
 
@@ -88,28 +174,46 @@ public class EmpleadoController implements ActionListener {
         }
         return validacion;
     }
-
-    public void listarEmpleados() throws SQLException, FileNotFoundException {
-        DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblEmpleados().getModel();
-        modelo.setRowCount(0);
-        List<EmpleadoModel> empleados;
-        empleados = empleadoDAO.verEmpleado(null);
-        Object[] fila = new Object[5];
-        for (EmpleadoModel empleado : empleados) {
-            fila[0] = empleado.getNombre();
-            fila[1] = empleado.getApellido();
-            fila[2] = empleado.getCedula();
-            fila[3] = empleado.getSalario();
-            fila[4] = empleado.getTelefono();
-            modelo.addRow(fila);
-        }
-        paneldeRegistros.getTblEmpleados().setModel(modelo);
+    private void limpiarCampos(){
+        registrodeEmpleados.getTxtregistroempleadosnombre().setText("");
+        registrodeEmpleados.getTxtregistroempleadosapellido().setText("");
+        registrodeEmpleados.getTxtregistroempleadoscedula().setText("");
+        registrodeEmpleados.getTxtregistroempleadostelefono().setText("");
+        registrodeEmpleados.getTxtregistroempleadossalario().setText("");
+        registrodeEmpleados.getTxtregistroempleadosnombre().requestFocus();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registrodeEmpleados.getBtnregistroempleadosagregar()) {
             agregar();
+        } else if (e.getSource() == paneldeRegistros.getBtnregistroeliminar()) {
+            String cedula = paneldeRegistros.getTxtpanelregistroempleado().getText();
+            try {
+                eliminarEmpleado(cedula);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        } else if (e.getSource() == paneldeRegistros.getBtnregistroactualizar()) {
+            String cedula = paneldeRegistros.getTxtpanelregistroempleado().getText();
+            try {
+                actualizarEmpleado(cedula);
+            } catch (SQLException ex) {
+                Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (e.getSource() == paneldeRegistros.getBtnregistrobuscar()) {
+            String cedula = paneldeRegistros.getTxtpanelregistroempleado().getText();
+            try {
+                buscarPorCedula(cedula);
+            } catch (SQLException ex) {
+                Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

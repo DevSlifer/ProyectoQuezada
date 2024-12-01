@@ -2,12 +2,10 @@ package Views;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class frmDashboard extends javax.swing.JFrame {
-
-    PaneldeRegistros panelRegistros;
-    RegistrodeCarros RegistroVehiculos;
 
     /**
      * Creates new form frmDashboard
@@ -180,33 +178,9 @@ public class frmDashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public JMenuItem getPanelRegistros() {
-        return PanelRegistros;
-    }
-
-    public void setPanelRegistros(JMenuItem PanelRegistros) {
-        this.PanelRegistros = PanelRegistros;
-    }
-
-    public JDesktopPane getEscritorio() {
-        return escritorio;
-    }
-  
-
-    public JMenuItem getRegistrodevehiculos() {
-        return registrodevehiculos;
-    }
-
-    public JMenuItem getRegistrodeclientes() {
-        return registrodeclientes;
-    }
-    
-    public JMenuItem getPaneldefacturacion() {
-        return paneldefacturacion1;
-    }
 
     private void PanelRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PanelRegistrosActionPerformed
- 
+
     }//GEN-LAST:event_PanelRegistrosActionPerformed
 
     private void paneldefacturacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paneldefacturacion1ActionPerformed
@@ -214,7 +188,6 @@ public class frmDashboard extends javax.swing.JFrame {
 
 
     private void viewdereservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewdereservasActionPerformed
-
 
     }//GEN-LAST:event_viewdereservasActionPerformed
 
@@ -240,6 +213,22 @@ public class frmDashboard extends javax.swing.JFrame {
      * @param args the command line arguments
      */
 
+    public JMenuItem getPanelRegistros() {
+        return PanelRegistros;
+    }
+
+    public void setPanelRegistros(JMenuItem PanelRegistros) {
+        this.PanelRegistros = PanelRegistros;
+    }
+
+    public JMenu getPaneldefacturacion() {
+        return Paneldefacturacion;
+    }
+
+    public void setPaneldefacturacion(JMenu Paneldefacturacion) {
+        this.Paneldefacturacion = Paneldefacturacion;
+    }
+
     public JMenuItem getPaneldefacturacion1() {
         return paneldefacturacion1;
     }
@@ -248,12 +237,12 @@ public class frmDashboard extends javax.swing.JFrame {
         this.paneldefacturacion1 = paneldefacturacion1;
     }
 
-    public JMenuItem getRegistrodeempleados() {
-        return registrodeempleados;
+    public JMenuItem getRegistrodeclientes() {
+        return registrodeclientes;
     }
 
-    public void setRegistrodeempleados(JMenuItem registrodeempleados) {
-        this.registrodeempleados = registrodeempleados;
+    public void setRegistrodeclientes(JMenuItem registrodeclientes) {
+        this.registrodeclientes = registrodeclientes;
     }
 
     public JMenuItem getRegistrodereservaciones() {
@@ -264,6 +253,14 @@ public class frmDashboard extends javax.swing.JFrame {
         this.registrodereservaciones = registrodereservaciones;
     }
 
+    public JMenuItem getRegistrodevehiculos() {
+        return registrodevehiculos;
+    }
+
+    public void setRegistrodevehiculos(JMenuItem registrodevehiculos) {
+        this.registrodevehiculos = registrodevehiculos;
+    }
+
     public JMenuItem getViewdereservas() {
         return viewdereservas;
     }
@@ -271,7 +268,16 @@ public class frmDashboard extends javax.swing.JFrame {
     public void setViewdereservas(JMenuItem viewdereservas) {
         this.viewdereservas = viewdereservas;
     }
+
+    public JMenuItem getRegistrodeempleados() {
+        return registrodeempleados;
+    }
+
+    public void setRegistrodeempleados(JMenuItem registrodeempleados) {
+        this.registrodeempleados = registrodeempleados;
+    }
     
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem PanelRegistros;
     private javax.swing.JMenu Paneldefacturacion;

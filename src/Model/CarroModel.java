@@ -19,15 +19,6 @@ public class CarroModel {
     private String matricula;
     private double kilometraje;
 
-    public double getKilometraje() {
-        return kilometraje;
-    }
-
-    public void setKilometraje(double kilometraje) {
-        this.kilometraje = kilometraje;
-    }
-    
-
     public CarroModel() {
     }
 
@@ -38,6 +29,14 @@ public class CarroModel {
         this.precioPorDia = precioPorDia;
         this.placa = placa;
         this.matricula = matricula;
+    }
+
+    public double getKilometraje() {
+        return kilometraje;
+    }
+
+    public void setKilometraje(double kilometraje) {
+        this.kilometraje = kilometraje;
     }
 
     // Getters and Setters

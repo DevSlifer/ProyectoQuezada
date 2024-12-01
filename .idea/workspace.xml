@@ -4,54 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0c33e4c-9886-4941-961f-63e2a43a122a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="c0c33e4c-9886-4941-961f-63e2a43a122a" name="Changes" comment="CarroController hecho, ClienteController hecho, EmpleadoController hecho, FacturaController a medias, arreglar login y meter adminController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DashBoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CarroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarroController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ClienteController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/FacturaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FacturaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReservaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UsuarioController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/CarroDAO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/CarroModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/CarroModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ClienteDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ClienteModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ClienteModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DBConnection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/EmpleadoDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/EmpleadoModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/EmpleadoModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ReservaDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ReservaModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ReservaModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/UsuarioDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/UsuarioModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/UsuarioModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Components/PanelCover.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Components/PanelCover.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Components/PanelLoginAndRegister.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Components/PanelLoginAndRegister.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Imagenes/7347206 (2).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Imagenes/mail.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Imagenes/pass.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/Imagenes/user.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/LoginView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/MainFrame.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/MainFrame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelAdmin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelCarros.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelCarros.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelClientes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelEmpleados.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelReservaciones.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelReservaciones.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPaneldeFacturacion.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelviewReservaClientes.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmPanelviewReservaClientes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/swing/Button.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/swing/ButtonOutLine.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/swing/MyPasswordField.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/swing/MyTextField.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/ReservaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/ReservaDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistros.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeRegistros.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistros.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeRegistros.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistrosparaEmpleados.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistrosparaEmpleados.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/frmDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmDashboard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,29 +43,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LoginController.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Supre/Documents/NetBeansProjects/ProyectoQuezada&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LoginController.executor": "Run",
+    "Application.ReservaController.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Supre/Documents/NetBeansProjects/ProyectoQuezada",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql_aurora&quot;,
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql_aurora",
+      "mysql"
     ]
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected="Application.ReservaController">
     <configuration name="LoginController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Controller.LoginController" />
       <module name="ProyectoQuezada" />
@@ -105,8 +80,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReservaController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Controller.ReservaController" />
+      <module name="ProyectoQuezada" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ReservaController" />
         <item itemvalue="Application.LoginController" />
       </list>
     </recent_temporary>
@@ -134,8 +123,31 @@
       <workItem from="1732865128604" duration="310000" />
       <workItem from="1732865451639" duration="9619000" />
       <workItem from="1732897819321" duration="259000" />
-      <workItem from="1732902487935" duration="20382000" />
+      <workItem from="1732902487935" duration="36769000" />
+      <workItem from="1732986349591" duration="8100000" />
+      <workItem from="1733025807179" duration="1509000" />
+      <workItem from="1733027350331" duration="139000" />
+      <workItem from="1733027979692" duration="16000" />
+      <workItem from="1733029950364" duration="16000" />
+      <workItem from="1733030052345" duration="4450000" />
     </task>
+    <task id="LOCAL-00001" summary="Algunas funciones de los controladores añadidas">
+      <option name="closed" value="true" />
+      <created>1732930131967</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732930131967</updated>
+    </task>
+    <task id="LOCAL-00002" summary="CarroController hecho, ClienteController hecho, EmpleadoController hecho, FacturaController a medias, arreglar login y meter adminController">
+      <option name="closed" value="true" />
+      <created>1732956403657</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732956403657</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,26 +155,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Vistas, modelos, y controladores agregados" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Controller/ReservaController.java</url>
-          <line>4</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Controller/CarroController.java</url>
-          <line>36</line>
-          <properties class="Controller.CarroController" method="agregar">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Algunas funciones de los controladores añadidas" />
+    <MESSAGE value="CarroController hecho, ClienteController hecho, EmpleadoController hecho, FacturaController a medias, arreglar login y meter adminController" />
+    <option name="LAST_COMMIT_MESSAGE" value="CarroController hecho, ClienteController hecho, EmpleadoController hecho, FacturaController a medias, arreglar login y meter adminController" />
   </component>
 </project>

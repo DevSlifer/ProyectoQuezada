@@ -117,7 +117,15 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombres", "Apellidos", "Cedula", "Telefono", "Licencia", "Provincia", "Sector", "Calle", "N.º de la Casa"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblclientes.setSelectionBackground(new java.awt.Color(255, 255, 255));
         tblclientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -125,10 +133,6 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblclientes);
-        if (tblclientes.getColumnModel().getColumnCount() > 0) {
-            tblclientes.getColumnModel().getColumn(2).setResizable(false);
-            tblclientes.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         tblCarro.setBackground(new java.awt.Color(255, 255, 255));
         tblCarro.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -148,7 +152,7 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -179,7 +183,15 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre del Empleado", "Apellido", "Cedula", "Salario", "Telefono"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblEmpleadosMouseClicked(evt);
@@ -202,7 +214,7 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,7 +282,7 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
                             .addComponent(btnregistrobuscar)
                             .addComponent(btnregistroactualizar)
                             .addComponent(btnregistroeliminar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 

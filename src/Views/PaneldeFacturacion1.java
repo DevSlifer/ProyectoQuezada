@@ -32,19 +32,17 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
 
         jPanel9 = new javax.swing.JPanel();
         txtfacturacioncargosadicionales = new javax.swing.JTextField();
-        txtpaneldefacturacionfechadepago = new javax.swing.JTextField();
-        txtpanelfacturacionnombre = new javax.swing.JTextField();
+        txtpanelfacturacioncedula = new javax.swing.JTextField();
         btnpanelfacturacionguardar = new javax.swing.JButton();
         btnpanelfacturacioneliminar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtabledatos = new javax.swing.JTable();
-        btnpanelfacturacionpagos = new javax.swing.JButton();
-        txtpanelfacturacionapellido = new javax.swing.JTextField();
-        txtpanelfacturacionmonto = new javax.swing.JTextField();
+        txtpanelfacturacionfechainicio = new javax.swing.JTextField();
         btnpanelfacturacionactualizar = new javax.swing.JButton();
-        btnpanelfacturaciongeneralrecibos = new javax.swing.JButton();
-        txtpanelfacturacioncedula = new javax.swing.JTextField();
+        txtpanelfacturacionfechafin = new javax.swing.JTextField();
+        btnpanelfacturacionbuscar = new javax.swing.JButton();
+        txtpaneldefacturacionfechadepago = new javax.swing.JTextField();
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -56,19 +54,11 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
             }
         });
 
-        txtpaneldefacturacionfechadepago.setBackground(new java.awt.Color(255, 255, 255));
-        txtpaneldefacturacionfechadepago.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de Pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
-        txtpaneldefacturacionfechadepago.addActionListener(new java.awt.event.ActionListener() {
+        txtpanelfacturacioncedula.setBackground(new java.awt.Color(255, 255, 255));
+        txtpanelfacturacioncedula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtpanelfacturacioncedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpaneldefacturacionfechadepagotxtfechadepagoActionPerformed(evt);
-            }
-        });
-
-        txtpanelfacturacionnombre.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelfacturacionnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelfacturacionnombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelfacturacionnombretxtnombreActionPerformed(evt);
+                txtpanelfacturacioncedulatxtnombreActionPerformed(evt);
             }
         });
 
@@ -110,7 +100,15 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre", "Apellido", "Cedula", "Monto", "Cargos Adicionales", "Fecha de Pago"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtabledatos.setGridColor(new java.awt.Color(0, 0, 0));
         jtabledatos.setSelectionForeground(new java.awt.Color(255, 0, 0));
         jtabledatos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -137,29 +135,11 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        btnpanelfacturacionpagos.setBackground(new java.awt.Color(0, 0, 0));
-        btnpanelfacturacionpagos.setFont(new java.awt.Font("Kalam", 0, 18)); // NOI18N
-        btnpanelfacturacionpagos.setForeground(new java.awt.Color(255, 255, 255));
-        btnpanelfacturacionpagos.setText("Pagos");
-        btnpanelfacturacionpagos.addActionListener(new java.awt.event.ActionListener() {
+        txtpanelfacturacionfechainicio.setBackground(new java.awt.Color(255, 255, 255));
+        txtpanelfacturacionfechainicio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de inicio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtpanelfacturacionfechainicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnpanelfacturacionpagosActionPerformed(evt);
-            }
-        });
-
-        txtpanelfacturacionapellido.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelfacturacionapellido.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelfacturacionapellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelfacturacionapellidoActionPerformed(evt);
-            }
-        });
-
-        txtpanelfacturacionmonto.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelfacturacionmonto.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Monto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelfacturacionmonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelfacturacionmontoActionPerformed(evt);
+                txtpanelfacturacionfechainicioActionPerformed(evt);
             }
         });
 
@@ -173,21 +153,29 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
             }
         });
 
-        btnpanelfacturaciongeneralrecibos.setBackground(new java.awt.Color(0, 0, 0));
-        btnpanelfacturaciongeneralrecibos.setFont(new java.awt.Font("Kalam", 0, 18)); // NOI18N
-        btnpanelfacturaciongeneralrecibos.setForeground(new java.awt.Color(255, 255, 255));
-        btnpanelfacturaciongeneralrecibos.setText("General recibo");
-        btnpanelfacturaciongeneralrecibos.addActionListener(new java.awt.event.ActionListener() {
+        txtpanelfacturacionfechafin.setBackground(new java.awt.Color(255, 255, 255));
+        txtpanelfacturacionfechafin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha Fin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtpanelfacturacionfechafin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnpanelfacturaciongeneralrecibosbtnactualizarActionPerformed(evt);
+                txtpanelfacturacionfechafinActionPerformed(evt);
             }
         });
 
-        txtpanelfacturacioncedula.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelfacturacioncedula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelfacturacioncedula.addActionListener(new java.awt.event.ActionListener() {
+        btnpanelfacturacionbuscar.setBackground(new java.awt.Color(0, 0, 0));
+        btnpanelfacturacionbuscar.setFont(new java.awt.Font("Kalam", 0, 18)); // NOI18N
+        btnpanelfacturacionbuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnpanelfacturacionbuscar.setText("Buscar");
+        btnpanelfacturacionbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelfacturacioncedulaActionPerformed(evt);
+                btnpanelfacturacionbuscarbtnactualizarActionPerformed(evt);
+            }
+        });
+
+        txtpaneldefacturacionfechadepago.setBackground(new java.awt.Color(255, 255, 255));
+        txtpaneldefacturacionfechadepago.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de Pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 18), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        txtpaneldefacturacionfechadepago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtpaneldefacturacionfechadepagotxtfechadepagoActionPerformed(evt);
             }
         });
 
@@ -200,24 +188,22 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtpanelfacturacionapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelfacturacionnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelfacturacioncedula, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtpanelfacturacionfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtpanelfacturacioncedula, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtpanelfacturacionfechafin, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtpaneldefacturacionfechadepago, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtfacturacioncargosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelfacturacionmonto, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtfacturacioncargosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnpanelfacturacionactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnpanelfacturacionguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnpanelfacturacionpagos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnpanelfacturaciongeneralrecibos)
-                    .addComponent(btnpanelfacturacioneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnpanelfacturacioneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnpanelfacturacionbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -227,32 +213,27 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(txtpanelfacturacionnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtpanelfacturacioncedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtpanelfacturacionapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtpanelfacturacionfechainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(btnpanelfacturacionguardar)
                         .addGap(29, 29, 29)
                         .addComponent(btnpanelfacturacionactualizar)
                         .addGap(7, 7, 7)))
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpanelfacturacioncedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnpanelfacturacionpagos))
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(btnpanelfacturaciongeneralrecibos)
-                        .addGap(15, 15, 15))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtpanelfacturacionmonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnpanelfacturacioneliminar)
-                    .addComponent(txtfacturacioncargosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(txtpaneldefacturacionfechadepago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnpanelfacturacionbuscar)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnpanelfacturacioneliminar))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(txtpanelfacturacionfechafin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtfacturacioncargosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtpaneldefacturacionfechadepago, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
@@ -284,10 +265,6 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpaneldefacturacionfechadepagotxtfechadepagoActionPerformed
 
-    private void txtpanelfacturacionnombretxtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacionnombretxtnombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelfacturacionnombretxtnombreActionPerformed
-
     private void btnpanelfacturacionguardarbtnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelfacturacionguardarbtnagregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnpanelfacturacionguardarbtnagregarActionPerformed
@@ -300,44 +277,44 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jtabledatosMouseClicked
 
-    private void btnpanelfacturacionpagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelfacturacionpagosActionPerformed
+    private void txtpanelfacturacionfechainicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacionfechainicioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnpanelfacturacionpagosActionPerformed
-
-    private void txtpanelfacturacionapellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacionapellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelfacturacionapellidoActionPerformed
-
-    private void txtpanelfacturacionmontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacionmontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelfacturacionmontoActionPerformed
+    }//GEN-LAST:event_txtpanelfacturacionfechainicioActionPerformed
 
     private void btnpanelfacturacionactualizarbtnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelfacturacionactualizarbtnactualizarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnpanelfacturacionactualizarbtnactualizarActionPerformed
 
-    private void btnpanelfacturaciongeneralrecibosbtnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelfacturaciongeneralrecibosbtnactualizarActionPerformed
+    private void txtpanelfacturacionfechafinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacionfechafinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnpanelfacturaciongeneralrecibosbtnactualizarActionPerformed
+    }//GEN-LAST:event_txtpanelfacturacionfechafinActionPerformed
 
-    private void txtpanelfacturacioncedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacioncedulaActionPerformed
+    private void btnpanelfacturacionbuscarbtnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelfacturacionbuscarbtnactualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelfacturacioncedulaActionPerformed
+    }//GEN-LAST:event_btnpanelfacturacionbuscarbtnactualizarActionPerformed
 
-    public JTable getJtabledatos() {
-        return jtabledatos;
-    }
+    private void txtpanelfacturacioncedulatxtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelfacturacioncedulatxtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpanelfacturacioncedulatxtnombreActionPerformed
 
-    public void setJtabledatos(JTable jtabledatos) {
-        this.jtabledatos = jtabledatos;
-    }
-
+    
+    
+    //Acceso a los componentes para los controladores
+    
     public JButton getBtnpanelfacturacionactualizar() {
         return btnpanelfacturacionactualizar;
     }
 
     public void setBtnpanelfacturacionactualizar(JButton btnpanelfacturacionactualizar) {
         this.btnpanelfacturacionactualizar = btnpanelfacturacionactualizar;
+    }
+
+    public JButton getBtnpanelfacturacionbuscar() {
+        return btnpanelfacturacionbuscar;
+    }
+
+    public void setBtnpanelfacturacionbuscar(JButton btnpanelfacturacionbuscar) {
+        this.btnpanelfacturacionbuscar = btnpanelfacturacionbuscar;
     }
 
     public JButton getBtnpanelfacturacioneliminar() {
@@ -348,28 +325,12 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
         this.btnpanelfacturacioneliminar = btnpanelfacturacioneliminar;
     }
 
-    public JButton getBtnpanelfacturaciongeneralrecibos() {
-        return btnpanelfacturaciongeneralrecibos;
-    }
-
-    public void setBtnpanelfacturaciongeneralrecibos(JButton btnpanelfacturaciongeneralrecibos) {
-        this.btnpanelfacturaciongeneralrecibos = btnpanelfacturaciongeneralrecibos;
-    }
-
     public JButton getBtnpanelfacturacionguardar() {
         return btnpanelfacturacionguardar;
     }
 
     public void setBtnpanelfacturacionguardar(JButton btnpanelfacturacionguardar) {
         this.btnpanelfacturacionguardar = btnpanelfacturacionguardar;
-    }
-
-    public JButton getBtnpanelfacturacionpagos() {
-        return btnpanelfacturacionpagos;
-    }
-
-    public void setBtnpanelfacturacionpagos(JButton btnpanelfacturacionpagos) {
-        this.btnpanelfacturacionpagos = btnpanelfacturacionpagos;
     }
 
     public JTextField getTxtfacturacioncargosadicionales() {
@@ -388,12 +349,28 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
         this.txtpaneldefacturacionfechadepago = txtpaneldefacturacionfechadepago;
     }
 
-    public JTextField getTxtpanelfacturacionapellido() {
-        return txtpanelfacturacionapellido;
+    public JTextField getTxtpanelfacturacionfechafin() {
+        return txtpanelfacturacionfechafin;
     }
 
-    public void setTxtpanelfacturacionapellido(JTextField txtpanelfacturacionapellido) {
-        this.txtpanelfacturacionapellido = txtpanelfacturacionapellido;
+    public void setTxtpanelfacturacionfechafin(JTextField txtpanelfacturacionfechafin) {
+        this.txtpanelfacturacionfechafin = txtpanelfacturacionfechafin;
+    }
+
+    public JTextField getTxtpanelfacturacionfechainicio() {
+        return txtpanelfacturacionfechainicio;
+    }
+
+    public void setTxtpanelfacturacionfechainicio(JTextField txtpanelfacturacionfechainicio) {
+        this.txtpanelfacturacionfechainicio = txtpanelfacturacionfechainicio;
+    }
+
+    public JTable getJtabledatos() {
+        return jtabledatos;
+    }
+
+    public void setJtabledatos(JTable jtabledatos) {
+        this.jtabledatos = jtabledatos;
     }
 
     public JTextField getTxtpanelfacturacioncedula() {
@@ -403,38 +380,24 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
     public void setTxtpanelfacturacioncedula(JTextField txtpanelfacturacioncedula) {
         this.txtpanelfacturacioncedula = txtpanelfacturacioncedula;
     }
+    
+    
+    
 
-    public JTextField getTxtpanelfacturacionmonto() {
-        return txtpanelfacturacionmonto;
-    }
-
-    public void setTxtpanelfacturacionmonto(JTextField txtpanelfacturacionmonto) {
-        this.txtpanelfacturacionmonto = txtpanelfacturacionmonto;
-    }
-
-    public JTextField getTxtpanelfacturacionnombre() {
-        return txtpanelfacturacionnombre;
-    }
-
-    public void setTxtpanelfacturacionnombre(JTextField txtpanelfacturacionnombre) {
-        this.txtpanelfacturacionnombre = txtpanelfacturacionnombre;
-    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnpanelfacturacionactualizar;
+    private javax.swing.JButton btnpanelfacturacionbuscar;
     private javax.swing.JButton btnpanelfacturacioneliminar;
-    private javax.swing.JButton btnpanelfacturaciongeneralrecibos;
     private javax.swing.JButton btnpanelfacturacionguardar;
-    private javax.swing.JButton btnpanelfacturacionpagos;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtabledatos;
     private javax.swing.JTextField txtfacturacioncargosadicionales;
     private javax.swing.JTextField txtpaneldefacturacionfechadepago;
-    private javax.swing.JTextField txtpanelfacturacionapellido;
     private javax.swing.JTextField txtpanelfacturacioncedula;
-    private javax.swing.JTextField txtpanelfacturacionmonto;
-    private javax.swing.JTextField txtpanelfacturacionnombre;
+    private javax.swing.JTextField txtpanelfacturacionfechafin;
+    private javax.swing.JTextField txtpanelfacturacionfechainicio;
     // End of variables declaration//GEN-END:variables
 }

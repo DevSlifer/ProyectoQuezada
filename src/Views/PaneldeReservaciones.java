@@ -4,6 +4,9 @@
  */
 package Views;
 
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
 /**
  *
  * @author 1000g
@@ -253,6 +256,77 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpanelreservacionescedulaActionPerformed
 
+    public JButton getBtnpanelreservacionesguardar() {
+        return btnpanelreservacionesguardar;
+    }
+
+    public void setBtnpanelreservacionesguardar(JButton btnpanelreservacionesguardar) {
+        this.btnpanelreservacionesguardar = btnpanelreservacionesguardar;
+    }
+
+    public JTextField getTxtpanelreservacionesapellido() {
+        return txtpanelreservacionesapellido;
+    }
+
+    public void setTxtpanelreservacionesapellido(JTextField txtpanelreservacionesapellido) {
+        this.txtpanelreservacionesapellido = txtpanelreservacionesapellido;
+    }
+
+    public JTextField getTxtpanelreservacionesaño() {
+        return txtpanelreservacionesaño;
+    }
+
+    public void setTxtpanelreservacionesaño(JTextField txtpanelreservacionesaño) {
+        this.txtpanelreservacionesaño = txtpanelreservacionesaño;
+    }
+
+    public JTextField getTxtpanelreservacionescedula() {
+        return txtpanelreservacionescedula;
+    }
+
+    public void setTxtpanelreservacionescedula(JTextField txtpanelreservacionescedula) {
+        this.txtpanelreservacionescedula = txtpanelreservacionescedula;
+    }
+
+    public JTextField getTxtpanelreservacionesfechadevolucion() {
+        return txtpanelreservacionesfechadevolucion;
+    }
+
+    public void setTxtpanelreservacionesfechadevolucion(JTextField txtpanelreservacionesfechadevolucion) {
+        this.txtpanelreservacionesfechadevolucion = txtpanelreservacionesfechadevolucion;
+    }
+
+    public JTextField getTxtpanelreservacionesfechaentrega() {
+        return txtpanelreservacionesfechaentrega;
+    }
+
+    public void setTxtpanelreservacionesfechaentrega(JTextField txtpanelreservacionesfechaentrega) {
+        this.txtpanelreservacionesfechaentrega = txtpanelreservacionesfechaentrega;
+    }
+
+    public JTextField getTxtpanelreservacionesmarca() {
+        return txtpanelreservacionesmarca;
+    }
+
+    public void setTxtpanelreservacionesmarca(JTextField txtpanelreservacionesmarca) {
+        this.txtpanelreservacionesmarca = txtpanelreservacionesmarca;
+    }
+
+    public JTextField getTxtpanelreservacionesmodelo() {
+        return txtpanelreservacionesmodelo;
+    }
+
+    public void setTxtpanelreservacionesmodelo(JTextField txtpanelreservacionesmodelo) {
+        this.txtpanelreservacionesmodelo = txtpanelreservacionesmodelo;
+    }
+
+    public JTextField getTxtpanelreservacionesnombre() {
+        return txtpanelreservacionesnombre;
+    }
+
+    public void setTxtpanelreservacionesnombre(JTextField txtpanelreservacionesnombre) {
+        this.txtpanelreservacionesnombre = txtpanelreservacionesnombre;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnpanelreservacionesguardar;

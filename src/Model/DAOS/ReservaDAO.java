@@ -143,12 +143,12 @@ public class ReservaDAO {
     }
 
     public int eliminarReserva(String cedula) throws FileNotFoundException, SQLException {
-        String sql = "call sp_borrar_empleado(?,?)";
+        String sql = "call sp_eliminar_reserva(?,?)";
         try {
-
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
             cs.setString(1, cedula);
+            cs.setNull(2, Types.VARCHAR);
             cs.execute();
             return 1;
         } finally {

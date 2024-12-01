@@ -6,6 +6,7 @@ package Views;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -33,6 +34,7 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         txtviewreservacionesdeclientescedula = new javax.swing.JTextField();
         btnviewreservacionesdeclientesbuscar = new javax.swing.JButton();
+        btnviewreservacionesdeclientesborrar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableviewreservaciones = new javax.swing.JTable();
@@ -66,6 +68,16 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
             }
         });
 
+        btnviewreservacionesdeclientesborrar.setBackground(new java.awt.Color(0, 0, 0));
+        btnviewreservacionesdeclientesborrar.setFont(new java.awt.Font("Kalam", 0, 14)); // NOI18N
+        btnviewreservacionesdeclientesborrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnviewreservacionesdeclientesborrar.setText("Borrar");
+        btnviewreservacionesdeclientesborrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnviewreservacionesdeclientesborrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -74,7 +86,8 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnviewreservacionesdeclientesbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtviewreservacionesdeclientescedula, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtviewreservacionesdeclientescedula, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnviewreservacionesdeclientesborrar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -82,9 +95,11 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtviewreservacionesdeclientescedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addComponent(btnviewreservacionesdeclientesbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(33, 33, 33)
+                .addComponent(btnviewreservacionesdeclientesborrar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 204));
@@ -147,7 +162,7 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,7 +173,9 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,6 +193,10 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jtableviewreservacionesMouseClicked
 
+    private void btnviewreservacionesdeclientesborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnviewreservacionesdeclientesborrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnviewreservacionesdeclientesborrarActionPerformed
+
     public JButton getBtnviewreservacionesdeclientesbuscar() {
         return btnviewreservacionesdeclientesbuscar;
     }
@@ -192,8 +213,27 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         this.jtableviewreservaciones = jtableviewreservaciones;
     }
 
+    public JButton getBtnviewreservacionesdeclientesborrar() {
+        return btnviewreservacionesdeclientesborrar;
+    }
+
+    public void setBtnviewreservacionesdeclientesborrar(JButton btnviewreservacionesdeclientesborrar) {
+        this.btnviewreservacionesdeclientesborrar = btnviewreservacionesdeclientesborrar;
+    }
+
+    public JTextField getTxtviewreservacionesdeclientescedula() {
+        return txtviewreservacionesdeclientescedula;
+    }
+
+    public void setTxtviewreservacionesdeclientescedula(JTextField txtviewreservacionesdeclientescedula) {
+        this.txtviewreservacionesdeclientescedula = txtviewreservacionesdeclientescedula;
+    }
+
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnviewreservacionesdeclientesborrar;
     private javax.swing.JButton btnviewreservacionesdeclientesbuscar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
