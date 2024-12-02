@@ -45,7 +45,7 @@ Contacto
 Para cualquier consulta o sugerencia, por favor contáctenos a través de info@nexcode.com.
 
 Imagenes:
-![Imagen 1](src/Views/imagenes/mail.jpg)
+![Imagen 1](src/Views/imagenes/mail.png)
 ![Imagen 2](src/Views/imagenes/pass.jpg)
 ![Imagen 3](src/Views/imagenes/user.jpg)
 ![Imagen 4](src/Views/imagenes/LOGO(5).jpg)
