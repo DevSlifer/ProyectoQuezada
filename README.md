@@ -44,5 +44,11 @@ Contacto
 
 Para cualquier consulta o sugerencia, por favor contáctenos a través de info@nexcode.com.
 
+Imagenes:
+![Imagen 1](src/Views/Images/mail.jpg)
+![Imagen 2](src/Views/Images/pass.jpg)
+![Imagen 3](src/Views/Images/user.jpg)
+![Imagen 4](src/Views/Images/LOGO(5).jpg)
+
 
 ¡Gracias por su interés en nuestro sistema de gestión de reservas de Rent a Car!
