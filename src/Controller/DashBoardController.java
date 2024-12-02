@@ -6,6 +6,10 @@ import javax.swing.JOptionPane;
 
 public class DashBoardController {
 
+    /*
+    Todos los panales son JInternalFrames por eso un controlador para 
+    traer todos los paneles creando una sola instancia del dashboard
+     */
     private final frmDashboard dashboard;
     private final String rol;
 
@@ -17,6 +21,7 @@ public class DashBoardController {
     private PaneldeFacturacion1 panelFacturacion;
     private ViewReservacionesdeClientes viewReservaciones;
     private PaneldeReservaciones panelReservaciones;
+    private AcercaDE acercaDe;
 
     // Controladores
     private CarroController carroController;
@@ -50,12 +55,14 @@ public class DashBoardController {
             empleadoController = new EmpleadoController(registroEmpleados, panelRegistros);
             facturaController = new FacturaController(panelFacturacion);
             reservaController = new ReservaController(viewReservaciones, panelReservaciones);
+            dashboard.getAcercaDe().addMenuListener(new MenuAcercaDeListener());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(dashboard,
                     "Error al inicializar controladores: " + e.getMessage());
         }
     }
 
+    //Configuracion de los botones, para quu tengan acciones
     private void configurarMenuListeners() {
         dashboard.getPanelRegistros().addActionListener(e -> mostrarPanel(panelRegistros, "Panel de Registros"));
         dashboard.getRegistrodevehiculos().addActionListener(e -> mostrarPanel(registroCarros, "Registro de Vehículos"));
@@ -66,6 +73,7 @@ public class DashBoardController {
         dashboard.getViewdereservas().addActionListener(e -> mostrarPanel(viewReservaciones, "Ver Reservaciones"));
     }
 
+    //Mostrar todos los panales
     private void mostrarPanel(JInternalFrame panel, String titulo) {
         if (!panel.isVisible()) {
             panel.setTitle(titulo);
@@ -75,6 +83,32 @@ public class DashBoardController {
             panel.toFront();
         } else {
             panel.toFront();
+        }
+    }
+
+    //EL listener del "Acerca De"
+    private class MenuAcercaDeListener implements javax.swing.event.MenuListener {
+
+        @Override
+        public void menuSelected(javax.swing.event.MenuEvent evt) {
+            mostrarAcercaDe();
+        }
+
+        @Override
+        public void menuDeselected(javax.swing.event.MenuEvent evt) {
+        }
+
+        @Override
+        public void menuCanceled(javax.swing.event.MenuEvent evt) {
+        }
+    }
+
+    private void mostrarAcercaDe() {
+        if (acercaDe == null || !acercaDe.isVisible()) {
+            acercaDe = new AcercaDE();
+            mostrarPanel(acercaDe, "Acerca de");
+        } else {
+            acercaDe.toFront();
         }
     }
 }

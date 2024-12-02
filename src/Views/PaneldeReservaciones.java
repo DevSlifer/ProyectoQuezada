@@ -195,6 +195,10 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpanelreservacionesfechadevolucionActionPerformed
 
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnpanelreservacionesguardar() {
         return btnpanelreservacionesguardar;
     }
@@ -202,7 +206,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
     public void setBtnpanelreservacionesguardar(JButton btnpanelreservacionesguardar) {
         this.btnpanelreservacionesguardar = btnpanelreservacionesguardar;
     }
-
 
     public JTextField getTxtpanelreservacionescedula() {
         return txtpanelreservacionescedula;
@@ -244,7 +247,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         this.txtpanelreservacionesplacadelvehiculo = txtpanelreservacionesplacadelvehiculo;
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnpanelreservacionesguardar;

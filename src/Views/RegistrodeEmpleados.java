@@ -186,7 +186,7 @@ public class RegistrodeEmpleados extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void txtregistroempleadoscedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtregistroempleadoscedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtregistroempleadoscedulaActionPerformed
@@ -211,6 +211,10 @@ public class RegistrodeEmpleados extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtregistroempleadosapellidoActionPerformed
 
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnregistroempleadosagregar() {
         return btnregistroempleadosagregar;
     }
@@ -258,8 +262,7 @@ public class RegistrodeEmpleados extends javax.swing.JInternalFrame {
     public void setTxtregistroempleadostelefono(JTextField txtregistroempleadostelefono) {
         this.txtregistroempleadostelefono = txtregistroempleadostelefono;
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnregistroempleadosagregar;

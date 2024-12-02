@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ReservaController implements ActionListener {
 
+    //Llamada a todas las clases y paneles necesarios
     private final ReservaDAO reservaDAO;
     private final ReservaModel reservaModel;
     private final ViewReservacionesdeClientes viewReservacionesdeClientes;
@@ -31,9 +32,10 @@ public class ReservaController implements ActionListener {
         this.paneldeReservaciones.getBtnpanelreservacionesguardar().addActionListener(this);
         this.viewReservacionesdeClientes.getBtnviewreservacionesdeclientesbuscar().addActionListener(this);
         this.viewReservacionesdeClientes.getBtnviewreservacionesdeclientesborrar().addActionListener(this);
-        listarReservas();
+        listarReservas(); // Una vez iniciado el componente automaticamente listar las reservas
     }
 
+    //Listar todas las reservas
     public void listarReservas() throws FileNotFoundException, SQLException {
         try {
             DefaultTableModel modelo = (DefaultTableModel) viewReservacionesdeClientes.getJtableviewreservaciones().getModel();
@@ -65,6 +67,7 @@ public class ReservaController implements ActionListener {
         }
     }
 
+    //Buscar reserva por la cedula del cliente
     public void buscarReserva(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -99,9 +102,6 @@ public class ReservaController implements ActionListener {
     }
 
     public void agregarReserva() {
-        System.out.println("Intentando agregar reserva..."); // Debug
-        int validacion = validaCampos(paneldeReservaciones);
-        System.out.println("Resultado de validación: " + validacion); // Debug
         if (validaCampos(paneldeReservaciones) > 1) {
             try {
                 // Inicializar modelos
@@ -156,6 +156,7 @@ public class ReservaController implements ActionListener {
         }
     }
 
+    //Eliminar reservacion por cedula
     public void eliminarReserva(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -177,7 +178,8 @@ public class ReservaController implements ActionListener {
     }
 
     public int validaCampos(PaneldeReservaciones paneldeReservaciones) {
-        int validacion = 2; // Cambiamos el valor inicial a 2
+        int validacion = 2; // Cambiamos el valor inicial a 2, para saber si todos 
+        //los campos estan vacios o llenos
 
         if (paneldeReservaciones.getTxtpanelreservacionescedula().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(paneldeReservaciones,
@@ -219,14 +221,15 @@ public class ReservaController implements ActionListener {
         return validacion;
     }
 
+    //Una vez agregada una reserva esge borra todos los campos
     private void limpiarCampos() {
         paneldeReservaciones.getTxtpanelreservacionescedula().setText("");
-        paneldeReservaciones.getTxtpanelreservacionesmodelo().setText("");
         paneldeReservaciones.getTxtpanelreservacionesfechaentrega().setText("");
         paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().setText("");
         paneldeReservaciones.getTxtpanelreservacionesplacadelvehiculo().setText("");
     }
 
+    //Para que funcione los botones
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == viewReservacionesdeClientes.getBtnviewreservacionesdeclientesbuscar()) {

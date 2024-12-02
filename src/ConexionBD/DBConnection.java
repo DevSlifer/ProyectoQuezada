@@ -20,6 +20,11 @@ import java.io.IOException;
  *
  * @author Supre
  */
+
+/*
+
+Clase para obtener la conexiion a la base de datos
+*/
 public class DBConnection {
 
     private static Connection conexion = null;
@@ -31,9 +36,9 @@ public class DBConnection {
             try {
                 String directorioActual = System.getProperty("user.dir");
 
-                String rutaArchivo = directorioActual + File.separator + "\\src\\Utils\\configuracion.txt";
+                String rutaArchivo = directorioActual + File.separator + "\\src\\Utils\\configuracion.txt"; // Archivo de configuracion
                 File archivo = new File(rutaArchivo);
-                FileReader lector = new FileReader(archivo);
+                FileReader lector = new FileReader(archivo); // Lectura del archivo
                 String url;
                 String usuario;
                 String contraseña;
@@ -55,7 +60,7 @@ public class DBConnection {
         }
     }
 
-    public static void cerrarConexion() throws SQLException {
+    public static void cerrarConexion() throws SQLException { // Cerrar conexion
         if (conexion != null && !conexion.isClosed()) {
             conexion.close();
         }

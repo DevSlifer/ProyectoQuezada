@@ -22,7 +22,8 @@ public class ReservaDAO {
     Connection connection;
     CallableStatement cs;
     ResultSet rs;
-
+    
+    //Insertar reserva mediante la placa del vehiculo y la cedula del cliente
     public int insertarReserva(ReservaModel reserva) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_reserva(?,?,?,?)";
         try {
@@ -51,6 +52,7 @@ public class ReservaDAO {
         }
     }
 
+    //Ver todas las reservas
     public List verReserva(String cedula) throws FileNotFoundException, SQLException {
         String sql = "call sp_leer_reservas(?,?)";
         List<ReservaModel> infoReserva = new ArrayList();
@@ -106,6 +108,7 @@ public class ReservaDAO {
         return infoReserva;
     }
 
+    //Actualizar reservas
     public int actualizarReserva(ReservaModel reserva) throws SQLException, FileNotFoundException {
         String sql = "call sp_actualizar_reserva(?,?,?,?)";
         try {
@@ -119,7 +122,7 @@ public class ReservaDAO {
             if (reserva.getCarro() != null && reserva.getCarro().getPlaca() != null) {
                 cs.setString(2, reserva.getCarro().getPlaca());
             } else {
-                cs.setNull(2, Types.VARCHAR);
+                cs.setNull(2, Types.VARCHAR); //Seteo de nuulo
             }
 
             if (reserva.getFechaDeEntrega() != null) {
@@ -146,6 +149,7 @@ public class ReservaDAO {
         }
     }
 
+    //Eliminar reserva de un cliente
     public int eliminarReserva(String cedula) throws FileNotFoundException, SQLException {
         String sql = "call sp_eliminar_reserva(?,?)";
         try {

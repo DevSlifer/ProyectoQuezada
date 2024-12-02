@@ -304,8 +304,10 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
 
     
     
-    //Acceso a los componentes para los controladores
-    
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnpanelfacturacionactualizar() {
         return btnpanelfacturacionactualizar;
     }
@@ -385,9 +387,6 @@ public class PaneldeFacturacion1 extends javax.swing.JInternalFrame {
     public void setTxtpanelfacturacioncedula(JTextField txtpanelfacturacioncedula) {
         this.txtpanelfacturacioncedula = txtpanelfacturacioncedula;
     }
-    
-    
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

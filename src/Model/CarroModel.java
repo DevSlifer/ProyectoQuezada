@@ -10,6 +10,8 @@ package Model;
  */
 public class CarroModel {
 
+    //Getters y setters el acceso a la informacion , y seteo de la informacion
+    //Con los mismos atributos de la base de datos
     private int idCarro;
     private String marca;
     private String modelo;

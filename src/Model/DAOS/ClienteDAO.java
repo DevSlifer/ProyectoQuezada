@@ -22,6 +22,7 @@ public class ClienteDAO {
     CallableStatement cs;
     ResultSet rs;
 
+    //Para poder insertar un cliente
     public int insertarCliente(ClienteModel cliente) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_cliente(?,?,?,?,?,?,?,?,?)";
         try {
@@ -54,8 +55,10 @@ public class ClienteDAO {
         }
     }
 
+    //Para poder ver todos los cliente
     public List verCliente(String cedula) throws FileNotFoundException, SQLException {
-        String sql = "call sp_leer_cliente(?)";
+        String sql = "call sp_leer_cliente(?)"; //Si el parametro es null, este listara todos los cliente
+        //Sino busscara por cedula
 
         List<ClienteModel> infoCliente = new ArrayList();
 
@@ -63,16 +66,15 @@ public class ClienteDAO {
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
             if (cedula != null) {
-                cs.setString(1, cedula);
+                cs.setString(1, cedula); // Cedula no null
             } else {
-                cs.setNull(1, Types.VARCHAR);
+                cs.setNull(1, Types.VARCHAR); //Parametro null
             }
             rs = cs.executeQuery();
 
             while (rs.next()) {
                 ClienteModel cliente = new ClienteModel();
                 DireccionClienteModel direccion = new DireccionClienteModel();
-
                 cliente.setNombre(rs.getString("Nombre"));
                 cliente.setApellido(rs.getString("Apellido"));
                 cliente.setCedula(rs.getString("Cedula"));
@@ -100,8 +102,10 @@ public class ClienteDAO {
         return infoCliente;
     }
 
+    //Actualizar cliente
     public int actualizarCliente(ClienteModel cliente) throws SQLException, FileNotFoundException {
-        String sql = "call sp_actualizar_cliente(?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_actualizar_cliente(?,?,?,?,?,?,?,?,?)"; //Todos los parametros pueden ser null,
+        //El unico campo requerido es la cedula.
         try {
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
@@ -113,17 +117,17 @@ public class ClienteDAO {
             if (cliente.getNombre() != null) {
                 cs.setString(2, cliente.getNombre());
             } else {
-                cs.setNull(2, Types.VARCHAR);
+                cs.setNull(2, Types.VARCHAR); // Si no se proporciona un nuevo nombre, este quedara igual
             }
 
             if (cliente.getApellido() != null) {
                 cs.setString(3, cliente.getApellido());
             } else {
-                cs.setNull(3, Types.VARCHAR);
+                cs.setNull(3, Types.VARCHAR); // Si no se proporciona un nuevo apellido, este quedara igual
             }
 
             if (cliente.getLicencia() != null) {
-                cs.setString(4, cliente.getLicencia());
+                cs.setString(4, cliente.getLicencia()); // Si no se proporciona una nueva licencia, este quedara igual
             } else {
                 cs.setNull(4, Types.VARCHAR);
             }
@@ -133,7 +137,8 @@ public class ClienteDAO {
                 if (cliente.getDirreccion().getProvincia() != null) {
                     cs.setString(5, cliente.getDirreccion().getProvincia());
                 } else {
-                    cs.setNull(5, Types.VARCHAR);
+                    cs.setNull(5, Types.VARCHAR); // Si no se proporciona una dirreccion
+                    //este quedara igual
                 }
 
                 if (cliente.getDirreccion().getSector() != null) {
@@ -178,6 +183,7 @@ public class ClienteDAO {
         }
     }
 
+    //Eliminar cliente por cedula
     public int eliminarCliente(String cedula) throws SQLException, FileNotFoundException {
         String sql = "call sp_borrar_cliente(?)";
         try {

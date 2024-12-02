@@ -22,6 +22,7 @@ public class EmpleadoDAO {
     CallableStatement cs;
     ResultSet rs;
 
+    //Insertar un nuevo empleado
     public int insertarEmpleado(EmpleadoModel empleado) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_empleado(?,?,?,?,?)";
         try {
@@ -50,18 +51,17 @@ public class EmpleadoDAO {
 
     }
 
+    //Leer todos los empleados
     public List verEmpleado(String cedula) throws FileNotFoundException, SQLException {
-        String sql = "call sp_leer_empleados(?)";
-
+        String sql = "call sp_leer_empleados(?)"; //Si el parametro es "null" este traera todos los empleados
         List<EmpleadoModel> infoEmpleado = new ArrayList();
-
         try {
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
             if (cedula != null) {
                 cs.setString(1, cedula);
             } else {
-                cs.setNull(1, Types.VARCHAR);
+                cs.setNull(1, Types.VARCHAR); //Setear el parametro a null
             }
             rs = cs.executeQuery();
 
@@ -90,6 +90,7 @@ public class EmpleadoDAO {
         return infoEmpleado;
     }
 
+    //Eliminar Empleado por cedula
     public int eliminarEmpleado(String cedula) throws FileNotFoundException, SQLException {
         String sql = "call sp_borrar_empleado(?)";
         try {
@@ -109,6 +110,7 @@ public class EmpleadoDAO {
         }
     }
 
+    //Actualizar empleado mediante su cedula
     public int actualizarEmpleado(EmpleadoModel empleado) throws SQLException, FileNotFoundException {
         String sql = "call sp_actualizar_empleado(?,?,?,?,?)";
         try {
@@ -122,7 +124,8 @@ public class EmpleadoDAO {
             if (empleado.getNombre() != null) {
                 cs.setString(2, empleado.getNombre());
             } else {
-                cs.setNull(2, Types.VARCHAR);
+                cs.setNull(2, Types.VARCHAR); //seteo de null para dejarlo igual, pasa
+                //lo mismo para los otros campos
             }
 
             if (empleado.getApellido() != null) {
@@ -145,29 +148,6 @@ public class EmpleadoDAO {
 
             cs.execute();
             return 1;
-        } finally {
-            if (cs != null) {
-                cs.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    public int eliminarReserva(String cedula) throws SQLException, FileNotFoundException {
-        String sql = "call sp_eliminar_resverva(?,?)";
-        try {
-            connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
-            cs.setString(1, cedula);
-            cs.setNull(2, Types.INTEGER);
-            cs.execute();
-            return 1;
-
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar: " + e.getMessage());
-            return 0;
         } finally {
             if (cs != null) {
                 cs.close();

@@ -15,6 +15,10 @@ import java.util.ArrayList;
  *
  * @author Supre
  */
+
+/*
+Data Access objtects para los carros.
+*/
 public class CarroDAO {
 
     Connection connection;
@@ -22,20 +26,23 @@ public class CarroDAO {
     ResultSet rs;
 
     public List verCarros(String matricula) throws FileNotFoundException, SQLException {
-        var sql = "call sp_leer_carro(?)";
-
+        var sql = "call sp_leer_carro(?)"; 
+        //Procedure para buscar todos los carros
+        //Si el parametro es "null", este listara todos
+        //Sino solamente buscara por la matricula
         List<CarroModel> infoCarros = new ArrayList();
 
         try {
             connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
+            cs = connection.prepareCall(sql); 
             if (matricula != null) {
                 cs.setString(1, matricula);
             } else {
-                cs.setNull(1, Types.VARCHAR);
+                cs.setNull(1, Types.VARCHAR); //Seteandolo a "Null"
             }
             rs = cs.executeQuery();
 
+            //Toda la informacion de los carros
             while (rs.next()) {
                 CarroModel carro = new CarroModel();
                 carro.setIdCarro(rs.getInt("IDCarro"));
@@ -62,6 +69,7 @@ public class CarroDAO {
         return infoCarros;
     }
 
+    //Metodo para agregar los carros.
     public int insertarCarro(CarroModel carro) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_carro(?,?,?,?,?,?,?)";
         try {
@@ -92,19 +100,20 @@ public class CarroDAO {
         }
     }
 
+    //Metodo paara actualizar carros
     public int actualizarCarro(CarroModel carro) throws SQLException, FileNotFoundException {
         String sql = "call sp_actualizar_carro(?,?,?,?,?,?,?)";
         try {
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
 
-            cs.setNull(1, Types.VARCHAR);  // marca
-            cs.setNull(2, Types.VARCHAR);  // modelo
-            cs.setNull(3, Types.INTEGER);  // año
-            cs.setNull(4, Types.VARCHAR);  // placa
-            cs.setString(5, carro.getMatricula());  // matrícula (requerida)
-            cs.setInt(6, (int) carro.getPrecioPorDia());  // precio
-            cs.setDouble(7, carro.getKilometraje());  // solo actualizamos kilometraje
+            cs.setNull(1, Types.VARCHAR);  // marca, no cambia
+            cs.setNull(2, Types.VARCHAR);  // modelo, no cambia
+            cs.setNull(3, Types.INTEGER);  // año, no cambiar
+            cs.setNull(4, Types.VARCHAR);  // placa, no cambia
+            cs.setString(5, carro.getMatricula());  // matrícula, para metro requerido
+            cs.setInt(6, (int) carro.getPrecioPorDia());  // precio, campo actualizable
+            cs.setDouble(7, carro.getKilometraje());  // actualizalacion del kilometraje
 
             cs.execute();
             return 1;
@@ -118,6 +127,7 @@ public class CarroDAO {
         }
     }
 
+    //Para borrar por matrcula
     public int eliminarCarro(String matricula) throws SQLException, FileNotFoundException {
         String sql = "call sp_borrar_carro(?)";
         try {

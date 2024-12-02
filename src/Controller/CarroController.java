@@ -16,11 +16,13 @@ import javax.swing.table.DefaultTableModel;
 
 public final class CarroController implements ActionListener {
 
+    //Todos los componentes necesarios
     CarroDAO carroDAO;
     CarroModel carroModel;
     RegistrodeCarros registrodeCarros;
     PaneldeRegistros paneldeRegistros;
 
+    //Inicializacion de todos los componentes
     public CarroController(RegistrodeCarros registrodeCarros, PaneldeRegistros paneldeRegistros) throws SQLException, FileNotFoundException {
         this.carroDAO = new CarroDAO();
         this.carroModel = new CarroModel();
@@ -33,7 +35,8 @@ public final class CarroController implements ActionListener {
         listarCarros();
     }
 
-    public void agregar() throws SQLException, FileNotFoundException {
+    //Agregar un nuevo carro al sistema
+    public void agregarCarro() throws SQLException, FileNotFoundException {
         String marca = registrodeCarros.getTxtregistrocarrosmarca().getText();
         String modelo = registrodeCarros.getTxtregistrocarrosmodelo().getText();
         String placa = registrodeCarros.getTxtregistrocarrosnumdeplaca().getText();
@@ -72,6 +75,7 @@ public final class CarroController implements ActionListener {
         }
     }
 
+    //Ver todos los carros del sistema
     public void listarCarros() throws SQLException, FileNotFoundException {
         DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblCarro().getModel();
         modelo.setRowCount(0);
@@ -91,6 +95,7 @@ public final class CarroController implements ActionListener {
         }
     }
 
+    //Buscar por la matricula del carro
     public void buscarPorMatricula(String matricula) {
         try {
             if (matricula.trim().isEmpty()) {
@@ -128,6 +133,7 @@ public final class CarroController implements ActionListener {
         }
     }
 
+    //Eliminar un carro por su matricula
     public void eliminarPorMatricula(String matricula) {
         try {
             if (matricula.trim().isEmpty()) {
@@ -159,6 +165,7 @@ public final class CarroController implements ActionListener {
         }
     }
 
+    //Actualizar el precio de un carro
     public void actualizarCarro(String matricula) {
         try {
             if (matricula.trim().isEmpty()) {
@@ -206,6 +213,7 @@ public final class CarroController implements ActionListener {
         }
     }
 
+    //Validar los campos
     private int validarCampos(RegistrodeCarros registrodeCarros) {
         int validacion = 1;
         if (registrodeCarros.getTxtregistrocarrosmarca().getText().isEmpty()) {
@@ -239,6 +247,7 @@ public final class CarroController implements ActionListener {
         return validacion;
     }
 
+    //Limpiar los campos
     private void limpiarCampos() {
         registrodeCarros.getTxtregistrocarrosmarca().setText("");
         registrodeCarros.getTxtregistrocarrosmodelo().setText("");
@@ -249,11 +258,12 @@ public final class CarroController implements ActionListener {
         registrodeCarros.getTxtregistrocarrosmatricula().setText("");
     }
 
+    //Todas las acciones de los botones
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registrodeCarros.getBtnregistrocarrosagregar()) {
             try {
-                agregar();
+                agregarCarro();
             } catch (SQLException ex) {
                 Logger.getLogger(CarroController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (FileNotFoundException ex) {

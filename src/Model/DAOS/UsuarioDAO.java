@@ -19,6 +19,7 @@ public class UsuarioDAO {
     CallableStatement cs;
     ResultSet rs;
 
+    //leer el usuario para su auntenticacion.
     public UsuarioModel leerUsario(String email, String clave) throws SQLException, FileNotFoundException {
         UsuarioModel usuario = null;
 

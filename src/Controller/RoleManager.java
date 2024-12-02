@@ -11,6 +11,7 @@ import Views.frmDashboard;
  * @author Supre
  */
 // RoleManager.java
+//Clase para poder manejar los roles, admin y empleado
 public class RoleManager {
     public static final String ROLE_ADMIN = "admin";
     public static final String ROLE_EMPLEADO = "empleado";

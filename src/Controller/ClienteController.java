@@ -17,11 +17,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClienteController implements ActionListener {
 
+    //Todos los panales, clases necesarias
     private final ClienteDAO clienteDAO;
     private final ClienteModel clienteModel;
     private final PaneldeRegistros paneldeRegistros;
     private final RegistrodeClientes registrodeClientes;
 
+    //Inicializacion de todos los componentes
     public ClienteController(PaneldeRegistros paneldeRegistros, RegistrodeClientes registroDeClientes) throws SQLException, FileNotFoundException {
         this.clienteDAO = new ClienteDAO();
         this.clienteModel = new ClienteModel();
@@ -35,6 +37,7 @@ public class ClienteController implements ActionListener {
         listarClientes();
     }
 
+    //Ver todos los clientes
     public void listarClientes() throws FileNotFoundException, SQLException {
         try {
             DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblclientes().getModel();
@@ -63,7 +66,8 @@ public class ClienteController implements ActionListener {
         }
     }
 
-    public void agregar() {
+    //Agregar un nuevo cliente
+    public void agregarCliente() {
         String nombre = registrodeClientes.getTxtregistroclientesnombre().getText();
         String apellido = registrodeClientes.getTxtregistroclientesapellido().getText();
         String cedula = registrodeClientes.getTxtregistroclientescedula().getText();
@@ -105,6 +109,7 @@ public class ClienteController implements ActionListener {
         }
     }
 
+    //Eliminar cliente por su cedula
     public void eliminarCliente(String cedula) throws FileNotFoundException, SQLException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -126,6 +131,7 @@ public class ClienteController implements ActionListener {
         }
     }
 
+    //Actualizar la informacion de los clientes
     public void actualizarCliente(String cedula) throws FileNotFoundException, SQLException, SQLException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -176,6 +182,7 @@ public class ClienteController implements ActionListener {
         }
     }
 
+    //Buscar a un cliente por su cedula
     public void buscarPorCedula(String cedula) throws FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -212,6 +219,7 @@ public class ClienteController implements ActionListener {
         }
     }
 
+    //Validar los campos
     public int validar(RegistrodeClientes registrodeClientes) {
         int validacion = 1;
         if (registrodeClientes.getTxtregistroclientesnombre().getText().trim().isEmpty()) {
@@ -257,6 +265,7 @@ public class ClienteController implements ActionListener {
         return validacion;
     }
 
+    //limpiar los campos una vez ingresado
     public void limpiarCampos() {
         registrodeClientes.getTxtregistroclientesnombre().setText("");
         registrodeClientes.getTxtregistroclientesapellido().setText("");
@@ -269,6 +278,7 @@ public class ClienteController implements ActionListener {
         registrodeClientes.getTxtregistroclientesnumdelacasa().setText("");
     }
 
+    //Acciones de cada boton
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == paneldeRegistros.getBtnregistrobuscar()) {
@@ -279,7 +289,7 @@ public class ClienteController implements ActionListener {
                 Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (e.getSource() == registrodeClientes.getBtnregistroclientesagregar()) {
-            agregar();
+            agregarCliente();
         } else if (e.getSource() == paneldeRegistros.getBtnregistroeliminar()) {
             String cedula = paneldeRegistros.getTxtpanelregistrocedula().getText();
             try {

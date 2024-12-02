@@ -177,7 +177,7 @@ public class RegistrodeClientes extends javax.swing.JInternalFrame {
                 .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(186, 186, 186))
         );
         jPanel1Layout.setVerticalGroup(
@@ -283,6 +283,10 @@ public class RegistrodeClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtregistroclientessectorActionPerformed
 
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnregistroclientesagregar() {
         return btnregistroclientesagregar;
     }
@@ -363,7 +367,6 @@ public class RegistrodeClientes extends javax.swing.JInternalFrame {
         this.txtregistroclientestelefono = txtregistroclientestelefono;
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnregistroclientesagregar;

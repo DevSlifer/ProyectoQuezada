@@ -22,6 +22,7 @@ public class FacturaDAO {
     CallableStatement cs;
     ResultSet rs;
 
+    //Insertar una nueva factura
     public int insertarFactura(FacturaModel factura) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_factura(?,?,?,?,?)";
         try {
@@ -46,8 +47,10 @@ public class FacturaDAO {
         }
     }
 
+    //ver todas las facturas
     public List verFactura(String cedula) throws FileNotFoundException, SQLException {
-        String sql = "call sp_leer_factura(?)";
+        String sql = "call sp_leer_factura(?)"; //Parametro "Opcional", si es null, este 
+        //Traera todas las facturas sino, buscara por la cedula.
 
         List<FacturaModel> infoFactura = new ArrayList();
 
@@ -57,7 +60,7 @@ public class FacturaDAO {
             if (cedula != null) {
                 cs.setString(1, cedula);
             } else {
-                cs.setNull(1, Types.VARCHAR);
+                cs.setNull(1, Types.VARCHAR);//Parametro null
             }
             rs = cs.executeQuery();
 
@@ -90,7 +93,7 @@ public class FacturaDAO {
     }
 
     /*
-    
+    Actualizar factura por el cliente
      */
     public int actualizarFactura(FacturaModel factura) throws SQLException, FileNotFoundException {
         String sql = "call sp_actualizar_factura(?,?,?,?)";
@@ -98,7 +101,7 @@ public class FacturaDAO {
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
 
-            // Parámetro requerido
+            // Parámetro requerido, la cual es cedula
             cs.setString(1, factura.getCliente().getCedula());
 
             if (factura.getMonto() != 0) {
@@ -131,6 +134,7 @@ public class FacturaDAO {
         }
     }
 
+    //ELiminar factura por cliente
     public int eliminarFactura(String cedula) throws SQLException, FileNotFoundException {
         String sql = "call sp_eliminar_factura(?,?)";
         try {

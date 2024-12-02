@@ -1,7 +1,6 @@
-package Views;
+    package Views;
 
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -36,6 +35,7 @@ public class frmDashboard extends javax.swing.JFrame {
         registrodereservaciones = new javax.swing.JMenuItem();
         registrodeempleados = new javax.swing.JMenuItem();
         viewdereservas = new javax.swing.JMenuItem();
+        AcercaDe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +157,14 @@ public class frmDashboard extends javax.swing.JFrame {
         });
         Paneldefacturacion.add(viewdereservas);
 
+        AcercaDe.setText("Acerca de");
+        AcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcercaDeActionPerformed(evt);
+            }
+        });
+        Paneldefacturacion.add(AcercaDe);
+
         jMenuBar1.add(Paneldefacturacion);
 
         setJMenuBar(jMenuBar1);
@@ -209,11 +217,17 @@ public class frmDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_registrodeempleadosActionPerformed
 
-    
+    private void AcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcercaDeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AcercaDeActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos, y poder abrir los JInternalFrames/ MenuItems
     public JMenuItem getPanelRegistros() {
         return PanelRegistros;
     }
@@ -285,10 +299,21 @@ public class frmDashboard extends javax.swing.JFrame {
     public void setEscritorio(JDesktopPane escritorio) {
         this.escritorio = escritorio;
     }
+
+    public JMenu getAcercaDe() {
+        return AcercaDe;
+    }
+
+    public void setAcercaDe(JMenu AcercaDe) {
+        this.AcercaDe = AcercaDe;
+    }
     
+      
     
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu AcercaDe;
     private javax.swing.JMenuItem PanelRegistros;
     private javax.swing.JMenu Paneldefacturacion;
     private javax.swing.JDesktopPane escritorio;

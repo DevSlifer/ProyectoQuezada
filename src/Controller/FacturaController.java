@@ -33,6 +33,7 @@ public class FacturaController implements ActionListener {
     private final FacturaDAO facturaDAO;
     private final FacturaModel facturaModel;
 
+    //Inicializar todos los componentes necesarios
     public FacturaController(PaneldeFacturacion1 paneldeFacturacion1) {
         this.paneldeFacturacion1 = paneldeFacturacion1;
         this.facturaDAO = new FacturaDAO();
@@ -45,6 +46,7 @@ public class FacturaController implements ActionListener {
         listarFacturas();
     }
 
+    //Ver todas las facturas
     public void listarFacturas() {
         try {
             DefaultTableModel modelo = (DefaultTableModel) paneldeFacturacion1.getJtabledatos().getModel();
@@ -69,6 +71,7 @@ public class FacturaController implements ActionListener {
         }
     }
 
+    //Eliminar facturas mediante la cedula del cliente
     public void eliminarFactura(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -91,7 +94,8 @@ public class FacturaController implements ActionListener {
             JOptionPane.showMessageDialog(paneldeFacturacion1, "Error al eliminar la factura: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
+    //Buscar factura por la cedula del cliente
     public void buscarFactura(String cedula) {
         try {
             if (cedula.trim().isEmpty()) {
@@ -117,6 +121,7 @@ public class FacturaController implements ActionListener {
         }
     }
 
+    //Actualizar factura
     public void actualizarFactura(String cedula) {
         try {
             if (cedula.trim().isEmpty()) {
@@ -165,6 +170,7 @@ public class FacturaController implements ActionListener {
         }
     }
 
+    //Agregar factura
     public void agregarFactura() {
         if (validarCampos()) {
             try {
@@ -198,6 +204,7 @@ public class FacturaController implements ActionListener {
 
     }
 
+    //Validacion de campos
     private boolean validarCampos() {
         if (paneldeFacturacion1.getTxtpanelfacturacioncedula().getText().trim().isEmpty()) {
             mostrarError("Debe ingresar la cédula del cliente",
@@ -256,6 +263,7 @@ public class FacturaController implements ActionListener {
         campo.requestFocus();
     }
 
+    //Generar facturas txt Not WORKING
     private void generarFacturaTxt(FacturaModel factura) {
         try {
             File directory = new File("Facturas generadas");
@@ -306,6 +314,7 @@ public class FacturaController implements ActionListener {
         }
     }
 
+    //Limpiar campos
     private void limpiarCampos() {
         paneldeFacturacion1.getTxtpanelfacturacioncedula().setText("");
         paneldeFacturacion1.getTxtpanelfacturacionfechainicio().setText("");
@@ -314,6 +323,7 @@ public class FacturaController implements ActionListener {
         paneldeFacturacion1.getTxtpaneldefacturacionfechadepago().setText("");
     }
 
+    //Accion de cada boton
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == paneldeFacturacion1.getBtnpanelfacturacionguardar()) {

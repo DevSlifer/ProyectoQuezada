@@ -205,6 +205,10 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnviewreservacionesdeclientesborrarActionPerformed
 
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnviewreservacionesdeclientesbuscar() {
         return btnviewreservacionesdeclientesbuscar;
     }
@@ -237,8 +241,6 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         this.txtviewreservacionesdeclientescedula = txtviewreservacionesdeclientescedula;
     }
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnviewreservacionesdeclientesborrar;

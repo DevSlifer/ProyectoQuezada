@@ -223,6 +223,7 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18))
         );
 
+        jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setFont(new java.awt.Font("Kalam", 3, 18)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(0, 0, 0));
@@ -339,6 +340,10 @@ public class PaneldeRegistros extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpanelregistromatricula1ActionPerformed
 
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnregistroeliminar() {
         return btnregistroeliminar;
     }

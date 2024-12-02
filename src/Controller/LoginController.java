@@ -29,13 +29,7 @@ public class LoginController implements ActionListener {
         btnIniciar.addActionListener(this);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnIniciar && validarCredenciales()) {
-            autenticarUsuario();
-        }
-    }
-
+    //Valiar que todos los campos esten llenos
     private boolean validarCredenciales() {
         if (userText.getText().trim().isEmpty()) {
             mostrarError("El campo de email no debe estar vacío", userText);
@@ -48,6 +42,7 @@ public class LoginController implements ActionListener {
         return true;
     }
 
+    //Obtenr la informacion de los campos
     private void autenticarUsuario() {
         try {
             String email = userText.getText();
@@ -64,6 +59,7 @@ public class LoginController implements ActionListener {
         }
     }
 
+    //Inicio de seccion
     private void iniciarSesion(UsuarioModel usuario) {
         try {
             loginView.setVisible(false);
@@ -82,10 +78,19 @@ public class LoginController implements ActionListener {
         }
     }
 
+    //Errores sorpresas
     private void mostrarError(String mensaje, JComponent componente) {
         JOptionPane.showMessageDialog(loginView, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
         if (componente != null) {
             componente.requestFocus();
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnIniciar && validarCredenciales()) {
+            autenticarUsuario();
+        }
+    }
+
 }

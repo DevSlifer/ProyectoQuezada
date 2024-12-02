@@ -230,7 +230,10 @@ public class RegistrodeCarros extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtregistrocarrospreciopordiaActionPerformed
 
-    
+    //Getter y setters de todos los componentes
+    //Para que los controladores puedan acceder
+    // a sus acciones y tener que poner lo componentes 
+    //publicos
     public JButton getBtnregistrocarrosagregar() {
         return btnregistrocarrosagregar;
     }

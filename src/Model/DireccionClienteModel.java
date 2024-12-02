@@ -10,6 +10,9 @@ package Model;
  */
 public class DireccionClienteModel {
 
+    
+    //Getters y setters el acceso a la informacion , y seteo de la informacion
+    //Con los mismos atributos de la base de datos
     private int idDireccion;
     private String provincia;
     private String sector;

@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class FacturaModel {
 
+    //Getters y setters el acceso a la informacion , y seteo de la informacion
+    //Con los mismos atributos de la base de datos
     private int idFactura;
     private double monto;
     private int cargosAdicionales;
@@ -19,6 +21,16 @@ public class FacturaModel {
     private Date fechaInicio;
     private Date fechaFin;
     private ReservaModel reserva;
+    private int idCliente; //Como en la entidad de la BD,un cliente puede hacer muchas reservas
+    private ClienteModel cliente; //Objecto del tipo "Cliente" para poder acceder a sus datos
+
+    public ClienteModel getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
+    }
 
     public ReservaModel getReserva() {
         return reserva;
@@ -42,16 +54,6 @@ public class FacturaModel {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
-    }
-    private int idCliente;
-    private ClienteModel cliente;
-
-    public ClienteModel getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(ClienteModel cliente) {
-        this.cliente = cliente;
     }
 
     public FacturaModel() {

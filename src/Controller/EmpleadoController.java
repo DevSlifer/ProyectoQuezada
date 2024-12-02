@@ -21,6 +21,7 @@ public class EmpleadoController implements ActionListener {
     private final RegistrodeEmpleados registrodeEmpleados;
     private final PaneldeRegistros paneldeRegistros;
 
+    //Inicializacion de los componentes
     public EmpleadoController(RegistrodeEmpleados registrodeEmpleados, PaneldeRegistros paneldeRegistros) throws SQLException, FileNotFoundException {
         this.empleadoDAO = new EmpleadoDAO();
         this.empleadoModel = new EmpleadoModel();
@@ -33,6 +34,7 @@ public class EmpleadoController implements ActionListener {
         listarEmpleados();
     }
 
+    //Agregar empleados con todos sus botones
     public void agregar() {
         if (validarCampos(registrodeEmpleados) > 1) {
             try {
@@ -52,6 +54,7 @@ public class EmpleadoController implements ActionListener {
         }
     }
 
+    //Ver todos los empleados
     public void listarEmpleados() throws SQLException, FileNotFoundException {
         DefaultTableModel modelo = (DefaultTableModel) paneldeRegistros.getTblEmpleados().getModel();
         modelo.setRowCount(0);
@@ -69,6 +72,7 @@ public class EmpleadoController implements ActionListener {
         paneldeRegistros.getTblEmpleados().setModel(modelo);
     }
 
+    //Eliminar empleado por cedula
     public void eliminarEmpleado(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -92,6 +96,7 @@ public class EmpleadoController implements ActionListener {
         }
     }
 
+    //Actualizar empleado por su cedula
     public void actualizarEmpleado(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -122,6 +127,7 @@ public class EmpleadoController implements ActionListener {
         }
     }
 
+    //Buscar empleado por su cedula
     public void buscarPorCedula(String cedula) throws SQLException, FileNotFoundException {
         try {
             if (cedula.trim().isEmpty()) {
@@ -148,6 +154,7 @@ public class EmpleadoController implements ActionListener {
         }
     }
 
+    //validacion de campos
     private int validarCampos(RegistrodeEmpleados registrodeEmpleados) {
         int validacion = 1;
         if (registrodeEmpleados.getTxtregistroempleadosnombre().getText().isEmpty()) {
@@ -173,6 +180,7 @@ public class EmpleadoController implements ActionListener {
         }
         return validacion;
     }
+    //Limpieza de campos 
     private void limpiarCampos(){
         registrodeEmpleados.getTxtregistroempleadosnombre().setText("");
         registrodeEmpleados.getTxtregistroempleadosapellido().setText("");
@@ -182,6 +190,7 @@ public class EmpleadoController implements ActionListener {
         registrodeEmpleados.getTxtregistroempleadosnombre().requestFocus();
     }
 
+    //Accion de cada boton con sus metodos
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == registrodeEmpleados.getBtnregistroempleadosagregar()) {

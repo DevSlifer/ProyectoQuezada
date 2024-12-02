@@ -10,13 +10,16 @@ package Model;
  */
 public class ClienteModel {
     
+    
+     //Getters y setters el acceso a la informacion , y seteo de la informacion
+    //Con los mismos atributos de la base de datos
     private int idCliente;
     private String nombre;
     private String apellido;
     private String cedula;
     private String licencia;
     private String telefono;
-    private DireccionClienteModel dirreccion;
+    private DireccionClienteModel dirreccion; //Objeto del "DireccionCliente para poder acceder desde esta misma clase"
 
     public DireccionClienteModel getDirreccion() {
         return dirreccion;

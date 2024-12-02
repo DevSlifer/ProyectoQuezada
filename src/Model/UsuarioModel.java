@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class UsuarioModel {
 
+    
+    //Atributos, getters y setters para la tabla de usuarios.
     private int idUsuario;
     private String email;
     private String contrasena;
