@@ -46,9 +46,9 @@ Para cualquier consulta o sugerencia, por favor contáctenos a través de info@n
 
 Imagenes:
 ![Imagen 1](src/Views/imagenes/mail.png)
-![Imagen 2](src/Views/imagenes/pass.jpg)
-![Imagen 3](src/Views/imagenes/user.jpg)
-![Imagen 4](src/Views/imagenes/LOGO(5).jpg)
+![Imagen 2](src/Views/imagenes/pass.png)
+![Imagen 3](src/Views/imagenes/user.png)
+![Imagen 4](src/Views/imagenes/LOGO(5).png)
 
 
 ¡Gracias por su interés en nuestro sistema de gestión de reservas de Rent a Car!
