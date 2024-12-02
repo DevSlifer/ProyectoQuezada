@@ -3,9 +3,6 @@ package Main;
 import Views.LoginView;
 import Views.component.PanelLoginAndRegister;
 import Controller.LoginController;
-import Views.swing.MyTextField;
-import Views.swing.MyPasswordField;
-import Views.swing.Button;
 import javax.swing.SwingUtilities;
 
 public class Main {

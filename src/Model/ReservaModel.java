@@ -13,12 +13,23 @@ public class ReservaModel {
     private double montoEstimado;
     private int idCliente;
     private int idCarro;
+    private ReservaModel reservaModel;
     private ClienteModel cliente;
     private CarroModel carro;
 
     public int getDiasTotal() {
         return diasTotal;
     }
+
+    public ReservaModel getReservaModel() {
+        return reservaModel;
+    }
+
+    public void setReservaModel(ReservaModel reservaModel) {
+        this.reservaModel = reservaModel;
+    }
+    
+    
 
     public void setDiasTotal(int diasTotal) {
         this.diasTotal = diasTotal;

@@ -75,8 +75,13 @@ public class CarroDAO {
             cs.setDouble(6, carro.getPrecioPorDia());
             cs.setString(7, carro.getMatricula());
 
-            cs.execute(); 
-            return 1; 
+            cs.execute();
+            return 1;
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                throw new SQLException(e.getMessage());
+            }
+            throw e;
         } finally {
             if (cs != null) {
                 cs.close();
@@ -121,7 +126,7 @@ public class CarroDAO {
             cs.setString(1, matricula);
 
             cs.execute();
-            return 1; 
+            return 1;
 
         } catch (SQLException e) {
             System.out.println("Error al eliminar: " + e.getMessage());

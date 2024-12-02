@@ -4,7 +4,6 @@ import Model.EmpleadoModel;
 import Model.DAOS.EmpleadoDAO;
 import Views.PaneldeRegistros;
 import Views.RegistrodeEmpleados;
-import Views.frmDashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;

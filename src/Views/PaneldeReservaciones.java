@@ -31,16 +31,12 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        txtpanelreservacionesmarca = new javax.swing.JTextField();
         txtpanelreservacionesfechadevolucion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtpanelreservacionesaño = new javax.swing.JTextField();
         btnpanelreservacionesguardar = new javax.swing.JButton();
-        txtpanelreservacionesapellido = new javax.swing.JTextField();
         txtpanelreservacionesfechaentrega = new javax.swing.JTextField();
-        txtpanelreservacionesnombre = new javax.swing.JTextField();
         txtpanelreservacionescedula = new javax.swing.JTextField();
-        txtpanelreservacionesmodelo = new javax.swing.JTextField();
+        txtpanelreservacionesplacadelvehiculo = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -52,14 +48,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14), new java.awt.Color(255, 255, 255)), "", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION)); // NOI18N
-
-        txtpanelreservacionesmarca.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelreservacionesmarca.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Marca del vehiculo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelreservacionesmarca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelreservacionesmarcaActionPerformed(evt);
-            }
-        });
 
         txtpanelreservacionesfechadevolucion.setBackground(new java.awt.Color(255, 255, 255));
         txtpanelreservacionesfechadevolucion.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Fecha de Devolucion", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
@@ -74,14 +62,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Ingrese los datos de la reserva");
 
-        txtpanelreservacionesaño.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelreservacionesaño.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Año", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelreservacionesaño.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelreservacionesañoActionPerformed(evt);
-            }
-        });
-
         btnpanelreservacionesguardar.setBackground(new java.awt.Color(0, 0, 0));
         btnpanelreservacionesguardar.setForeground(new java.awt.Color(255, 255, 255));
         btnpanelreservacionesguardar.setText("Aceptar");
@@ -89,14 +69,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         btnpanelreservacionesguardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnpanelreservacionesguardarActionPerformed(evt);
-            }
-        });
-
-        txtpanelreservacionesapellido.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelreservacionesapellido.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Apellido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelreservacionesapellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelreservacionesapellidoActionPerformed(evt);
             }
         });
 
@@ -108,15 +80,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
             }
         });
 
-        txtpanelreservacionesnombre.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelreservacionesnombre.setFont(new java.awt.Font("Kalam", 3, 14)); // NOI18N
-        txtpanelreservacionesnombre.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelreservacionesnombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelreservacionesnombreActionPerformed(evt);
-            }
-        });
-
         txtpanelreservacionescedula.setBackground(new java.awt.Color(255, 255, 255));
         txtpanelreservacionescedula.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cedula", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
         txtpanelreservacionescedula.addActionListener(new java.awt.event.ActionListener() {
@@ -125,11 +88,11 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
             }
         });
 
-        txtpanelreservacionesmodelo.setBackground(new java.awt.Color(255, 255, 255));
-        txtpanelreservacionesmodelo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Modelo ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
-        txtpanelreservacionesmodelo.addActionListener(new java.awt.event.ActionListener() {
+        txtpanelreservacionesplacadelvehiculo.setBackground(new java.awt.Color(255, 255, 255));
+        txtpanelreservacionesplacadelvehiculo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Placa del vehiculo ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Kalam", 3, 14), new java.awt.Color(0, 0, 0)))); // NOI18N
+        txtpanelreservacionesplacadelvehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtpanelreservacionesmodeloActionPerformed(evt);
+                txtpanelreservacionesplacadelvehiculoActionPerformed(evt);
             }
         });
 
@@ -140,51 +103,43 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtpanelreservacionesapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelreservacionesnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelreservacionescedula, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtpanelreservacionesmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(67, 67, 67)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtpanelreservacionesaño, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                                .addComponent(txtpanelreservacionesfechaentrega)
-                                .addComponent(txtpanelreservacionesmodelo))
-                            .addComponent(txtpanelreservacionesfechadevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(208, 208, 208)
-                        .addComponent(btnpanelreservacionesguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(136, 136, 136)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtpanelreservacionesfechaentrega, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtpanelreservacionescedula, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtpanelreservacionesplacadelvehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtpanelreservacionesfechadevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnpanelreservacionesguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(169, 169, 169))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtpanelreservacionesplacadelvehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(txtpanelreservacionescedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpanelreservacionesnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtpanelreservacionesmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpanelreservacionesapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtpanelreservacionesfechaentrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpanelreservacionescedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtpanelreservacionesfechaentrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpanelreservacionesfechadevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtpanelreservacionesmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtpanelreservacionesaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addComponent(btnpanelreservacionesguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -199,9 +154,9 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,41 +175,25 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtpanelreservacionesmarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesmarcaActionPerformed
+    private void txtpanelreservacionesplacadelvehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesplacadelvehiculoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesmarcaActionPerformed
+    }//GEN-LAST:event_txtpanelreservacionesplacadelvehiculoActionPerformed
 
-    private void txtpanelreservacionesfechadevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesfechadevolucionActionPerformed
+    private void txtpanelreservacionescedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionescedulaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesfechadevolucionActionPerformed
-
-    private void btnpanelreservacionesguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelreservacionesguardarActionPerformed
-
-    }//GEN-LAST:event_btnpanelreservacionesguardarActionPerformed
-
-    private void txtpanelreservacionesañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesañoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesañoActionPerformed
-
-    private void txtpanelreservacionesapellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesapellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesapellidoActionPerformed
+    }//GEN-LAST:event_txtpanelreservacionescedulaActionPerformed
 
     private void txtpanelreservacionesfechaentregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesfechaentregaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpanelreservacionesfechaentregaActionPerformed
 
-    private void txtpanelreservacionesmodeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesmodeloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesmodeloActionPerformed
+    private void btnpanelreservacionesguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpanelreservacionesguardarActionPerformed
 
-    private void txtpanelreservacionesnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesnombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionesnombreActionPerformed
+    }//GEN-LAST:event_btnpanelreservacionesguardarActionPerformed
 
-    private void txtpanelreservacionescedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionescedulaActionPerformed
+    private void txtpanelreservacionesfechadevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpanelreservacionesfechadevolucionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtpanelreservacionescedulaActionPerformed
+    }//GEN-LAST:event_txtpanelreservacionesfechadevolucionActionPerformed
 
     public JButton getBtnpanelreservacionesguardar() {
         return btnpanelreservacionesguardar;
@@ -264,21 +203,6 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         this.btnpanelreservacionesguardar = btnpanelreservacionesguardar;
     }
 
-    public JTextField getTxtpanelreservacionesapellido() {
-        return txtpanelreservacionesapellido;
-    }
-
-    public void setTxtpanelreservacionesapellido(JTextField txtpanelreservacionesapellido) {
-        this.txtpanelreservacionesapellido = txtpanelreservacionesapellido;
-    }
-
-    public JTextField getTxtpanelreservacionesaño() {
-        return txtpanelreservacionesaño;
-    }
-
-    public void setTxtpanelreservacionesaño(JTextField txtpanelreservacionesaño) {
-        this.txtpanelreservacionesaño = txtpanelreservacionesaño;
-    }
 
     public JTextField getTxtpanelreservacionescedula() {
         return txtpanelreservacionescedula;
@@ -304,42 +228,32 @@ public class PaneldeReservaciones extends javax.swing.JInternalFrame {
         this.txtpanelreservacionesfechaentrega = txtpanelreservacionesfechaentrega;
     }
 
-    public JTextField getTxtpanelreservacionesmarca() {
-        return txtpanelreservacionesmarca;
-    }
-
-    public void setTxtpanelreservacionesmarca(JTextField txtpanelreservacionesmarca) {
-        this.txtpanelreservacionesmarca = txtpanelreservacionesmarca;
-    }
-
     public JTextField getTxtpanelreservacionesmodelo() {
-        return txtpanelreservacionesmodelo;
+        return txtpanelreservacionesplacadelvehiculo;
     }
 
     public void setTxtpanelreservacionesmodelo(JTextField txtpanelreservacionesmodelo) {
-        this.txtpanelreservacionesmodelo = txtpanelreservacionesmodelo;
+        this.txtpanelreservacionesplacadelvehiculo = txtpanelreservacionesmodelo;
     }
 
-    public JTextField getTxtpanelreservacionesnombre() {
-        return txtpanelreservacionesnombre;
+    public JTextField getTxtpanelreservacionesplacadelvehiculo() {
+        return txtpanelreservacionesplacadelvehiculo;
     }
 
-    public void setTxtpanelreservacionesnombre(JTextField txtpanelreservacionesnombre) {
-        this.txtpanelreservacionesnombre = txtpanelreservacionesnombre;
+    public void setTxtpanelreservacionesplacadelvehiculo(JTextField txtpanelreservacionesplacadelvehiculo) {
+        this.txtpanelreservacionesplacadelvehiculo = txtpanelreservacionesplacadelvehiculo;
     }
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnpanelreservacionesguardar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtpanelreservacionesapellido;
-    private javax.swing.JTextField txtpanelreservacionesaño;
     private javax.swing.JTextField txtpanelreservacionescedula;
     private javax.swing.JTextField txtpanelreservacionesfechadevolucion;
     private javax.swing.JTextField txtpanelreservacionesfechaentrega;
-    private javax.swing.JTextField txtpanelreservacionesmarca;
-    private javax.swing.JTextField txtpanelreservacionesmodelo;
-    private javax.swing.JTextField txtpanelreservacionesnombre;
+    private javax.swing.JTextField txtpanelreservacionesplacadelvehiculo;
     // End of variables declaration//GEN-END:variables
 }

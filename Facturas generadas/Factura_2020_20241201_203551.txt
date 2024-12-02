@@ -1,0 +1,13 @@
+=============== FACTURA ===============
+Fecha de emisión: 2024-12-01 20:35:51
+
+DATOS DEL CLIENTE
+Cédula: 2020
+
+DETALLES DE LA RESERVA
+Fecha de inicio: null
+Fecha fin: null
+Fecha de pago: 2024-12-02
+
+DETALLES DEL PAGO
+Monto calculado: $0.00

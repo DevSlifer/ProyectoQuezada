@@ -26,16 +26,21 @@ public class ReservaDAO {
     public int insertarReserva(ReservaModel reserva) throws SQLException, FileNotFoundException {
         String sql = "call sp_insertar_reserva(?,?,?,?)";
         try {
-
             connection = DBConnection.obtenerConexion();
             cs = connection.prepareCall(sql);
+
             cs.setString(1, reserva.getCliente().getCedula());
             cs.setString(2, reserva.getCarro().getPlaca());
             cs.setDate(3, new java.sql.Date(reserva.getFechaDeEntrega().getTime()));
             cs.setDate(4, new java.sql.Date(reserva.getFechaDevolucion().getTime()));
-            cs.execute();
-            return 1;
 
+            boolean hasResults = cs.execute();
+            return 1;
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                throw new SQLException(e.getMessage());
+            }
+            throw e;
         } finally {
             if (cs != null) {
                 cs.close();
@@ -45,7 +50,6 @@ public class ReservaDAO {
             }
         }
     }
-    
 
     public List verReserva(String cedula) throws FileNotFoundException, SQLException {
         String sql = "call sp_leer_reservas(?,?)";
@@ -79,7 +83,7 @@ public class ReservaDAO {
                 reserva.setFechaReservacion(rs.getDate("FechaReservacion"));
                 reserva.setFechaDeEntrega(rs.getDate("FechaDeEntrega"));
                 reserva.setFechaDevolucion(rs.getDate("FechaDevolucion"));
-                
+
                 reserva.setDiasTotal(rs.getInt("DiasTotal"));
                 reserva.setMontoEstimado(rs.getInt("MontoEstimado"));
 

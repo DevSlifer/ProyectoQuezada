@@ -119,7 +119,15 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
             new String [] {
                 "Nombre", "Apellido", "Cedula", "Telefono", "Marca del vehiculo", "Modelo", "Placa", "Precio por dia", "Fecha de Reserva", "Fecha de entrega", "Fecha devolucion", "Dias totales", "Monto estimado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jtableviewreservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtableviewreservacionesMouseClicked(evt);
@@ -139,7 +147,7 @@ public class ViewReservacionesdeClientes extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

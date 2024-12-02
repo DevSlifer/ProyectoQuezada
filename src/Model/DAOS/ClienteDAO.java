@@ -39,6 +39,11 @@ public class ClienteDAO {
             cs.execute();
             return 1;
 
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                throw new SQLException(e.getMessage());
+            }
+            throw e;
         } finally {
             if (cs != null) {
                 cs.close();

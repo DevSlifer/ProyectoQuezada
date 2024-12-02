@@ -9,8 +9,6 @@ import Views.swing.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-
-import Views.component.PanelLoginAndRegister;
 import javax.swing.JComponent;
 
 public class LoginController implements ActionListener {

@@ -7,8 +7,8 @@ package Controller;
 import Model.ClienteModel;
 import Model.DAOS.FacturaDAO;
 import Model.FacturaModel;
+import Model.ReservaModel;
 import Views.PaneldeFacturacion1;
-import Views.frmDashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -171,11 +171,13 @@ public class FacturaController implements ActionListener {
                 if (facturaModel.getCliente() == null) {
                     facturaModel.setCliente(new ClienteModel());
                 }
+                ReservaModel reserva = new ReservaModel();
+                reserva.setFechaDeEntrega(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechainicio().getText().trim()));
+                reserva.setFechaDevolucion(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechafin().getText().trim()));
                 facturaModel.getCliente().setCedula(paneldeFacturacion1.getTxtpanelfacturacioncedula().getText().trim());
-                facturaModel.setFechaInicio(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechainicio().getText().trim()));
-                facturaModel.setFechaFin(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechafin().getText().trim()));
                 facturaModel.setCargosAdicionales((int) Double.parseDouble(paneldeFacturacion1.getTxtfacturacioncargosadicionales().getText().trim()));
                 facturaModel.setFechaDePago(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpaneldefacturacionfechadepago().getText().trim()));
+                facturaModel.setReserva(reserva);
                 int resultado = facturaDAO.insertarFactura(facturaModel);
                 if (resultado > 0) {
                     JOptionPane.showMessageDialog(paneldeFacturacion1,
@@ -226,7 +228,6 @@ public class FacturaController implements ActionListener {
                     paneldeFacturacion1.getTxtpaneldefacturacionfechadepago());
             return false;
         }
-
         try {
             java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechainicio().getText().trim());
             java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechafin().getText().trim());
@@ -264,8 +265,10 @@ public class FacturaController implements ActionListener {
 
             java.util.Date fechaActual = new java.util.Date();
 
+            String numeroFactura = String.valueOf(factura.getCliente().getCedula());
+
             String fileName = String.format("Facturas generadas/Factura_%s_%s.txt",
-                    factura.getCliente().getCedula(),
+                    numeroFactura,
                     new SimpleDateFormat("yyyyMMdd_HHmmss").format(fechaActual));
 
             try (FileWriter writer = new FileWriter(fileName)) {
@@ -283,12 +286,11 @@ public class FacturaController implements ActionListener {
 
                 writer.write("DETALLES DEL PAGO\n");
                 writer.write(String.format("Monto calculado: $%.2f\n", factura.getMonto()));
-                writer.write(String.format("Cargos adicionales: $%.2f\n", factura.getCargosAdicionales()));
+                writer.write(String.format("Cargos adicionales: $%d\n", factura.getCargosAdicionales()));
                 writer.write(String.format("Total a pagar: $%.2f\n",
                         factura.getMonto() + factura.getCargosAdicionales()));
 
                 writer.write("\n====================================");
-
             }
 
             JOptionPane.showMessageDialog(paneldeFacturacion1,
@@ -311,7 +313,6 @@ public class FacturaController implements ActionListener {
         paneldeFacturacion1.getTxtfacturacioncargosadicionales().setText("");
         paneldeFacturacion1.getTxtpaneldefacturacionfechadepago().setText("");
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {

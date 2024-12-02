@@ -69,9 +69,9 @@ public class DashBoardController {
     private void mostrarPanel(JInternalFrame panel, String titulo) {
         if (!panel.isVisible()) {
             panel.setTitle(titulo);
-            panel.setBounds(150, 50, 700, 500);
+            panel.setBounds(150, 50, 1000, 500);
             panel.setVisible(true);
-            dashboard.escritorio.add(panel);
+            dashboard.getEscritorio().add(panel);
             panel.toFront();
         } else {
             panel.toFront();

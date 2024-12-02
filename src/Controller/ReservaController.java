@@ -1,11 +1,11 @@
 package Controller;
 
-import Model.FacturaModel;
+import Model.ClienteModel;
 import Model.ReservaModel;
+import Model.CarroModel;
 import Model.DAOS.ReservaDAO;
 import Views.ViewReservacionesdeClientes;
 import Views.PaneldeReservaciones;
-import Views.frmDashboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class ReservaController implements ActionListener{
+public class ReservaController implements ActionListener {
 
     private final ReservaDAO reservaDAO;
     private final ReservaModel reservaModel;
@@ -24,6 +24,8 @@ public class ReservaController implements ActionListener{
     public ReservaController(ViewReservacionesdeClientes viewReservacionesdeClientes, PaneldeReservaciones paneldeReservaciones) throws SQLException, FileNotFoundException {
         this.reservaDAO = new ReservaDAO();
         this.reservaModel = new ReservaModel();
+        this.reservaModel.setCliente(new ClienteModel());
+        this.reservaModel.setCarro(new CarroModel());
         this.paneldeReservaciones = paneldeReservaciones;
         this.viewReservacionesdeClientes = viewReservacionesdeClientes;
         this.paneldeReservaciones.getBtnpanelreservacionesguardar().addActionListener(this);
@@ -31,7 +33,6 @@ public class ReservaController implements ActionListener{
         this.viewReservacionesdeClientes.getBtnviewreservacionesdeclientesborrar().addActionListener(this);
         listarReservas();
     }
-
 
     public void listarReservas() throws FileNotFoundException, SQLException {
         try {
@@ -63,16 +64,17 @@ public class ReservaController implements ActionListener{
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public void buscarReserva(String cedula) throws SQLException, FileNotFoundException {
-      try{
-          if(cedula.trim().isEmpty()){
-              JOptionPane.showMessageDialog(viewReservacionesdeClientes, "El campo de cedula no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-              return;
-          }
-          DefaultTableModel modelo = (DefaultTableModel) viewReservacionesdeClientes.getJtableviewreservaciones().getModel();
-          modelo.setRowCount(0);
-          List<ReservaModel> facturas = reservaDAO.verReserva(cedula);
-            for(ReservaModel factura : facturas){
+        try {
+            if (cedula.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(viewReservacionesdeClientes, "El campo de cedula no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            DefaultTableModel modelo = (DefaultTableModel) viewReservacionesdeClientes.getJtableviewreservaciones().getModel();
+            modelo.setRowCount(0);
+            List<ReservaModel> facturas = reservaDAO.verReserva(cedula);
+            for (ReservaModel factura : facturas) {
                 Object[] fila = new Object[13];
                 fila[0] = factura.getCliente().getNombre();
                 fila[1] = factura.getCliente().getApellido();
@@ -90,27 +92,66 @@ public class ReservaController implements ActionListener{
                 modelo.addRow(fila);
             }
             viewReservacionesdeClientes.getJtableviewreservaciones().setModel(modelo);
-      }catch (SQLException e ){
-          JOptionPane.showMessageDialog(viewReservacionesdeClientes, "Error al buscar la reserva: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
-          listarReservas();
-      }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(viewReservacionesdeClientes, "Error al buscar la reserva: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+            listarReservas();
+        }
     }
 
-    public void agregarReserva(){
-        if(validaCampos(paneldeReservaciones)>1){
+    public void agregarReserva() {
+        System.out.println("Intentando agregar reserva..."); // Debug
+        int validacion = validaCampos(paneldeReservaciones);
+        System.out.println("Resultado de validación: " + validacion); // Debug
+        if (validaCampos(paneldeReservaciones) > 1) {
             try {
-                reservaModel.getCliente().setCedula(paneldeReservaciones.getTxtpanelreservacionescedula().getText());
-                reservaModel.getCliente().setNombre(paneldeReservaciones.getTxtpanelreservacionesnombre().getText());
-                reservaModel.getCliente().setApellido(paneldeReservaciones.getTxtpanelreservacionesapellido().getText());
-                reservaModel.getCarro().setMarca(paneldeReservaciones.getTxtpanelreservacionesmarca().getText());
-                reservaModel.getCarro().setModelo(paneldeReservaciones.getTxtpanelreservacionesmodelo().getText());
-                reservaModel.getFechaDeEntrega();
-                reservaDAO.insertarReserva(reservaModel);
-                JOptionPane.showMessageDialog(paneldeReservaciones, "Reserva guardada con exito!", "Exito!", JOptionPane.INFORMATION_MESSAGE);
-                limpiarCampos();
-                listarReservas();
-            } catch (SQLException | FileNotFoundException e) {
-                JOptionPane.showMessageDialog(paneldeReservaciones, "Error al guardar la reserva: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+                // Inicializar modelos
+                if (reservaModel.getCliente() == null) {
+                    reservaModel.setCliente(new ClienteModel());
+                }
+                if (reservaModel.getCarro() == null) {
+                    reservaModel.setCarro(new CarroModel());
+                }
+
+                // Establecer valores
+                reservaModel.getCliente().setCedula(paneldeReservaciones.getTxtpanelreservacionescedula().getText().trim());
+                reservaModel.getCarro().setPlaca(paneldeReservaciones.getTxtpanelreservacionesplacadelvehiculo().getText().trim());
+
+                // Convertir y validar fechas
+                try {
+                    reservaModel.setFechaDeEntrega(java.sql.Date.valueOf(
+                            paneldeReservaciones.getTxtpanelreservacionesfechaentrega().getText().trim()));
+                    reservaModel.setFechaDevolucion(java.sql.Date.valueOf(
+                            paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().getText().trim()));
+                } catch (IllegalArgumentException e) {
+                    JOptionPane.showMessageDialog(paneldeReservaciones,
+                            "Formato de fecha inválido. Use YYYY-MM-DD",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Intentar insertar
+                int resultado = reservaDAO.insertarReserva(reservaModel);
+
+                if (resultado > 0) {
+                    JOptionPane.showMessageDialog(paneldeReservaciones,
+                            "Reserva guardada exitosamente",
+                            "Éxito",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                    listarReservas();
+                }
+            } catch (SQLException e) {
+                // Mostrar mensaje específico del SP
+                JOptionPane.showMessageDialog(paneldeReservaciones,
+                        "Error en la reserva: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(paneldeReservaciones,
+                        "Error inesperado: " + e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -135,55 +176,60 @@ public class ReservaController implements ActionListener{
         }
     }
 
-    public int validaCampos(PaneldeReservaciones paneldeReservaciones){
-        int validacion = 1;
+    public int validaCampos(PaneldeReservaciones paneldeReservaciones) {
+        int validacion = 2; // Cambiamos el valor inicial a 2
+
         if (paneldeReservaciones.getTxtpanelreservacionescedula().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones.getTxtpanelreservacionescedula(), "El campo de cedula no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(paneldeReservaciones,
+                    "El campo de cedula no debe estar vacio!",
+                    "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             paneldeReservaciones.getTxtpanelreservacionescedula().requestFocus();
-            validacion = 0;
+            return 0;
         }
-        else if(paneldeReservaciones.getTxtpanelreservacionesaño().getText().trim().isEmpty()){
-            JOptionPane.showMessageDialog(paneldeReservaciones.getTxtpanelreservacionesaño(), "El campo de año no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-            paneldeReservaciones.getTxtpanelreservacionesaño().requestFocus();
-            validacion =0;
-        } else if (paneldeReservaciones.getTxtpanelreservacionesapellido().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones, "El campo de apellido no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-            paneldeReservaciones.getTxtpanelreservacionesapellido().requestFocus();
-            validacion = 0;
-        } else if (paneldeReservaciones.getTxtpanelreservacionesmarca().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones, "El campo de marca no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-            paneldeReservaciones.getTxtpanelreservacionesmarca().requestFocus();
-            validacion = 0;
-        } else if (paneldeReservaciones.getTxtpanelreservacionesmodelo().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones, "El campo de modelo no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-            paneldeReservaciones.getTxtpanelreservacionesmodelo().requestFocus();
-            validacion = 0;
-        } else if (paneldeReservaciones.getTxtpanelreservacionesfechaentrega().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones, "El campo de fecha de entrega no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
+
+        if (paneldeReservaciones.getTxtpanelreservacionesfechaentrega().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(paneldeReservaciones,
+                    "El campo de fecha de entrega no debe estar vacio!",
+                    "Error!",
+                    JOptionPane.ERROR_MESSAGE);
             paneldeReservaciones.getTxtpanelreservacionesfechaentrega().requestFocus();
-            validacion = 0;
-        } else if (paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(paneldeReservaciones, "El campo de fecha de devolucion no debe estar vacio!", "Error!", JOptionPane.ERROR_MESSAGE);
-            paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().requestFocus();
-            validacion = 0;
+            return 0;
         }
+
+        if (paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(paneldeReservaciones,
+                    "El campo de fecha de devolucion no debe estar vacio!",
+                    "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().requestFocus();
+            return 0;
+        }
+
+        if (paneldeReservaciones.getTxtpanelreservacionesplacadelvehiculo().getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(paneldeReservaciones,
+                    "El campo de placa no debe estar vacio!",
+                    "Error!",
+                    JOptionPane.ERROR_MESSAGE);
+            paneldeReservaciones.getTxtpanelreservacionesplacadelvehiculo().requestFocus();
+            return 0;
+        }
+
+        // Si todos los campos están llenos y válidos
         return validacion;
     }
 
-    private void limpiarCampos(){
-        paneldeReservaciones.getTxtpanelreservacionesapellido().setText("");
+    private void limpiarCampos() {
         paneldeReservaciones.getTxtpanelreservacionescedula().setText("");
-        paneldeReservaciones.getTxtpanelreservacionesnombre().setText("");
-        paneldeReservaciones.getTxtpanelreservacionesmarca().setText("");
         paneldeReservaciones.getTxtpanelreservacionesmodelo().setText("");
         paneldeReservaciones.getTxtpanelreservacionesfechaentrega().setText("");
         paneldeReservaciones.getTxtpanelreservacionesfechadevolucion().setText("");
-        paneldeReservaciones.getTxtpanelreservacionesaño().setText("");
+        paneldeReservaciones.getTxtpanelreservacionesplacadelvehiculo().setText("");
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == viewReservacionesdeClientes.getBtnviewreservacionesdeclientesbuscar()) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == viewReservacionesdeClientes.getBtnviewreservacionesdeclientesbuscar()) {
             String cedula = viewReservacionesdeClientes.getTxtviewreservacionesdeclientescedula().getText();
             try {
                 buscarReserva(cedula);
@@ -192,11 +238,9 @@ public class ReservaController implements ActionListener{
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
-        }
-        else if (e.getSource() == paneldeReservaciones.getBtnpanelreservacionesguardar()){
+        } else if (e.getSource() == paneldeReservaciones.getBtnpanelreservacionesguardar()) {
             agregarReserva();
-        }
-        else if (e.getSource() == viewReservacionesdeClientes.getBtnviewreservacionesdeclientesborrar()){
+        } else if (e.getSource() == viewReservacionesdeClientes.getBtnviewreservacionesdeclientesborrar()) {
             String cedula = viewReservacionesdeClientes.getTxtviewreservacionesdeclientescedula().getText();
             try {
                 eliminarReserva(cedula);
@@ -207,5 +251,5 @@ public class ReservaController implements ActionListener{
             }
         }
     }
-    
+
 }

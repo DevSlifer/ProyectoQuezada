@@ -4,7 +4,6 @@ import Model.CarroModel;
 import Model.DAOS.CarroDAO;
 import Views.PaneldeRegistros;
 import Views.RegistrodeCarros;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
