@@ -157,4 +157,40 @@ public class FacturaDAO {
             }
         }
     }
+
+    //Llamar a la function del mysql
+    public double calcularMontoPorCedula(String cedula, java.util.Date fechaInicio, java.util.Date fechaFin) throws SQLException, FileNotFoundException {
+        String sql = "SELECT fn_calcular_monto_por_cedula(?, ?, ?) as monto";
+        double monto = 0;
+
+        try {
+            connection = DBConnection.obtenerConexion();
+            cs = connection.prepareCall(sql);
+            cs.setString(1, cedula);
+
+            // Convertir java.util.Date a java.sql.Date
+            java.sql.Date sqlFechaInicio = new java.sql.Date(fechaInicio.getTime());
+            java.sql.Date sqlFechaFin = new java.sql.Date(fechaFin.getTime());
+
+            cs.setDate(2, sqlFechaInicio);
+            cs.setDate(3, sqlFechaFin);
+
+            rs = cs.executeQuery();
+
+            if (rs.next()) {
+                monto = rs.getDouble("monto");
+            }
+            return monto;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (cs != null) {
+                cs.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 }

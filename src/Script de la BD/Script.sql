@@ -276,7 +276,7 @@ BEGIN
         SELECT 'Ocurrió un error al intentar obtener los clientes' AS MensajeError;
         RESIGNAL;
     END;
-
+  
     SELECT * 
     FROM informacioncliente
     WHERE (p_Cedula IS NULL OR Cedula = p_Cedula);

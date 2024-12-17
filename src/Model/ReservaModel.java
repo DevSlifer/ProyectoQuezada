@@ -33,7 +33,7 @@ public class ReservaModel {
     }
 
     
-    
+
     public ClienteModel getCliente() {
         return cliente;
     }

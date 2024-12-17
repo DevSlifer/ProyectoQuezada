@@ -94,7 +94,7 @@ public class FacturaController implements ActionListener {
             JOptionPane.showMessageDialog(paneldeFacturacion1, "Error al eliminar la factura: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     //Buscar factura por la cedula del cliente
     public void buscarFactura(String cedula) {
         try {
@@ -174,9 +174,6 @@ public class FacturaController implements ActionListener {
     public void agregarFactura() {
         if (validarCampos()) {
             try {
-                if (facturaModel.getCliente() == null) {
-                    facturaModel.setCliente(new ClienteModel());
-                }
                 ReservaModel reserva = new ReservaModel();
                 reserva.setFechaDeEntrega(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechainicio().getText().trim()));
                 reserva.setFechaDevolucion(java.sql.Date.valueOf(paneldeFacturacion1.getTxtpanelfacturacionfechafin().getText().trim()));
@@ -263,16 +260,26 @@ public class FacturaController implements ActionListener {
         campo.requestFocus();
     }
 
-    //Generar facturas txt Not WORKING
+    //Generar facturas txt
     private void generarFacturaTxt(FacturaModel factura) {
         try {
+            // Obtener las fechas de la reserva
+            java.util.Date fechaInicio = factura.getReserva().getFechaDeEntrega();
+            java.util.Date fechaFin = factura.getReserva().getFechaDevolucion();
+
+            // Calcular el monto antes de generar la factura
+            double montoCalculado = facturaDAO.calcularMontoPorCedula(
+                    factura.getCliente().getCedula(),
+                    fechaInicio,
+                    fechaFin
+            );
+
             File directory = new File("Facturas generadas");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
             java.util.Date fechaActual = new java.util.Date();
-
             String numeroFactura = String.valueOf(factura.getCliente().getCedula());
 
             String fileName = String.format("Facturas generadas/Factura_%s_%s.txt",
@@ -288,15 +295,18 @@ public class FacturaController implements ActionListener {
                 writer.write(String.format("Cédula: %s\n\n", factura.getCliente().getCedula()));
 
                 writer.write("DETALLES DE LA RESERVA\n");
-                writer.write(String.format("Fecha de inicio: %s\n", factura.getFechaInicio()));
-                writer.write(String.format("Fecha fin: %s\n", factura.getFechaFin()));
-                writer.write(String.format("Fecha de pago: %s\n\n", factura.getFechaDePago()));
+                writer.write(String.format("Fecha de inicio: %s\n",
+                        new SimpleDateFormat("yyyy-MM-dd").format(fechaInicio)));
+                writer.write(String.format("Fecha fin: %s\n",
+                        new SimpleDateFormat("yyyy-MM-dd").format(fechaFin)));
+                writer.write(String.format("Fecha de pago: %s\n\n",
+                        new SimpleDateFormat("yyyy-MM-dd").format(factura.getFechaDePago())));
 
                 writer.write("DETALLES DEL PAGO\n");
-                writer.write(String.format("Monto calculado: $%.2f\n", factura.getMonto()));
+                writer.write(String.format("Monto calculado: $%.2f\n", montoCalculado));
                 writer.write(String.format("Cargos adicionales: $%d\n", factura.getCargosAdicionales()));
                 writer.write(String.format("Total a pagar: $%.2f\n",
-                        factura.getMonto() + factura.getCargosAdicionales()));
+                        montoCalculado + factura.getCargosAdicionales()));
 
                 writer.write("\n====================================");
             }
