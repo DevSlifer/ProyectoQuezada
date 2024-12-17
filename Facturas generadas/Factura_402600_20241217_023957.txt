@@ -1,0 +1,19 @@
+=============== FACTURA ===============
+Fecha de emisión: 2024-12-17 02:39:57
+
+DATOS DEL CLIENTE
+Cédula: 402600
+
+DETALLES DE LA RESERVA
+Fecha de inicio: 2024-12-03
+Fecha fin: 2024-12-08
+Fecha de pago: 2024-12-17
+
+DETALLES DEL PAGO
+Monto calculado: $0.00
+Monto calculado: $0.00
+Monto calculado: $0.00
+Cargos adicionales: $0
+Total a pagar: $0.00
+
+====================================
