@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.EmpleadoModel;
+import Model.UsuarioModel;
+import Model.DAOS.UsuarioDAO;
 import Model.DAOS.EmpleadoDAO;
 import Views.PaneldeRegistros;
 import Views.RegistrodeEmpleados;
@@ -20,11 +22,15 @@ public class EmpleadoController implements ActionListener {
     private final EmpleadoModel empleadoModel;
     private final RegistrodeEmpleados registrodeEmpleados;
     private final PaneldeRegistros paneldeRegistros;
+    private final UsuarioModel usuarioModel;
+    private final UsuarioDAO usuarioDAO;
 
     //Inicializacion de los componentes
     public EmpleadoController(RegistrodeEmpleados registrodeEmpleados, PaneldeRegistros paneldeRegistros) throws SQLException, FileNotFoundException {
         this.empleadoDAO = new EmpleadoDAO();
         this.empleadoModel = new EmpleadoModel();
+        this.usuarioModel = new UsuarioModel();
+        this.usuarioDAO = new UsuarioDAO();
         this.registrodeEmpleados = registrodeEmpleados;
         this.paneldeRegistros = paneldeRegistros;
         registrodeEmpleados.getBtnregistroempleadosagregar().addActionListener(this);
@@ -36,22 +42,42 @@ public class EmpleadoController implements ActionListener {
 
     //Agregar empleados con todos sus botones
     public void agregar() {
-        if (validarCampos(registrodeEmpleados) > 1) {
-            try {
-                empleadoModel.setNombre(registrodeEmpleados.getTxtregistroempleadosnombre().getText());
-                empleadoModel.setApellido(registrodeEmpleados.getTxtregistroempleadosapellido().getText());
-                empleadoModel.setCedula(registrodeEmpleados.getTxtregistroempleadoscedula().getText());
-                empleadoModel.setTelefono(registrodeEmpleados.getTxtregistroempleadostelefono().getText());
-                empleadoModel.setSalario(Double.parseDouble(registrodeEmpleados.getTxtregistroempleadossalario().getText()));
 
+        String nombre = registrodeEmpleados.getTxtregistroempleadosnombre().getText();
+        String apellido = registrodeEmpleados.getTxtregistroempleadosapellido().getText();
+        String cedula = registrodeEmpleados.getTxtregistroempleadoscedula().getText();
+        String telefono = registrodeEmpleados.getTxtregistroempleadostelefono().getText();
+
+        double salario;
+        try {
+            salario = Double.parseDouble(registrodeEmpleados.getTxtregistroempleadossalario().getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(registrodeEmpleados, "El salario debe ser un número", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String correo = registrodeEmpleados.getTxtregistroempleadosCorreo().getText();
+        String contrasena = registrodeEmpleados.getTxtregistroempleadosContreseña().getText();
+
+        empleadoModel.setNombre(nombre);
+        empleadoModel.setApellido(apellido);
+        empleadoModel.setCedula(cedula);
+        empleadoModel.setTelefono(telefono);
+        empleadoModel.setSalario(salario);
+        usuarioModel.setEmail(correo);
+        usuarioModel.setContrasena(contrasena);
+
+        if (validarCampos(registrodeEmpleados)> 0){
+            try {
                 empleadoDAO.insertarEmpleado(empleadoModel);
+                usuarioDAO.insertarUsuario(usuarioModel);
                 JOptionPane.showMessageDialog(registrodeEmpleados, "Empleado agregado correctamente!", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
-                listarEmpleados();
                 limpiarCampos();
+                listarEmpleados();
             } catch (SQLException | FileNotFoundException e) {
                 JOptionPane.showMessageDialog(registrodeEmpleados, "Error al agregar el empleado: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
+
     }
 
     //Ver todos los empleados
@@ -178,15 +204,28 @@ public class EmpleadoController implements ActionListener {
             registrodeEmpleados.getTxtregistroempleadossalario().requestFocus();
             validacion = 0;
         }
+        else if(registrodeEmpleados.getTxtregistroempleadosContreseña().getText().isEmpty()){
+            JOptionPane.showMessageDialog(registrodeEmpleados, "El campo contraseña no debe estar vacío!", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeEmpleados.getTxtregistroempleadosContreseña().requestFocus();
+            validacion = 0;
+        }
+        else if (registrodeEmpleados.getTxtregistroempleadosCorreo().getText().length() < 8) {
+            JOptionPane.showMessageDialog(registrodeEmpleados, "El campo correo no puede estar vacio", "Error!", JOptionPane.ERROR_MESSAGE);
+            registrodeEmpleados.getTxtregistroempleadosContreseña().requestFocus();
+            validacion = 0;
+        }
         return validacion;
     }
+
     //Limpieza de campos 
-    private void limpiarCampos(){
+    private void limpiarCampos() {
         registrodeEmpleados.getTxtregistroempleadosnombre().setText("");
         registrodeEmpleados.getTxtregistroempleadosapellido().setText("");
         registrodeEmpleados.getTxtregistroempleadoscedula().setText("");
         registrodeEmpleados.getTxtregistroempleadostelefono().setText("");
         registrodeEmpleados.getTxtregistroempleadossalario().setText("");
+        registrodeEmpleados.getTxtregistroempleadosCorreo().setText("");
+        registrodeEmpleados.getTxtregistroempleadosContreseña().setText("");
         registrodeEmpleados.getTxtregistroempleadosnombre().requestFocus();
     }
 
