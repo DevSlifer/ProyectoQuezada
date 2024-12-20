@@ -46,5 +46,30 @@ public class UsuarioDAO {
                 connection.close();
             }
         }
-    } 
+    }
+
+    public int insertarUsuario(UsuarioModel usuario) throws FileNotFoundException, SQLException {
+        String sql = "Call sp_insertar_usuario(?,?,?)";
+        try {
+            connection = DBConnection.obtenerConexion();
+            cs = connection.prepareCall(sql);
+            cs.setString(1, usuario.getEmail());
+            cs.setString(2, usuario.getContrasena());
+            cs.setString(3, "empleado");
+            cs.execute();
+            return 1;
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                throw new SQLException(e.getMessage());
+            }
+            throw e;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 }

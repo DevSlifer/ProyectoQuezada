@@ -6,29 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c0c33e4c-9886-4941-961f-63e2a43a122a" name="Changes" comment="CarroController hecho, ClienteController hecho, EmpleadoController hecho, FacturaController a medias, arreglar login y meter adminController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConexionBD/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConexionBD/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CarroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CarroController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DashBoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EmpleadoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FacturaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FacturaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReservaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/CarroDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/CarroDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/ClienteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/ClienteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/EmpleadoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/EmpleadoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/ReservaDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/ReservaDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/ReservaModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/ReservaModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeFacturacion1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistros.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeRegistros.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeRegistros.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeRegistros.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/PaneldeReservaciones.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/ViewReservacionesdeClientes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmDashboard.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmDashboard.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Views/frmDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/frmDashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/DAOS/UsuarioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/DAOS/UsuarioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/RegistrodeEmpleados.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/RegistrodeEmpleados.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Views/RegistrodeEmpleados.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Views/RegistrodeEmpleados.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +32,7 @@
     &quot;Application.LoginController.executor&quot;: &quot;Run&quot;,
     &quot;Application.ReservaController.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;2fd8b39d&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Supre/Documents/NetBeansProjects/ProyectoQuezada&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -134,6 +115,10 @@
       <workItem from="1733029950364" duration="16000" />
       <workItem from="1733030052345" duration="4450000" />
       <workItem from="1733085418856" duration="1191000" />
+      <workItem from="1734674228473" duration="165000" />
+      <workItem from="1734675072137" duration="13000" />
+      <workItem from="1734677793891" duration="119000" />
+      <workItem from="1734677925087" duration="1629000" />
     </task>
     <task id="LOCAL-00001" summary="Algunas funciones de los controladores añadidas">
       <option name="closed" value="true" />
