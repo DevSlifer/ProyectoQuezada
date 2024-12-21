@@ -56,7 +56,7 @@ public class EmpleadoController implements ActionListener {
             return;
         }
         String correo = registrodeEmpleados.getTxtregistroempleadosCorreo().getText();
-        String contrasena = registrodeEmpleados.getTxtregistroempleadosContreseña().getText();
+        String contrasena = registrodeEmpleados.getTxtregistroempleadosContraseña().getText();
 
         empleadoModel.setNombre(nombre);
         empleadoModel.setApellido(apellido);
@@ -69,7 +69,7 @@ public class EmpleadoController implements ActionListener {
         if (validarCampos(registrodeEmpleados)> 0){
             try {
                 empleadoDAO.insertarEmpleado(empleadoModel);
-                usuarioDAO.insertarUsuario(usuarioModel);
+                empleadoDAO.insertarEmpleado(usuarioModel);
                 JOptionPane.showMessageDialog(registrodeEmpleados, "Empleado agregado correctamente!", "Éxito!", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
                 listarEmpleados();
@@ -204,14 +204,14 @@ public class EmpleadoController implements ActionListener {
             registrodeEmpleados.getTxtregistroempleadossalario().requestFocus();
             validacion = 0;
         }
-        else if(registrodeEmpleados.getTxtregistroempleadosContreseña().getText().isEmpty()){
+        else if(registrodeEmpleados.getTxtregistroempleadosContraseña().getText().isEmpty()){
             JOptionPane.showMessageDialog(registrodeEmpleados, "El campo contraseña no debe estar vacío!", "Error!", JOptionPane.ERROR_MESSAGE);
-            registrodeEmpleados.getTxtregistroempleadosContreseña().requestFocus();
+            registrodeEmpleados.getTxtregistroempleadosContraseña().requestFocus();
             validacion = 0;
         }
         else if (registrodeEmpleados.getTxtregistroempleadosCorreo().getText().length() < 8) {
             JOptionPane.showMessageDialog(registrodeEmpleados, "El campo correo no puede estar vacio", "Error!", JOptionPane.ERROR_MESSAGE);
-            registrodeEmpleados.getTxtregistroempleadosContreseña().requestFocus();
+            registrodeEmpleados.getTxtregistroempleadosCorreo().requestFocus();
             validacion = 0;
         }
         return validacion;
@@ -225,7 +225,7 @@ public class EmpleadoController implements ActionListener {
         registrodeEmpleados.getTxtregistroempleadostelefono().setText("");
         registrodeEmpleados.getTxtregistroempleadossalario().setText("");
         registrodeEmpleados.getTxtregistroempleadosCorreo().setText("");
-        registrodeEmpleados.getTxtregistroempleadosContreseña().setText("");
+        registrodeEmpleados.getTxtregistroempleadosContraseña().setText("");
         registrodeEmpleados.getTxtregistroempleadosnombre().requestFocus();
     }
 
