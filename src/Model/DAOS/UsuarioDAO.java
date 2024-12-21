@@ -47,7 +47,6 @@ public class UsuarioDAO {
             }
         }
     }
-
     public int insertarUsuario(UsuarioModel usuario) throws FileNotFoundException, SQLException {
         String sql = "Call sp_insertar_usuario(?,?,?)";
         try {

@@ -6,6 +6,7 @@ package Model.DAOS;
 
 import Model.EmpleadoModel;
 import ConexionBD.DBConnection;
+import Model.UsuarioModel;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -148,6 +149,31 @@ public class EmpleadoDAO {
 
             cs.execute();
             return 1;
+        } finally {
+            if (cs != null) {
+                cs.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public int insertarEmpleado(UsuarioModel usuarioModel) throws FileNotFoundException, SQLException {
+        String sql = "Call sp_insertar_usuario(?,?,?)";
+        try {
+            connection = DBConnection.obtenerConexion();
+            cs = connection.prepareCall(sql);
+            cs.setString(1, usuarioModel.getEmail());
+            cs.setString(2, usuarioModel.getContrasena());
+            cs.setString(3, "empleado");
+            cs.execute();
+            return 1;
+        } catch (SQLException e) {
+            if (e.getSQLState().equals("45000")) {
+                throw new SQLException(e.getMessage());
+            }
+            throw e;
         } finally {
             if (cs != null) {
                 cs.close();
