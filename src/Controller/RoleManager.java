@@ -4,62 +4,83 @@
  */
 package Controller;
 
+import Utils.Constants;
 import Views.PaneldeRegistros;
 import Views.frmDashboard;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
+ * Role Manager using Strategy Pattern.
+ * Refactored to follow Open/Closed Principle (OCP) - open for extension, closed for modification.
+ * New roles can be added by creating new strategy implementations without modifying this class.
  *
- * @author Supre
+ * @author ProyectoQuezada Team
  */
-// RoleManager.java
-//Clase para poder manejar los roles, admin y empleado
 public class RoleManager {
-    public static final String ROLE_ADMIN = "admin";
-    public static final String ROLE_EMPLEADO = "empleado";
-    
+
+    private static final Map<String, IRoleStrategy> roleStrategies = new HashMap<>();
+
+    // Static initialization block to register role strategies
+    static {
+        registerRoleStrategy(new AdminRoleStrategy());
+        registerRoleStrategy(new EmpleadoRoleStrategy());
+    }
+
+    private RoleManager() {
+        throw new UnsupportedOperationException("RoleManager is a utility class and cannot be instantiated");
+    }
+
+    /**
+     * Registers a new role strategy.
+     * Allows adding new roles without modifying existing code (OCP).
+     *
+     * @param strategy The role strategy to register
+     */
+    public static void registerRoleStrategy(IRoleStrategy strategy) {
+        roleStrategies.put(strategy.getRoleName().toLowerCase(), strategy);
+    }
+
+    /**
+     * Configures access based on user role using the Strategy pattern.
+     *
+     * @param rol The user's role
+     * @param dashboard The dashboard to configure
+     * @param panelRegistros The panel to configure
+     * @throws IllegalArgumentException if role is not recognized
+     */
     public static void configurarAccesosPorRol(String rol, frmDashboard dashboard, PaneldeRegistros panelRegistros) {
-        switch(rol.toLowerCase()) {
-            case ROLE_ADMIN:
-                configurarAccesosAdmin(dashboard, panelRegistros);
-                break;
-            case ROLE_EMPLEADO:
-                configurarAccesosEmpleado(dashboard, panelRegistros);
-                break;
-            default:
-                throw new IllegalArgumentException("Rol no reconocido: " + rol);
+        if (rol == null || rol.trim().isEmpty()) {
+            throw new IllegalArgumentException("El rol no puede ser nulo o vacío");
         }
+
+        IRoleStrategy strategy = roleStrategies.get(rol.toLowerCase());
+
+        if (strategy == null) {
+            throw new IllegalArgumentException("Rol no reconocido: " + rol);
+        }
+
+        strategy.configureDashboardAccess(dashboard);
+        strategy.configurePanelAccess(panelRegistros);
     }
-    
-    private static void configurarAccesosAdmin(frmDashboard dashboard, PaneldeRegistros panelRegistros) {
-        // Accesos del menú principal
-        dashboard.getPanelRegistros().setEnabled(true);
-        dashboard.getRegistrodeempleados().setEnabled(true);
-        dashboard.getRegistrodeclientes().setEnabled(true);
-        dashboard.getRegistrodevehiculos().setEnabled(true);
-        dashboard.getPaneldefacturacion().setEnabled(true);
-        dashboard.getViewdereservas().setEnabled(true);
-        
-        // Accesos en PaneldeRegistros
-        panelRegistros.getTblEmpleados().setVisible(true);
-        panelRegistros.getBtnregistroeliminar().setVisible(true);
-        panelRegistros.getBtnregistroactualizar().setVisible(true);
-        panelRegistros.getTxtpanelregistroempleado().setEditable(true);
-        panelRegistros.getTxtpanelregistroempleado().setVisible(true);
+
+    /**
+     * Gets the role strategy for a given role.
+     *
+     * @param rol The role name
+     * @return The role strategy, or null if not found
+     */
+    public static IRoleStrategy getRoleStrategy(String rol) {
+        if (rol == null) {
+            return null;
+        }
+        return roleStrategies.get(rol.toLowerCase());
     }
-    
-    private static void configurarAccesosEmpleado(frmDashboard dashboard, PaneldeRegistros panelRegistros) {
-        // Accesos del menú principal
-        dashboard.getPanelRegistros().setEnabled(true);
-        dashboard.getRegistrodeempleados().setEnabled(false);
-        dashboard.getRegistrodeclientes().setEnabled(true);
-        dashboard.getRegistrodevehiculos().setEnabled(true);
-        dashboard.getPaneldefacturacion().setEnabled(true);
-        dashboard.getViewdereservas().setEnabled(true);
-        
-        // Accesos restringidos en PaneldeRegistros
-        panelRegistros.getTblEmpleados().setVisible(false);
-        panelRegistros.getBtnregistroeliminar().setVisible(false);
-        panelRegistros.getBtnregistroactualizar().setVisible(true);
-        panelRegistros.getTxtpanelregistroempleado().setEditable(false);
-        panelRegistros.getTxtpanelregistroempleado().setVisible(false);
-    }
+
+    // Backward compatibility - deprecated constants
+    @Deprecated
+    public static final String ROLE_ADMIN = Constants.Roles.ADMIN;
+
+    @Deprecated
+    public static final String ROLE_EMPLEADO = Constants.Roles.EMPLEADO;
 }

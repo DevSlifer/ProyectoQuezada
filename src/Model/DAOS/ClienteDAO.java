@@ -6,28 +6,35 @@ package Model.DAOS;
 
 import Model.DireccionClienteModel;
 import Model.ClienteModel;
+import Utils.Constants;
 import java.sql.*;
 import ConexionBD.DBConnection;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
+ * Data Access Object for Cliente entity.
+ * Refactored to implement IClienteDAO interface and follow SOLID principles.
+ * Uses try-with-resources for proper resource management.
  *
- * @author Supre
+ * @author ProyectoQuezada Team
  */
-public class ClienteDAO {
+public class ClienteDAO implements IClienteDAO {
 
-    Connection connection;
-    CallableStatement cs;
-    ResultSet rs;
+    private static final Logger LOGGER = Logger.getLogger(ClienteDAO.class.getName());
 
-    //Para poder insertar un cliente
+    /**
+     * Inserts a new client into the database.
+     * Uses try-with-resources for automatic resource management.
+     */
+    @Override
     public int insertarCliente(ClienteModel cliente) throws SQLException, FileNotFoundException {
-        String sql = "call sp_insertar_cliente(?,?,?,?,?,?,?,?,?)";
-        try {
-            connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
+        try (Connection connection = DBConnection.obtenerConexion();
+             CallableStatement cs = connection.prepareCall(Constants.SQL.SP_INSERTAR_CLIENTE)) {
+
             cs.setString(1, cliente.getNombre());
             cs.setString(2, cliente.getApellido());
             cs.setString(3, cliente.getCedula());
@@ -38,126 +45,100 @@ public class ClienteDAO {
             cs.setInt(8, cliente.getDirreccion().getNumeroDeCasa());
             cs.setString(9, cliente.getTelefono());
             cs.execute();
+
+            LOGGER.log(Level.INFO, "Cliente inserted successfully: {0}", cliente.getCedula());
             return 1;
 
         } catch (SQLException e) {
-            if (e.getSQLState().equals("45000")) {
+            LOGGER.log(Level.SEVERE, "Error inserting cliente", e);
+            if (Constants.SQLStates.CUSTOM_ERROR.equals(e.getSQLState())) {
                 throw new SQLException(e.getMessage());
             }
             throw e;
-        } finally {
-            if (cs != null) {
-                cs.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
-    //Para poder ver todos los cliente
-    public List verCliente(String cedula) throws FileNotFoundException, SQLException {
-        String sql = "call sp_leer_cliente(?)"; //Si el parametro es null, este listara todos los cliente
-        //Sino busscara por cedula
+    /**
+     * Retrieves clients from the database.
+     * If cedula is null, returns all clients; otherwise returns specific client.
+     * Uses try-with-resources for automatic resource management.
+     */
+    @Override
+    public List<ClienteModel> verCliente(String cedula) throws FileNotFoundException, SQLException {
+        List<ClienteModel> infoCliente = new ArrayList<>();
 
-        List<ClienteModel> infoCliente = new ArrayList();
+        try (Connection connection = DBConnection.obtenerConexion();
+             CallableStatement cs = connection.prepareCall(Constants.SQL.SP_LEER_CLIENTE)) {
 
-        try {
-            connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
             if (cedula != null) {
-                cs.setString(1, cedula); // Cedula no null
+                cs.setString(1, cedula);
             } else {
-                cs.setNull(1, Types.VARCHAR); //Parametro null
+                cs.setNull(1, Types.VARCHAR);
             }
-            rs = cs.executeQuery();
 
-            while (rs.next()) {
-                ClienteModel cliente = new ClienteModel();
-                DireccionClienteModel direccion = new DireccionClienteModel();
-                cliente.setNombre(rs.getString("Nombre"));
-                cliente.setApellido(rs.getString("Apellido"));
-                cliente.setCedula(rs.getString("Cedula"));
-                cliente.setLicencia(rs.getString("Licencia"));
-                cliente.setTelefono(rs.getString("Telefono"));
-                direccion.setProvincia(rs.getString("Provincia"));
-                direccion.setSector(rs.getString("Sector"));
-                direccion.setCalle(rs.getString("Calle"));
-                direccion.setNumeroDeCasa(
-                        rs.getInt("NumeroDeCasa"));
-                cliente.setDirreccion(direccion);
-                infoCliente.add(cliente);
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    ClienteModel cliente = mapResultSetToCliente(rs);
+                    infoCliente.add(cliente);
+                }
             }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (cs != null) {
-                cs.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+
+            LOGGER.log(Level.INFO, "Retrieved {0} cliente(s)", infoCliente.size());
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error retrieving clientes", e);
+            throw e;
         }
+
         return infoCliente;
     }
 
-    //Actualizar cliente
-    public int actualizarCliente(ClienteModel cliente) throws SQLException, FileNotFoundException {
-        String sql = "call sp_actualizar_cliente(?,?,?,?,?,?,?,?,?)"; //Todos los parametros pueden ser null,
-        //El unico campo requerido es la cedula.
-        try {
-            connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
+    /**
+     * Maps a ResultSet row to a ClienteModel object.
+     * Extracted to avoid code duplication and improve maintainability (DRY principle).
+     */
+    private ClienteModel mapResultSetToCliente(ResultSet rs) throws SQLException {
+        ClienteModel cliente = new ClienteModel();
+        DireccionClienteModel direccion = new DireccionClienteModel();
 
-            // Parámetro requerido
+        cliente.setNombre(rs.getString("Nombre"));
+        cliente.setApellido(rs.getString("Apellido"));
+        cliente.setCedula(rs.getString("Cedula"));
+        cliente.setLicencia(rs.getString("Licencia"));
+        cliente.setTelefono(rs.getString("Telefono"));
+
+        direccion.setProvincia(rs.getString("Provincia"));
+        direccion.setSector(rs.getString("Sector"));
+        direccion.setCalle(rs.getString("Calle"));
+        direccion.setNumeroDeCasa(rs.getInt("NumeroDeCasa"));
+
+        cliente.setDirreccion(direccion);
+        return cliente;
+    }
+
+    /**
+     * Updates an existing client in the database.
+     * All parameters except cedula are optional (null values keep existing data).
+     * Uses try-with-resources for automatic resource management.
+     */
+    @Override
+    public int actualizarCliente(ClienteModel cliente) throws SQLException, FileNotFoundException {
+        try (Connection connection = DBConnection.obtenerConexion();
+             CallableStatement cs = connection.prepareCall(Constants.SQL.SP_ACTUALIZAR_CLIENTE)) {
+
+            // Required parameter
             cs.setString(1, cliente.getCedula());
 
-            // Parámetros opcionales del cliente
-            if (cliente.getNombre() != null) {
-                cs.setString(2, cliente.getNombre());
-            } else {
-                cs.setNull(2, Types.VARCHAR); // Si no se proporciona un nuevo nombre, este quedara igual
-            }
+            // Optional client parameters
+            setStringOrNull(cs, 2, cliente.getNombre());
+            setStringOrNull(cs, 3, cliente.getApellido());
+            setStringOrNull(cs, 4, cliente.getLicencia());
 
-            if (cliente.getApellido() != null) {
-                cs.setString(3, cliente.getApellido());
-            } else {
-                cs.setNull(3, Types.VARCHAR); // Si no se proporciona un nuevo apellido, este quedara igual
-            }
-
-            if (cliente.getLicencia() != null) {
-                cs.setString(4, cliente.getLicencia()); // Si no se proporciona una nueva licencia, este quedara igual
-            } else {
-                cs.setNull(4, Types.VARCHAR);
-            }
-
-            // Parámetros opcionales de dirección
+            // Optional address parameters
             if (cliente.getDirreccion() != null) {
-                if (cliente.getDirreccion().getProvincia() != null) {
-                    cs.setString(5, cliente.getDirreccion().getProvincia());
-                } else {
-                    cs.setNull(5, Types.VARCHAR); // Si no se proporciona una dirreccion
-                    //este quedara igual
-                }
-
-                if (cliente.getDirreccion().getSector() != null) {
-                    cs.setString(6, cliente.getDirreccion().getSector());
-                } else {
-                    cs.setNull(6, Types.VARCHAR);
-                }
-
-                if (cliente.getDirreccion().getCalle() != null) {
-                    cs.setString(7, cliente.getDirreccion().getCalle());
-                } else {
-                    cs.setNull(7, Types.VARCHAR);
-                }
-
-                if (cliente.getDirreccion().getNumeroDeCasa() != 0) {
-                    cs.setInt(8, cliente.getDirreccion().getNumeroDeCasa());
-                } else {
-                    cs.setNull(8, Types.INTEGER);
-                }
+                setStringOrNull(cs, 5, cliente.getDirreccion().getProvincia());
+                setStringOrNull(cs, 6, cliente.getDirreccion().getSector());
+                setStringOrNull(cs, 7, cliente.getDirreccion().getCalle());
+                setIntOrNull(cs, 8, cliente.getDirreccion().getNumeroDeCasa());
             } else {
                 cs.setNull(5, Types.VARCHAR);
                 cs.setNull(6, Types.VARCHAR);
@@ -165,45 +146,60 @@ public class ClienteDAO {
                 cs.setNull(8, Types.INTEGER);
             }
 
-            if (cliente.getTelefono() != null) {
-                cs.setString(9, cliente.getTelefono());
-            } else {
-                cs.setNull(9, Types.VARCHAR);
-            }
+            setStringOrNull(cs, 9, cliente.getTelefono());
 
             cs.execute();
-            return 1;
-        } finally {
-            if (cs != null) {
-                cs.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-    //Eliminar cliente por cedula
-    public int eliminarCliente(String cedula) throws SQLException, FileNotFoundException {
-        String sql = "call sp_borrar_cliente(?)";
-        try {
-            connection = DBConnection.obtenerConexion();
-            cs = connection.prepareCall(sql);
-            cs.setString(1, cedula);
-
-            cs.execute();
+            LOGGER.log(Level.INFO, "Cliente updated successfully: {0}", cliente.getCedula());
             return 1;
 
         } catch (SQLException e) {
-            System.out.println("Error al eliminar: " + e.getMessage());
-            return 0;
-        } finally {
-            if (cs != null) {
-                cs.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
+            LOGGER.log(Level.SEVERE, "Error updating cliente", e);
+            throw e;
+        }
+    }
+
+    /**
+     * Helper method to set a string parameter or null.
+     * Reduces code duplication (DRY principle).
+     */
+    private void setStringOrNull(CallableStatement cs, int parameterIndex, String value) throws SQLException {
+        if (value != null) {
+            cs.setString(parameterIndex, value);
+        } else {
+            cs.setNull(parameterIndex, Types.VARCHAR);
+        }
+    }
+
+    /**
+     * Helper method to set an integer parameter or null.
+     * Reduces code duplication (DRY principle).
+     */
+    private void setIntOrNull(CallableStatement cs, int parameterIndex, int value) throws SQLException {
+        if (value != 0) {
+            cs.setInt(parameterIndex, value);
+        } else {
+            cs.setNull(parameterIndex, Types.INTEGER);
+        }
+    }
+
+    /**
+     * Deletes a client from the database by cedula.
+     * Uses try-with-resources for automatic resource management.
+     */
+    @Override
+    public int eliminarCliente(String cedula) throws SQLException, FileNotFoundException {
+        try (Connection connection = DBConnection.obtenerConexion();
+             CallableStatement cs = connection.prepareCall(Constants.SQL.SP_BORRAR_CLIENTE)) {
+
+            cs.setString(1, cedula);
+            cs.execute();
+
+            LOGGER.log(Level.INFO, "Cliente deleted successfully: {0}", cedula);
+            return 1;
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting cliente: " + cedula, e);
+            throw e;
         }
     }
 }
