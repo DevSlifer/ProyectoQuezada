@@ -195,6 +195,18 @@ CREATE TABLE Cliente (
     telefono varchar (13)
 );
 
+DELIMITER ;
+
+CREATE TABLE DireccionCliente (
+    IDDireccion INT PRIMARY KEY AUTO_INCREMENT,
+    Provincia VARCHAR(50),
+    Sector VARCHAR(50),
+    Calle VARCHAR(100),
+    NumeroDeCasa INT,
+    IDCliente INT,
+    FOREIGN KEY (IDCliente) REFERENCES Cliente(IDCliente) ON DELETE CASCADE
+);
+
 CREATE VIEW InformacionCliente AS 
 SELECT 
     Cliente.Nombre, 
@@ -212,8 +224,8 @@ GROUP BY Cliente.IDCliente;
 
 
 #Procedures para los clientes
-delimiter //
-create procedure sp_insertar_cliente
+DELIMITER //
+CREATE PROCEDURE sp_insertar_cliente
 (
     IN p_Nombre VARCHAR(20),
     IN p_Apellido VARCHAR(20),
@@ -247,7 +259,7 @@ END //
 
 DELIMITER ;
 
-delimiter //
+DELIMITER //
 CREATE PROCEDURE sp_borrar_cliente(
     IN  p_Cedula varchar(11)
 )
@@ -266,7 +278,7 @@ BEGIN
     COMMIT;
 end //
 
-delimiter //
+DELIMITER //
 CREATE PROCEDURE sp_leer_cliente(
     IN p_Cedula VARCHAR(11) 
 )
@@ -339,19 +351,6 @@ END //
 
 DELIMITER ;
 
-
-
-
-CREATE TABLE DireccionCliente (
-    IDDireccion INT PRIMARY KEY AUTO_INCREMENT,
-    Provincia VARCHAR(50),
-    Sector VARCHAR(50),
-    Calle VARCHAR(100),
-    NumeroDeCasa INT,
-    IDCliente INT,
-    FOREIGN KEY (IDCliente) REFERENCES Cliente(IDCliente) ON DELETE CASCADE
-);
-
 CREATE TABLE Factura (
     IDFactura INT PRIMARY KEY AUTO_INCREMENT,
     Monto DECIMAL(10,2),
@@ -367,8 +366,8 @@ from cliente c
 inner join factura f on c.idcliente = f.idcliente;
 
 #Procedures para facturas
-delimiter //
-create procedure sp_leer_factura
+DELIMITER //
+CREATE PROCEDURE sp_leer_factura
 (
 	in p_cedula varchar(11)
 )
@@ -383,7 +382,8 @@ BEGIN
     FROM facturasgeneradas
     WHERE (p_Cedula IS NULL OR Cedula = p_Cedula);
 END //
-delimiter ;
+
+DELIMITER ;
 
 
 DELIMITER //
@@ -416,6 +416,8 @@ BEGIN
     
     RETURN v_MontoTotal;
 END //
+
+DELIMITER ;
 
 DELIMITER //
 
@@ -609,7 +611,8 @@ CREATE TABLE Carro (
     Marca VARCHAR(20),
     Modelo VARCHAR(20),
     Anio INT check(anio>2000),
-    PrecioPorDia int,
+    PrecioPorDia INT,
+    Kilometraje DECIMAL(10,2),
     Placa VARCHAR(9) UNIQUE,
     Matricula VARCHAR(50) UNIQUE
 );
@@ -638,7 +641,7 @@ BEGIN
 END //
 
 
-delimiter //sp_leer_cliente
+DELIMITER //
 CREATE PROCEDURE sp_actualizar_carro(
     IN p_Marca VARCHAR(20),
     IN p_Modelo VARCHAR(20),
@@ -658,19 +661,19 @@ BEGIN
     START TRANSACTION;
 
     UPDATE Carro
-    SET 
+    SET
         Marca = COALESCE(p_Marca, Marca),
-        Modelo = COALESCE(p_Modelo, Modelo), 
-        Anio = COALESCE(p_Anio, Anio), 
+        Modelo = COALESCE(p_Modelo, Modelo),
+        Anio = COALESCE(p_Anio, Anio),
         Placa = COALESCE(p_Placa, Placa),
-        Preciopordia = coalesce (p_preciopordia, preciopordia),
-        kilometraje = coalesce (p_kilometraje, preciopordia)
+        Preciopordia = COALESCE(p_preciopordia, preciopordia),
+        kilometraje = COALESCE(p_kilometraje, kilometraje)
     WHERE Matricula = p_Matricula;
 
     COMMIT;
 END //
 
-delimiter //
+DELIMITER //
 CREATE PROCEDURE sp_borrar_carro(
     IN  p_matricula varchar(50)
 )
@@ -689,7 +692,7 @@ BEGIN
     COMMIT;
 end //
 
-delimiter //
+DELIMITER //
 CREATE PROCEDURE sp_leer_carro(
     IN p_matricula VARCHAR(50) 
 )
@@ -1063,7 +1066,7 @@ BEGIN
     END IF;
 END //
 
--- Validar año del carro
+-- Validar año del carro y kilometraje inicial
 CREATE TRIGGER before_carro_insert
 BEFORE INSERT ON Carro
 FOR EACH ROW
@@ -1072,14 +1075,17 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'El año del carro debe ser mayor a 2000';
     END IF;
+
+    IF NEW.Kilometraje < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El kilometraje no puede ser negativo';
+    END IF;
+
+    IF NEW.PrecioPorDia <= 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'El precio por día debe ser mayor a 0';
+    END IF;
 END //
-
-DELIMITER ;
-
-DELIMITER //
-
-
-DELIMITER //
 
 -- Validacion de que el kilometraje nuevo sea mayor al anterior
 CREATE TRIGGER validar_kilometraje_update
@@ -1092,80 +1098,5 @@ BEGIN
     END IF;
 END //
 
--- Validacion de que el kilometraje inicial sea 0 o positivo
-delimiter //
-CREATE TRIGGER validar_kilometraje_insert
-BEFORE INSERT ON Carro
-FOR EACH ROW
-BEGIN
-    IF NEW.Kilometraje < 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El kilometraje no puede ser negativo';
-    END IF;
-END //
-
 DELIMITER ;
-
-DELIMITER //
-
--- Validar que el precio por día sea positivo
-CREATE TRIGGER validar_precio_carro
-BEFORE INSERT ON Carro
-FOR EACH ROW
-BEGIN
-    IF NEW.PrecioPorDia <= 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El precio por día debe ser mayor a 0';
-    END IF;
-END //
-
--- Validar fechas de reserva (que la fecha de devolución sea posterior a la entrega)
-CREATE TRIGGER validar_fechas_reserva
-BEFORE INSERT ON Reserva
-FOR EACH ROW
-BEGIN
-    IF NEW.FechaDevolucion <= NEW.FechaDeEntrega THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La fecha de devolución debe ser posterior a la fecha de entrega';
-    END IF;
-    
-    IF NEW.FechaDeEntrega < CURDATE() THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'No se pueden hacer reservas con fechas pasadas';
-    END IF;
-END //
-
--- Validar disponibilidad del carro
-CREATE TRIGGER validar_disponibilidad_carro
-BEFORE INSERT ON Reserva
-FOR EACH ROW
-BEGIN
-    IF EXISTS (
-        SELECT 1 FROM Reserva 
-        WHERE IDCarro = NEW.IDCarro 
-        AND Cancelacion = FALSE
-        AND (
-            (NEW.FechaDeEntrega BETWEEN FechaDeEntrega AND FechaDevolucion)
-            OR (NEW.FechaDevolucion BETWEEN FechaDeEntrega AND FechaDevolucion)
-        )
-    ) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El carro no está disponible para las fechas seleccionadas';
-    END IF;
-END //
-
--- Validar que el cliente tenga licencia antes de reservar
-CREATE TRIGGER validar_licencia_cliente
-BEFORE INSERT ON Reserva
-FOR EACH ROW
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1 FROM Cliente 
-        WHERE IDCliente = NEW.IDCliente 
-        AND Licencia IS NOT NULL
-    ) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El cliente debe tener licencia registrada para realizar una reserva';
-    END IF;
-END //
 
